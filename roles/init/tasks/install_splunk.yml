@@ -1,0 +1,8 @@
+---
+- name: Copy splunk install script
+  copy:
+    src: 'install_splunk.sh'
+    dest: /tmp
+
+- name: Executing splunk install script
+  ansible.builtin.shell: bash /tmp/install_splunk.sh

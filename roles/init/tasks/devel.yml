@@ -1,0 +1,10 @@
+---
+- name: Install CentOS/OL 8 packages for development
+  yum:
+    name: '{{ devel_pkgs_sysversion_8 }}'
+    state: present
+  register: yum_res
+
+- name: Show output of the previous yum call
+  debug:
+    msg: "{{ yum_res.results[0].split('\n') }}"
