@@ -2,13 +2,13 @@
 setenforce 0
 sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
 hostnamectl set-hostname splunk
-yum -y install wget mlocate
+sudo yum -y install wget mlocate
 
-useradd splunk -G wheel -m -d /opt/splunk -s /bin/bash
-echo -e "splunk1\nsplunk1" | passwd splunk
+sudo useradd splunk -G wheel -m -d /opt/splunk -s /bin/bash
+echo -e "splunk1\nsplunk1" | sudo passwd splunk
 
-mkdir /opt/splunk /opt/installers
-chown -R splunk:splunk /opt/splunk /opt/installers
+sudo mkdir /opt/splunk /opt/installers
+sudo chown -R splunk:splunk /opt/splunk /opt/installers
 cd /opt/installers
 
 #Splunk Enterprise

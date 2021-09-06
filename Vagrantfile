@@ -31,21 +31,6 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.provision "shell", privileged: true, run: "once", inline: <<-EOS
-    set -xe
-    cp -rf /home/vagrant/.ssh/ /root/
-    sed -i "s/^[\#\s]*PermitRootLogin.*$/PermitRootLogin yes/" /etc/ssh/sshd_config
-    service sshd restart
-    restorecon -R -v /root/.ssh
-    echo "root:vagrant"|chpasswd
-  EOS
-
-  # If running `vagrant ssh` command, use 'root' user
-  if ARGV.first == "ssh"
-    puts "Logging in as root."
-    config.ssh.username = "root"
-  end
-
   config.vm.provision "setup", type: "ansible" do |ansible|
     ansible.playbook = "setup.yml"
     ansible.extra_vars = {
