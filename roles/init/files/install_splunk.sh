@@ -1,7 +1,6 @@
 #!/bin/sh
 setenforce 0
 sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
-hostnamectl set-hostname splunk
 sudo yum -y install wget mlocate
 
 sudo useradd splunk -G wheel -m -d /opt/splunk -s /bin/bash
