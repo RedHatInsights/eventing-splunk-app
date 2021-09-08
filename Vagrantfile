@@ -22,14 +22,14 @@ Vagrant.configure("2") do |config|
     config.vm.box = "eurolinux-vagrant/centos-8" 
     config.vm.host_name = "splunk-"+Time.now.strftime("%Y%m%d%H%M%S")
   
-    # config.vm.provider :libvirt do |libvirt|
-    #   libvirt.memory = 2048
-    #   libvirt.cpus = 2
-    #   libvirt.cpu_mode = "host-passthrough"
-    #   if ENV["SYSTEM_SESSION"]
-    #     libvirt.qemu_use_session = false
-    #   end
-    # end
+    config.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+      libvirt.cpu_mode = "host-passthrough"
+      if ENV["SYSTEM_SESSION"]
+        libvirt.qemu_use_session = false
+      end
+    end
   
     config.vm.provision "shell", privileged: true, run: "once", inline: <<-EOS
       set -xe
