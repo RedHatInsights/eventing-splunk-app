@@ -1,3 +1,4 @@
 splunk_pkg: "splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm"
 splunk_version: "8.0.0"
 devel_pkgs_sysversion_8: ["vim", "python3-devel", "git", "wget", "mlocate"]
+splunk_password: "splunk1"

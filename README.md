@@ -42,7 +42,43 @@ Linux:
 
 Open your browser and go to:  `localhost:8000`
 
-Username: `splunk`
+Username: `admin`
 
-Password: `splunk`
+Password: `splunk.go`
 
+## How to create a splunk bundled app
+
+1- Install/download Packaging CLI tool here: https://dev.splunk.com/enterprise/downloads
+
+```python
+$ pip install splunk...tar.gz
+```
+2.0- Generate the manisfest
+
+```bash
+$ slim generate-manifest
+```
+
+2.1- Change the app version on manifest on `app/app.manifest` file:
+
+```json
+    "id": {
+      "group": null,
+      "name": "redhat-insigths",
+      "version": "1.0.0"
+```
+
+
+Optional step:  Everytime if needed, validate the app:
+
+```bash
+$ slim validate 
+```
+
+3- Generate the package
+
+```bash
+$ slim package
+```
+
+4- Go to the splunk app admin page and install from File.

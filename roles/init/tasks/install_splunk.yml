@@ -1,8 +1,67 @@
 ---
-- name: Copy splunk install script
-  copy:
-    src: 'install_splunk.sh'
-    dest: /tmp
+- name: Updating the system
+  ansible.builtin.shell: dnf update -y && dnf upgrade -y
 
-- name: Executing splunk install script
-  ansible.builtin.shell: bash /tmp/install_splunk.sh
+- name: Setting enforce
+  ansible.builtin.shell: setenforce 0 && sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+
+- name: Setting the new hostname
+  ansible.builtin.shell: hostnamectl set-hostname splunk
+
+- name: Install requirements packages for splunk
+  yum:
+    name: wget, mlocate
+    state: present
+  register: yum_res
+
+- name: Creating user splunk
+  user: 
+    name: splunk
+    password: "{{ 'splunk.go' | password_hash('sha512') }}"
+    groups: wheel
+  
+- name: Creates directory /opt/splunk
+  file:
+    path: /opt/splunk
+    state: directory
+    owner: splunk
+    group: splunk
+    mode: 0775
+
+- name: Creates directory /opt/installers
+  file:
+    path: /opt/installers
+    state: directory
+    owner: splunk
+    group: splunk
+    mode: 0775
+
+- name: Download splunk package
+  get_url:
+    url: https://d7wz6hmoaavd0.cloudfront.net/products/splunk/releases/8.2.2/linux/splunk-8.2.2-87344edfcdb4-linux-2.6-x86_64.rpm
+    dest: /opt/installers/splunk.rpm
+    mode: '0440'
+
+- name: Install splunk rpm
+  yum:
+    name: /opt/installers/splunk.rpm
+    state: present
+    disable_gpg_check: yes
+  register: yum_res
+
+- name: Setup Splunk boot-start
+  become: yes
+  command: /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 --accept-license --answer-yes --seed-passwd splunk.go                                                      
+  args:
+    creates: /etc/systemd/system/Splunkd.service
+
+- name:  Setting the permission to splunk folder
+  become: yes
+  command: chown -R splunk:splunk /opt/splunk
+
+- name:  Start splunk service
+  become: yes
+  command: systemctl start Splunkd
+
+- name: Setting enforce
+  ansible.builtin.shell: setenforce 1
