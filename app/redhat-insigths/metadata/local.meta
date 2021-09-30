@@ -1,0 +1,24 @@
+[app/ui]
+version = 8.2.2
+modtime = 1632308621.490299000
+
+[app/launcher]
+version = 8.2.2
+modtime = 1632308621.490956000
+
+[inputs/http%3A%2F%2Fredhat]
+access = read : [ admin ], write : [ admin ]
+export = none
+owner = admin
+version = 8.2.2
+modtime = 1632311721.305126000
+
+[views/drift]
+owner = admin
+version = 8.2.2
+modtime = 1633035606.587287000
+
+[views/home___red_hat_insights]
+owner = admin
+version = 8.2.2
+modtime = 1632345725.532740000

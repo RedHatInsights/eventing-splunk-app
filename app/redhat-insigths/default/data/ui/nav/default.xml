@@ -1,0 +1,13 @@
+<nav search_view="search">
+  <!-- <collection label="Dashboards">
+    <view name="dashboards" />
+  </collection> -->
+
+  <view name="home___red_hat_insights" default='true' />
+  <view name="search"  />
+  <!-- <view name="analytics_workspace" />
+  <view name="datasets" />
+  <view name="reports" />
+  <view name="alerts" /> -->
+  <view name="dashboards" />
+</nav>
