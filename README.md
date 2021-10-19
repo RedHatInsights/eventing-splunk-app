@@ -64,7 +64,7 @@ $ slim generate-manifest
 ```json
     "id": {
       "group": null,
-      "name": "redhat-insigths",
+      "name": "redhat-insights",
       "version": "1.0.0"
 ```
 
