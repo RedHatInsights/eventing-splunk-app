@@ -1,5 +1,5 @@
-Vagrant box for splunk
-============================
+Vagrant box for Splunk
+======================
 
 What is included?
 
@@ -11,15 +11,10 @@ What is included?
 If you are on:
 
 * macOS:
-  
   - Install VirtualBox
-
 * Linux:
-  
   - Install KVM with libvirt library
-
 * Install ansible on your local machine
-  
 
 When switching between the versions, run `rm -rf .vagrant/` first, or `vagrant destroy` twice (due to [a bug in vagrant](https://github.com/hashicorp/vagrant/issues/11800))
 
@@ -32,7 +27,7 @@ To get the default development environment (CentOS 8):
 $ git clone https://github.com/RedHatInsights/eventing.git
 $ cd eventing/splunk
 
-macOS: 
+macOS:
    $ vagrant up
 Linux:
    $ vagrant up --provider=libvirt
@@ -50,13 +45,13 @@ Password: `splunk.go`
 
 1- Install/download Packaging CLI tool here: https://dev.splunk.com/enterprise/downloads
 
-```python
-$ pip install splunk...tar.gz
+```bash
+$ pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
 ```
 2.0- Generate the manisfest
 
 ```bash
-$ slim generate-manifest
+$ slim generate-manifest app/redhat-insigths
 ```
 
 2.1- Change the app version on manifest on `app/app.manifest` file:
@@ -72,13 +67,16 @@ $ slim generate-manifest
 Optional step:  Everytime if needed, validate the app:
 
 ```bash
-$ slim validate 
+$ slim validate app/redhat-insigths
 ```
 
 3- Generate the package
 
 ```bash
-$ slim package
+$ slim package  pp/redhat-insigths
 ```
 
 4- Go to the splunk app admin page and install from File.
+
+Note, that the images from the app are only shown after the Splunk
+is restarted.
