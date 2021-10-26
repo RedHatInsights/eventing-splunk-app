@@ -80,3 +80,21 @@ $ slim package  pp/redhat-insigths
 
 Note, that the images from the app are only shown after the Splunk
 is restarted.
+
+
+## Exposing for cluster
+
+To expose locally running splunk (in a VM) we can use the [Ngrok](https://ngrok.com) service.
+
+Before you start:
+* [Sign up](https://dashboard.ngrok.com/signup)
+* [download the `ngrok` binary](https://ngrok.com/download)
+* and authenticate `ngrok authtoken <your_auth_token>`.
+
+Once the Splunk is running execute:
+```
+ngrok http 8088
+```
+
+Your Splunk will be publically available at the displayed location.
+For example: `https://abcd-999-111-22-33.ngrok.io`.
