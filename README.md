@@ -98,3 +98,13 @@ ngrok http 8088
 
 Your Splunk will be publically available at the displayed location.
 For example: `https://abcd-999-111-22-33.ngrok.io`.
+
+
+## Sending Examples
+
+To send example events from [`examples/`](examples/) use:
+```
+TOKEN=puttokenhere send-examples.sh
+```
+
+The token can be found at http://localhost:8000/en-US/manager/redhat-insights/http-eventcollector.
