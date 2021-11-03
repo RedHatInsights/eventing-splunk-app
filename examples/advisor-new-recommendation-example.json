@@ -1,0 +1,43 @@
+{
+    "event": {
+        "bundle": "rhel",
+        "application": "advisor",
+        "event_type": "new-recommendation",
+        "timestamp": "2021-11-03T17:04:45.683504",
+        "account_id": "6089719",
+        "context": {
+            "inventory_id": "0d671e9e-7928-47b5-9111-3d80c75fa3b0",
+            "hostname": "system.example.com",
+            "display_name": "system.example.com",
+            "rhel_version": "7.7",
+            "host_url": "https://console.redhat.com/insights/inventory/0d671e9e-7928-47b5-9111-3d80c75fa3b0",
+            "tags": []
+        },
+        "events": [
+            {
+                "metadata": {},
+                "payload": {
+                    "rule_id": "hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD",
+                    "rule_description": "Decreased security: auditd not running",
+                    "total_risk": "1",
+                    "publish_date": "2017-06-19T12:00:00+00:00",
+                    "rule_url": "https://console.redhat.com/insights/advisor/recommendations/hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD/",
+                    "reboot_required": false
+                },
+                "report_url": "https://console.redhat.com/insights/advisor/recommendations/hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD/0d671e9e-7928-47b5-9111-3d80c75fa3b0"
+            },
+            {
+                "metadata": {},
+                "payload": {
+                    "rule_id": "network_tcp_connection_hang|NETWORK_TCP_CONNECTION_HANG_WARN",
+                    "rule_description": "Network connections will hang when insufficient memory is allocated for the TCP packet fragmentation",
+                    "total_risk": "3",
+                    "publish_date": "2019-09-14T08:17:00+00:00",
+                    "rule_url": "https://console.redhat.com/insights/advisor/recommendations/network_tcp_connection_hang|NETWORK_TCP_CONNECTION_HANG_WARN/",
+                    "reboot_required": true
+                },
+                "report_url": "https://console.redhat.com/insights/advisor/recommendations/network_tcp_connection_hang|NETWORK_TCP_CONNECTION_HANG_WARN/0d671e9e-7928-47b5-9111-3d80c75fa3b0"
+            }
+        ]
+    }
+}

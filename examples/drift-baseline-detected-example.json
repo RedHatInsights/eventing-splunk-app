@@ -1,0 +1,24 @@
+{
+    "event": {
+        "bundle": "rhel",
+        "application": "drift",
+        "event_type": "drift-baseline-detected",
+        "timestamp": "2021-11-03T17:08:21.948364+00:00",
+        "account_id": "6089719",
+        "events": [
+            {
+                "metadata": {},
+                "payload": {
+                    "baseline_id": "c56a0fe8-fe38-4ea0-b0ad-4954db5c4768",
+                    "baseline_name": "My Baseline"
+                }
+            }
+        ],
+        "context": {
+            "inventory_id": "0d671e9e-7928-47b5-9111-3d80c75fa3b0",
+            "system_check_in": "2021-11-03T17:08:16.783379+00:00",
+            "display_name": "system.example.com",
+            "tags": []
+        }
+    }
+}

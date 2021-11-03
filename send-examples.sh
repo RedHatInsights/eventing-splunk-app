@@ -14,3 +14,5 @@ send_to_spulnk() {
     -H "Content-Type: application/json"
 }
 
+send_to_spulnk advisor-new-recommendation-example
+send_to_spulnk drift-baseline-detected-example
