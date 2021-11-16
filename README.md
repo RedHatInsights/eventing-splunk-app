@@ -26,11 +26,20 @@ To get the default development environment (CentOS 8):
 ```bash
 $ git clone https://github.com/RedHatInsights/eventing.git
 $ cd eventing/splunk
+```
 
 macOS:
+```bash
    $ vagrant up
+```
+
 Linux:
+```bash
    $ vagrant up --provider=libvirt
+```
+  * Note: app folder sync is ENABLED by default using NFS, if you want to disable:
+```bash
+   $ NFS=0 vagrant up --provider=libvirt
 ```
 
 ## How to access your splunk server
@@ -40,6 +49,16 @@ Open your browser and go to:  `localhost:8000`
 Username: `admin`
 
 Password: `splunk.go`
+
+## Splunk App
+
+Vagrant will share `app/redhat-insights` folder to vagrant box, any changes on local folder will reflect to the splunk server into vagrant box.
+
+Splunk may have problem to show images or new changes after the changes, maybe need to restart the service:
+
+```bash
+$ sudo systemctl restart Splunkd
+```
 
 ## How to create a splunk bundled app
 
