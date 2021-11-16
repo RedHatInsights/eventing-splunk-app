@@ -70,7 +70,7 @@ $ pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packagin
 2.0- Generate the manisfest
 
 ```bash
-$ slim generate-manifest app/redhat-insigths
+$ slim generate-manifest app/redhat-insights
 ```
 
 2.1- Change the app version on manifest on `app/app.manifest` file:
@@ -86,13 +86,13 @@ $ slim generate-manifest app/redhat-insigths
 Optional step:  Everytime if needed, validate the app:
 
 ```bash
-$ slim validate app/redhat-insigths
+$ slim validate app/redhat-insights
 ```
 
 3- Generate the package
 
 ```bash
-$ slim package  pp/redhat-insigths
+$ slim package app/redhat-insights
 ```
 
 4- Go to the splunk app admin page and install from File.
