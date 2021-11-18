@@ -1,6 +1,8 @@
 .DS_Store/
 .vagrant/
 redhat-insights-*.*.*.tar.gz
+splunk/app/redhat-insights/local/
+splunk/app/redhat-insights/metadata/local.meta
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
