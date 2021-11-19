@@ -2,7 +2,7 @@
 
 import * as Config from './setup_configuration.js'
 
-export async function perform(splunk_js_sdk, setup_options) {
+export const perform = async (splunk_js_sdk, setup_options) => {
   var application_name_space = {
     owner: "nobody",
     app: app_name,

@@ -15,7 +15,7 @@ require([
   "react",
   "ReactDOM",
   "myApp",
-], function (_react, ReactDOM, myApp) {
+], (_react, ReactDOM, myApp) => {
   ReactDOM.render(myApp, document.getElementById('main_container'));
 })
 

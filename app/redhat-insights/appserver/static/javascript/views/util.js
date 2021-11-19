@@ -1,11 +1,11 @@
-function promisify(fn) {
+export const promisify = (fn) => {
   console.log("promisify: Don't use this in production! Use a proper promisify library instead.")
 
   // return a new promisified function
   return (...args) => {
     return new Promise((resolve, reject) => {
       // create a callback that resolves and rejects
-      function callback(err, result) {
+      const callback = (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -19,8 +19,4 @@ function promisify(fn) {
       fn.call(this, ...args);
     })
   }
-}
-
-export {
-  promisify,
 }
