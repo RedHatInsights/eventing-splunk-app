@@ -1,4 +1,4 @@
-import * as Setup from "./store_secret.js";
+import * as Setup from "./setup.js";
 
 define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
   const e = react.createElement;
@@ -20,7 +20,15 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
       setStatus('Setting up...');
       setInProgress(true);
 
-      await Setup.perform(splunk_js_sdk, { password })
+      try {
+        await Setup.perform(splunk_js_sdk, { password })
+      } catch (error) {
+        setInProgress(false);
+        setStatus(error.message);
+        return;
+      }
+
+      setStatus('Setup done! Redirecting...');
     }
 
     return e("div", { class: 'setup_container' }, [
