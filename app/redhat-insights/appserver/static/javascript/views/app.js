@@ -4,6 +4,8 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
   const e = react.createElement;
 
   const SetupPage = () =>  {
+    const [status, setStatus] = react.useState('');
+    const [inProgress, setInProgress] = react.useState(false);
     const [username, setUsername] = react.useState();
     const [password, setPassword] = react.useState();
     const [cluster, setCluster] = react.useState("console.redhat.com");
@@ -15,10 +17,13 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
     const handleSubmit = async (event) => {
       event.preventDefault();
 
+      setStatus('Setting up...');
+      setInProgress(true);
+
       await Setup.perform(splunk_js_sdk, { password })
     }
 
-    return e("div", null, [
+    return e("div", { class: 'setup_container' }, [
       e("h2", null, "Set up the integration with Red Hat"),
       e("div", null, [
         e("form", { onSubmit: handleSubmit }, [
@@ -51,7 +56,8 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
               e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
                 e('label', { class: 'control-label' }),
                 e('div', { class: 'controls controls-join' }, [
-                  e("input", { type: "submit", value: "Log in & setup", class: 'btn btn-primary' }),
+                  e("input", { type: "submit", value: "Log in & setup", class: 'btn btn-primary', disabled: inProgress }),
+                  e('div', { class: 'inline-status' }, [status])
                 ])
               ]),
             ])
