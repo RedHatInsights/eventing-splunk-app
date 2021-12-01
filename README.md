@@ -106,6 +106,7 @@ is restarted.
 To expose locally running splunk (in a VM) we can use the [Ngrok](https://ngrok.com) service.
 
 Before you start:
+* Set up your HTTP Event Collector (HEC) within Splunk (see "Creating HEC" section below).
 * [Sign up](https://dashboard.ngrok.com/signup)
 * [download the `ngrok` binary](https://ngrok.com/download)
 * and authenticate `ngrok authtoken <your_auth_token>`.
@@ -127,3 +128,21 @@ TOKEN=puttokenhere send-examples.sh
 ```
 
 The token can be found at http://localhost:8000/en-US/manager/redhat-insights/http-eventcollector.
+
+If you haven't set up your HEC yet, you will need to do so to create the token, see "Creating HEC" section below.
+
+
+## Creating HEC
+
+Whether through the cloud login or your local instance, you will need to set up your Splunk HEC (http event collector).
+
+For full instructions, see this official walkthrough doc from [Splunk](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector).
+
+Here's the "short version":
+
+* Login. From your instance menu bar, click "Settings > Data inputs".
+* Select "HTTP Event Collector" to see your existing HECs if any (for instance, our plugin should create one).
+* If you still need a new one, go back and select "Add new" under "HTTP Event Collector" actions.
+* Name it, click next, then add the indices you wish, usually "main".
+* Next review your settings and submit.  You will be given a token here, but you can access it again at any time by navigating to "Settings > Data inputs > HTTP Event Collector" and clicking it instead of add to see all of your available HECs, their tokens, and from there enable or disable them.
+* Depending on your Splunk instance, the HECs may be enabled or disabled by default.  In the cloud, they're enabled imediately when created, but in local/on-prem instances, they're disabled by default.  Go to "Global Settings" on your "HTTP Event Collector" page and ensure "All Tokens" is set to "Enabled".
