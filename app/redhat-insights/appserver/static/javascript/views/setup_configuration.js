@@ -1,18 +1,36 @@
-import { promisify } from './util.js'
+import { promisify, uuidv4 } from './util.js'
 import * as SplunkHelpers from './splunk_helpers.js'
+
+async function create_hec_collector(splunk_js_sdk_service) {
+  var stanza_name = "http://redhatinsights";
+  var configuration_file_name = "inputs";
+  var properties_to_update = {
+    disabled: 0,
+    host: "splunk",
+    token: uuidv4()
+  };
+
+  await SplunkHelpers.create_hec_collector(
+    splunk_js_sdk_service,
+    stanza_name,
+    configuration_file_name,
+    properties_to_update
+  );
+}
 
 async function complete_setup(splunk_js_sdk_service) {
   var configuration_file_name = "app";
   var stanza_name = "install";
-  var properties_to_update = {
-      is_configured: "true",
-  };
 
+  var properties_to_update = {
+    is_configured: "true",
+  };
+  
   await SplunkHelpers.update_configuration_file(
-      splunk_js_sdk_service,
-      configuration_file_name,
-      stanza_name,
-      properties_to_update,
+    splunk_js_sdk_service,
+    configuration_file_name,
+    stanza_name,
+    properties_to_update,
   );
 };
 
@@ -43,8 +61,8 @@ function create_splunk_js_sdk_service(
   var http = new splunk_js_sdk.SplunkWebHttp();
 
   var splunk_js_sdk_service = new splunk_js_sdk.Service(
-      http,
-      application_name_space,
+    http,
+    application_name_space,
   );
 
   return splunk_js_sdk_service;
@@ -55,4 +73,5 @@ export {
   reload_splunk_app,
   redirect_to_splunk_app_homepage,
   create_splunk_js_sdk_service,
+  create_hec_collector,
 }

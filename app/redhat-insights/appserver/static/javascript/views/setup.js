@@ -15,8 +15,10 @@ export const perform = async (splunk_js_sdk, input) => {
       application_name_space,
     );
 
-    await Config.complete_setup(service);
+    await Config.create_hec_collector(service)
 
+    await Config.complete_setup(service);
+    
     await Config.reload_splunk_app(service, app_name);
 
     Config.redirect_to_splunk_app_homepage(app_name);
