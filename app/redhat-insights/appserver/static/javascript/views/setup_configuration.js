@@ -7,6 +7,7 @@ async function create_hec_collector(splunk_js_sdk_service) {
   var properties_to_update = {
     disabled: 0,
     host: "splunk",
+    index: "redhatinsights",
     token: uuidv4()
   };
 

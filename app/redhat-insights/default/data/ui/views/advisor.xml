@@ -15,7 +15,7 @@
       <table>
         <title>Events</title>
         <search>
-          <query>bundle = "rhel" AND  application = "advisor"
+          <query>index=redhatinsights AND bundle = "rhel" AND  application = "advisor"
 | spath 
 | rename object.* as *
 | convert timeformat="%m-%d-%Y %l:%M %p" ctime(_time) AS created_at_fmt
