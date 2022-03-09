@@ -87,40 +87,31 @@ Here's the "short version":
 
 ## How to create a splunk bundled app plugin
 
-1- Install/download Packaging CLI tool here: https://dev.splunk.com/enterprise/downloads
+### Prerequisites:
+
+Installed Packaging CLI tool here from https://dev.splunk.com/enterprise/downloads.
 
 ```bash
 $ pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
 ```
-2.0- Generate the manisfest
 
-```bash
-$ slim generate-manifest app/redhat-insights -o app/redhat-insights/app.manifest
-```
+### Package build
 
-2.1- Change the app version on manifest on `app/app.manifest` file:
-
-```json
-    "id": {
-      "group": null,
-      "name": "redhat-insights",
-      "version": "1.0.0"
-```
-
-
-Optional step:  Everytime if needed, validate the app:
-
-```bash
-$ slim validate app/redhat-insights
-```
-
-3- Generate the package
-
-```bash
-$ slim package app/redhat-insights
-```
-
-4- Go to the splunk app admin page and install from File.
+1. Set new version using these commands
+   ```
+   version=0.1.$(date -u +%Y%m%d%H%M)
+   sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" app/redhat-insights/app.manifest
+   sed -i "s/version = .*/version = $version/" app/redhat-insights/default/app.conf
+   ```
+2. Validate the app:
+   ```bash
+   slim validate app/redhat-insights
+   ```
+3. Generate the package
+   ```bash
+   slim package app/redhat-insights
+   mv "redhat-insights-$version.tar.gz" "redhat-insights-$version-$(git rev-parse --short HEAD).tar.gz"
+   ```
 
 Note, that the images from the app are only shown after the Splunk
 is restarted.
