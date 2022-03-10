@@ -1,0 +1,44 @@
+<form>
+    <label>Events</label>
+    <fieldset submitButton="false">
+      <input type="time" token="timepicker">
+        <label></label>
+        <default>
+          <earliest></earliest>
+          <latest></latest>
+        </default>
+      </input>
+    </fieldset>
+    <row>
+      <panel>
+        <table id="expand_table_row">
+          <search>
+            <query>
+  index=redhatinsights AND bundle = "rhel" 
+  | spath 
+  | spath path=events{} output=events
+  | stats by timestamp, events, application, event_type, account_id, context.display_name,
+  | mvexpand events 
+  | eval _raw=events
+  | kv
+  | eval title=coalesce('payload.rule_description', event_type) 
+  | eval converted_time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
+  | eval url = 'payload.rule_url'
+  | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(converted_time) AS created_at_fmt
+  | table created_at_fmt, title,  "context.display_name",  account_id, "event_type", "application", url
+  | rename account_id as "Account ID", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
+  
+  </query>
+            <earliest>$timepicker.earliest$</earliest>
+            <latest>$timepicker.latest$</latest>
+          </search>
+          <option name="count">50</option>
+          <option name="drilldown">none</option>
+          <option name="rowNumbers">false</option>
+          <option name="totalsRow">false</option>
+          <option name="wrap">false</option>
+        </table>
+      </panel>
+    </row>
+  </form>
+  
