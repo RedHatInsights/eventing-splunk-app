@@ -1,6 +1,5 @@
 <nav search_view="search">
-  <view name="home___red_hat_insights" default='true' />
-  <view name="events"  />
+  <view name="events" default='true' />
   <view name="search" />
   <view name="connection_settings" />
 </nav>

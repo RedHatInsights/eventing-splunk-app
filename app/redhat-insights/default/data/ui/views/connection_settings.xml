@@ -1,5 +1,15 @@
 
-        <dashboard version="2" theme="light">
-            <label>Connection settings</label>
-            <description></description>
-        </dashboard>
+<dashboard version="1">
+    <label>Connection settings</label>
+    <row>
+        <panel>
+            <html>
+                <div class="dataInputsWrapper serverControlsWrapper">
+                    <div class="serverControlsWrapper">
+                        <p><a href="#">Please follow this link for the Documents</a></p>
+                    </div>
+                </div>
+            </html>
+        </panel>
+    </row>
+</dashboard>
