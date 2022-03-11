@@ -3,9 +3,10 @@ import { promisify } from "./util.js";
 async function create_hec_collector(
   splunk_js_sdk_service,
   stanza_name,
-  configuration_file_name,
   properties_to_update
 ) {
+  const configuration_file_name = 'inputs';
+
   // Retrieve the accessor used to get a configuration file
   var splunk_js_sdk_service_configurations =
     splunk_js_sdk_service.configurations({

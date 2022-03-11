@@ -2,21 +2,22 @@ import { promisify, uuidv4 } from './util.js'
 import * as SplunkHelpers from './splunk_helpers.js'
 
 async function create_hec_collector(splunk_js_sdk_service, { hecName, defaultIndex }) {
-  var stanza_name = `http://${ hecName || 'redhatinsights'}`;
-  var configuration_file_name = "inputs";
-  var properties_to_update = {
+  const stanza_name = `http://${ hecName || 'redhatinsights'}`;
+  const token = uuidv4();
+  const properties_to_update = {
     disabled: 0,
     host: "splunk",
     index: defaultIndex || "redhatinsights",
-    token: uuidv4()
+    token: token
   };
 
   await SplunkHelpers.create_hec_collector(
     splunk_js_sdk_service,
     stanza_name,
-    configuration_file_name,
     properties_to_update
   );
+
+  return token;
 }
 
 async function complete_setup(splunk_js_sdk_service) {

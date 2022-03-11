@@ -6,6 +6,7 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
   const SetupPage = () =>  {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
+    const [hecToken, setHecToken] = react.useState('');
     const [status, setStatus] = react.useState('');
 
     return e("div", { class: 'setup_container' }, [
@@ -14,7 +15,7 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
     ]);
   };
 
-  const SetupForm = ({hecName, defaultIndex, status, setStatus}) => {
+  const SetupForm = ({ hecName, defaultIndex, status, setStatus, setHecToken }) => {
     const [inProgress, setInProgress] = react.useState(false);
 
     const handleSubmit = async (event) => {
@@ -22,9 +23,10 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
 
       setStatus('Setting up...');
       setInProgress(true);
+      let hecToken;
 
       try {
-        await Setup.perform(splunk_js_sdk, { hecName, defaultIndex });
+        hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex });
       } catch (error) {
         setInProgress(false);
         setStatus(error.message);
@@ -32,6 +34,7 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
       }
 
       setStatus('Setup done! Redirecting...');
+      setHecToken(hecToken);
     }
 
     return e("form", { onSubmit: handleSubmit }, [

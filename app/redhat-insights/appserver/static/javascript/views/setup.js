@@ -2,7 +2,7 @@
 
 import * as Config from './setup_configuration.js'
 
-export const perform = async (splunk_js_sdk, input) => {
+export const hecAndIndex = async (splunk_js_sdk, input) => {
   var application_name_space = {
     owner: "nobody",
     app: app_name,
@@ -15,13 +15,15 @@ export const perform = async (splunk_js_sdk, input) => {
       application_name_space,
     );
 
-    await Config.create_hec_collector(service, input);
+    const hecToken = await Config.create_hec_collector(service, input);
 
     await Config.complete_setup(service);
 
     await Config.reload_splunk_app(service, app_name);
 
     Config.redirect_to_splunk_app_homepage(app_name);
+
+    return hecToken;
   } catch (error) {
     throw new Error('Setup failed: ' + error);
   }
