@@ -103,6 +103,33 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
               ])
             ])
           ]),
+          e('p', null , [
+            'Create a new Integration on Red Hat Console at ',
+            e('a', { href: 'https://console.redhat.com/beta/settings/integrations', rel: 'noopener' }, [
+              'Integration Settings'
+            ]),
+            '.'
+          ]),
+          e('p', null , [
+            'Using the ',
+            e('i', null, ['Add Itegration']),
+            ' button create a Splunk type Integration copying the above HEC token and pasting it',
+            ' into the ',
+            e('i', null, ['Secret token']),
+            ' input.'
+          ]),
+          e('p', null , [
+            'See example:'
+          ]),
+          e('img', {
+            src: '/static/app/redhat-insights/images/RH Integrations Settings.png',
+            alt: 'New Splunk integration modal example',
+            width: '400'
+          }),
+          e('p', null , [
+            'Note, that the port 8088 is a default HTTP Collector port.',
+            ' Please set the port according to your Splunk instance.'
+          ]),
           e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
             e('label', { class: 'control-label' }),
             e('div', { class: 'controls controls-join' }, [
