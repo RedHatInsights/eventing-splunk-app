@@ -8,14 +8,19 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
     const defaultIndex = 'redhatinsights';
     const [hecToken, setHecToken] = react.useState('');
     const [status, setStatus] = react.useState('');
+    const [step, setStep] = react.useState(1);
 
     return e("div", { class: 'setup_container' }, [
       e("h2", null, "Set up the integration with Red Hat"),
-      e("div", null, [e(SetupForm, { hecName, defaultIndex, status, setStatus })])
+      e("div", null, [
+        step == 1
+          ? e(SetupForm, { hecName, defaultIndex, status, setStatus, setStep, setHecToken })
+          : e(SetupIntegration, { status, setStatus, hecToken })
+      ])
     ]);
   };
 
-  const SetupForm = ({ hecName, defaultIndex, status, setStatus, setHecToken }) => {
+  const SetupForm = ({ hecName, defaultIndex, status, setStatus, setStep, setHecToken }) => {
     const [inProgress, setInProgress] = react.useState(false);
 
     const handleSubmit = async (event) => {
@@ -33,8 +38,9 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
         return;
       }
 
-      setStatus('Setup done! Redirecting...');
+      setStatus('');
       setHecToken(hecToken);
+      setStep(2);
     }
 
     return e("form", { onSubmit: handleSubmit }, [
@@ -59,11 +65,52 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
           e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
             e('label', { class: 'control-label' }),
             e('div', { class: 'controls controls-join' }, [
-              e("input", { type: "submit", value: "Finish setup", class: 'btn btn-primary', disabled: inProgress }),
+              e("input", { type: "submit", value: "Continue", class: 'btn btn-primary', disabled: inProgress }),
               e('div', { class: 'inline-status' }, [status])
             ])
           ]),
         ])
+      ])
+    ]);
+  };
+
+  const SetupIntegration = ({ status, setStatus, hecToken }) => {
+    const [inProgress, setInProgress] = react.useState(false);
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      setStatus('Finishing setup...');
+      setInProgress(true);
+
+      try {
+        await Setup.complete(splunk_js_sdk);
+      } catch (error) {
+        setInProgress(false);
+        setStatus(error.message);
+        return;
+      }
+    }
+
+    return e("form", { onSubmit: handleSubmit }, [
+      e('fieldset', null, [
+        e('div', { class: 'shared-viewstack' }, [
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+            e('label', { class: 'control-label' }, ['HTTP Event Collector (HEC) token to copy']),
+            e('div', { class: 'controls controls-join' }, [
+              e('div', { class: 'control shared-controls-textcontrol control-default' }, [
+                e("input", { readonly: true, type: "text", name: "hecToken", value: hecToken })
+              ])
+            ])
+          ]),
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+            e('label', { class: 'control-label' }),
+            e('div', { class: 'controls controls-join' }, [
+              e("input", { type: "submit", value: "Finish", class: 'btn btn-primary', disabled: inProgress }),
+              e('div', { class: 'inline-status' }, [status])
+            ])
+          ]),
+        ]),
       ])
     ]);
   };

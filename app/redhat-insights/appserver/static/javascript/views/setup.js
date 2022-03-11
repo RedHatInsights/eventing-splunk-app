@@ -15,7 +15,24 @@ export const hecAndIndex = async (splunk_js_sdk, input) => {
       application_name_space,
     );
 
-    const hecToken = await Config.create_hec_collector(service, input);
+    return await Config.create_hec_collector(service, input);
+  } catch (error) {
+    throw new Error('Setup failed: ' + error);
+  }
+}
+
+export const complete = async (splunk_js_sdk) => {
+  var application_name_space = {
+    owner: "nobody",
+    app: app_name,
+    sharing: "app",
+  };
+
+  try {
+    const service = Config.create_splunk_js_sdk_service(
+      splunk_js_sdk,
+      application_name_space,
+    );
 
     await Config.complete_setup(service);
 
@@ -23,7 +40,6 @@ export const hecAndIndex = async (splunk_js_sdk, input) => {
 
     Config.redirect_to_splunk_app_homepage(app_name);
 
-    return hecToken;
   } catch (error) {
     throw new Error('Setup failed: ' + error);
   }
