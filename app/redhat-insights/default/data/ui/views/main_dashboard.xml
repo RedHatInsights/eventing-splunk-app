@@ -1,0 +1,588 @@
+
+        <dashboard version="2" theme="light">
+            <label>Dashboard</label>
+            <description></description>
+            <definition>
+						<![CDATA[{
+	"visualizations": {
+		"viz_critical_recom": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"sparklineDisplay": "off",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"trendFontSize": 12
+			},
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_rec": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#E9EAEA",
+				"fillOpacity": 0.7
+			}
+		},
+		"viz_MgD8seUG": {
+			"type": "viz.text",
+			"options": {
+				"content": "OPERATIONS",
+				"fontSize": 16
+			}
+		},
+		"viz_ADmMfrJZ": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			},
+			"encoding": {}
+		},
+		"viz_6ySxGaeW": {
+			"type": "viz.text",
+			"options": {
+				"content": "New Today",
+				"fontSize": 16
+			}
+		},
+		"viz_LBjOTUDT": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hour",
+				"fontSize": 12
+			}
+		},
+		"viz_SUs1Fz0m": {
+			"type": "viz.text",
+			"options": {
+				"content": "Critical Recommendations",
+				"fontSize": 16
+			}
+		},
+		"viz_xJf2jqoc": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA"
+			}
+		},
+		"viz_m20WVFsT": {
+			"type": "viz.text",
+			"options": {
+				"content": ">30 days old",
+				"fontSize": 12
+			}
+		},
+		"viz_IRvJaQrP": {
+			"type": "viz.text",
+			"options": {
+				"content": "Old",
+				"fontSize": 16
+			}
+		},
+		"viz_OdvpkuaK": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA"
+			}
+		},
+		"viz_UefNQGOa": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA",
+				"strokeWidth": 3
+			}
+		},
+		"viz_RlISPDpy": {
+			"type": "viz.text",
+			"options": {
+				"content": "Policy events received",
+				"fontSize": 16,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_b1j2M42M": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_aHadWVNE": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_A28QM2S4_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_sT40CCzB": {
+			"type": "viz.text",
+			"options": {
+				"content": "Drift events received",
+				"fontSize": 16,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_JcoYwJev": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_0FXgnEsP": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_lDtnkMeN"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_8LQURw6Y": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_HRRsnn9w"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 12
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_GrpNRnjO": {
+			"type": "viz.text",
+			"options": {
+				"content": "Recommendations with incidents",
+				"fontSize": 16
+			}
+		},
+		"viz_y538Pu8o": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA"
+			}
+		},
+		"viz_JXs4BGWC": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_cflXieRi_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"sparklineDisplay": "off",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"trendFontSize": 12
+			},
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_u05gnPO3": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_8HzUA9oC_ds_HRRsnn9w"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 12
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		}
+	},
+	"dataSources": {
+		"ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval risk='payload.total_risk'\n  | table _time, risk\n  | where risk=4\n  | timechart span=24h count(risk) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_critical_recomm_24hrs"
+		},
+		"ds_HRRsnn9w": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval risk='payload.total_risk'\n  | table _time, risk\n  | where now()>relative_time(_time, \"+30d\")\n  | where risk=4\n  | timechart span=24h count(risk) as count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_critical_recomm_30days"
+		},
+		"ds_A28QM2S4_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights source=eventing event_type=policy-triggered earliest=-24h\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_policy_24hrs"
+		},
+		"ds_lDtnkMeN": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights source=eventing event_type=drift-baseline-detected earliest=-24h\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_drift_24hrs"
+		},
+		"ds_cflXieRi_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND event_type=new-recommendation earliest=-24h\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where has_incident=\"true\"\n  | timechart span=24h count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_recomm_with_incidents_24hrs"
+		},
+		"ds_8HzUA9oC_ds_HRRsnn9w": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where now()>relative_time(_time, \"+30d\")\n  | where has_incident=\"false\"\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_recomm_with_incidents_30days"
+		}
+	},
+	"inputs": {},
+	"layout": {
+		"options": {
+			"submitButton": false,
+			"height": 500,
+			"width": 1200,
+			"display": "auto-scale"
+		},
+		"globalInputs": [],
+		"structure": [
+			{
+				"item": "viz_rec",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 1200,
+					"h": 30
+				}
+			},
+			{
+				"item": "viz_MgD8seUG",
+				"type": "block",
+				"position": {
+					"x": 545,
+					"y": -10,
+					"w": 110,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_ADmMfrJZ",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 30,
+					"w": 1200,
+					"h": 310
+				}
+			},
+			{
+				"item": "viz_critical_recom",
+				"type": "block",
+				"position": {
+					"x": 260,
+					"y": 80,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_6ySxGaeW",
+				"type": "block",
+				"position": {
+					"x": 310,
+					"y": 20,
+					"w": 130,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_LBjOTUDT",
+				"type": "block",
+				"position": {
+					"x": 310,
+					"y": 45,
+					"w": 100,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_SUs1Fz0m",
+				"type": "block",
+				"position": {
+					"x": 20,
+					"y": 80,
+					"w": 200,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_xJf2jqoc",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 19,
+						"y": 82
+					},
+					"to": {
+						"x": 1182,
+						"y": 80
+					}
+				}
+			},
+			{
+				"item": "viz_m20WVFsT",
+				"type": "block",
+				"position": {
+					"x": 480,
+					"y": 45,
+					"w": 100,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_IRvJaQrP",
+				"type": "block",
+				"position": {
+					"x": 480,
+					"y": 20,
+					"w": 70,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_OdvpkuaK",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 22,
+						"y": 131
+					},
+					"to": {
+						"x": 1185,
+						"y": 129
+					}
+				}
+			},
+			{
+				"item": "viz_UefNQGOa",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 23,
+						"y": 225
+					},
+					"to": {
+						"x": 1186,
+						"y": 223
+					}
+				}
+			},
+			{
+				"item": "viz_RlISPDpy",
+				"type": "block",
+				"position": {
+					"x": 380,
+					"y": 220,
+					"w": 170,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_b1j2M42M",
+				"type": "block",
+				"position": {
+					"x": 420,
+					"y": 240,
+					"w": 110,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_aHadWVNE",
+				"type": "block",
+				"position": {
+					"x": 380,
+					"y": 270,
+					"w": 170,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_sT40CCzB",
+				"type": "block",
+				"position": {
+					"x": 710,
+					"y": 220,
+					"w": 170,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_JcoYwJev",
+				"type": "block",
+				"position": {
+					"x": 755,
+					"y": 240,
+					"w": 130,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_0FXgnEsP",
+				"type": "block",
+				"position": {
+					"x": 720,
+					"y": 270,
+					"w": 170,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_8LQURw6Y",
+				"type": "block",
+				"position": {
+					"x": 430,
+					"y": 80,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_GrpNRnjO",
+				"type": "block",
+				"position": {
+					"x": 20,
+					"y": 130,
+					"w": 260,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_y538Pu8o",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 24,
+						"y": 177
+					},
+					"to": {
+						"x": 1187,
+						"y": 175
+					}
+				}
+			},
+			{
+				"item": "viz_JXs4BGWC",
+				"type": "block",
+				"position": {
+					"x": 260,
+					"y": 130,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_u05gnPO3",
+				"type": "block",
+				"position": {
+					"x": 430,
+					"y": 130,
+					"w": 150,
+					"h": 50
+				}
+			}
+		],
+		"type": "absolute"
+	},
+	"title": "Dashboard"
+}]]>
+					</definition>
+            <assets><![CDATA[{}]]></assets>
+        </dashboard>

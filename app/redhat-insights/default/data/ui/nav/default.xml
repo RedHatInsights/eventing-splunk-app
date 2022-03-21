@@ -1,5 +1,6 @@
 <nav search_view="search">
-  <view name="events" default='true' />
+  <view name="main_dashboard" default='true' />
+    <view name="events" />
   <view name="search" />
   <view name="connection_settings" />
 </nav>
