@@ -111,12 +111,7 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
             '.'
           ]),
           e('p', null , [
-            'Using the ',
-            e('i', null, ['Add Itegration']),
-            ' button create a Splunk type Integration copying the above HEC token and pasting it',
-            ' into the ',
-            e('i', null, ['Secret token']),
-            ' input.'
+            'To create a Splunk integration, copy the HEC token above, paste it into the Secret token field on the Create integration screen in Insights, and then click Save. Follow the example below.'
           ]),
           e('p', null , [
             'See example:'
