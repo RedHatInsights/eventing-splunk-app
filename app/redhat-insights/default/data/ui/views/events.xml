@@ -1,4 +1,4 @@
-<form>
+<form script="javascript/events_page.js">
   <label>Events</label>
   <search id="base_query">
     <query>
@@ -15,7 +15,7 @@ index=redhatinsights AND bundle = "rhel"
 | eval url = 'payload.rule_url'
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(mytime) AS created_at_fmt
 | table created_at_fmt, title,  "context.display_name",  account_id, "event_type", "application", url
-| rename account_id as "Account ID", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
+| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
 
     </query>
     <earliest>$timepicker.earliest$</earliest>
@@ -53,11 +53,17 @@ index=redhatinsights AND bundle = "rhel"
       <choice value="*">All</choice>
       <default>*</default>
     </input>
-    <input type="text" token="field_account" searchWhenChanged="true">
+    <input type="dropdown" token="field_account" searchWhenChanged="true">
       <label>Account</label>
-      <prefix>"Account ID"="</prefix>
+      <search base="base_query">
+        <query>| stats count by "Account"</query>
+      </search>
+      <fieldForLabel>Account</fieldForLabel>
+      <fieldForValue>Account</fieldForValue>
+      <prefix>"Account"="</prefix>
       <suffix>"</suffix>
       <default>*</default>
+      <choice value="*">All</choice>
     </input>
   </fieldset>
   <row>
