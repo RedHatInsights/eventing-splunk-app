@@ -62,14 +62,14 @@
 		"viz_LBjOTUDT": {
 			"type": "viz.text",
 			"options": {
-				"content": "Last 24 hour",
+				"content": "Last 24 hours",
 				"fontSize": 12
 			}
 		},
 		"viz_SUs1Fz0m": {
 			"type": "viz.text",
 			"options": {
-				"content": "Critical Recommendations",
+				"content": "Critical recommendations",
 				"fontSize": 16
 			}
 		},
@@ -82,7 +82,7 @@
 		"viz_m20WVFsT": {
 			"type": "viz.text",
 			"options": {
-				"content": ">30 days old",
+				"content": ">30 days",
 				"fontSize": 12
 			}
 		},
@@ -278,6 +278,10 @@
 		"ds_snKvID23": {
 			"type": "ds.search",
 			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
 				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval risk='payload.total_risk'\n  | table _time, risk\n  | where risk=4\n  | timechart span=24h count(risk) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_critical_recomm_24hrs"
@@ -292,6 +296,10 @@
 		"ds_A28QM2S4_ds_snKvID23": {
 			"type": "ds.search",
 			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
 				"query": "index=redhatinsights source=eventing event_type=policy-triggered earliest=-24h\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_policy_24hrs"
@@ -310,6 +318,10 @@
 		"ds_cflXieRi_ds_snKvID23": {
 			"type": "ds.search",
 			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
 				"query": "index=redhatinsights AND event_type=new-recommendation earliest=-24h\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where has_incident=\"true\"\n  | timechart span=24h count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_recomm_with_incidents_24hrs"
