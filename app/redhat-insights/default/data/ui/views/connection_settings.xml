@@ -1,12 +1,12 @@
 
-<dashboard version="1">
+<dashboard version="1.1">
     <label>Connection settings</label>
     <row>
         <panel>
             <html>
                 <div class="dataInputsWrapper serverControlsWrapper">
                     <div class="serverControlsWrapper">
-                        <p><a href="#">Please follow this link for the Documents</a></p>
+                        <p><a href="help.redhat.com">Please follow this link for Red Hat Support</a></p>
                     </div>
                 </div>
             </html>

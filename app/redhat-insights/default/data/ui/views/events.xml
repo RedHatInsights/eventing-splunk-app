@@ -1,89 +1,91 @@
-<form script="javascript/events_page.js">
-  <label>Events</label>
-  <search id="base_query">
-    <query>
-index=redhatinsights AND bundle = "rhel" 
-| spath 
-| rename object.* as *
-| spath path=events{} output=events
-| stats by timestamp, events, application, event_type, account_id, context.display_name,
-| mvexpand events 
-| eval _raw=events
-| kv
-| eval title=coalesce('payload.rule_description', event_type) 
-| eval mytime=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
-| eval url = 'payload.rule_url'
-| convert timeformat="%Y-%m-%d %H:%M:%S" ctime(mytime) AS created_at_fmt
-| table created_at_fmt, title,  "context.display_name",  account_id, "event_type", "application", url
-| sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
+<dashboard version="1.1">
+  <form script="javascript/events_page.js">
+    <label>Events</label>
+    <search id="base_query">
+      <query>
+  index=redhatinsights AND bundle = "rhel" 
+  | spath 
+  | rename object.* as *
+  | spath path=events{} output=events
+  | stats by timestamp, events, application, event_type, account_id, context.display_name,
+  | mvexpand events 
+  | eval _raw=events
+  | kv
+  | eval title=coalesce('payload.rule_description', event_type) 
+  | eval mytime=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
+  | eval url = 'payload.rule_url'
+  | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(mytime) AS created_at_fmt
+  | table created_at_fmt, title,  "context.display_name",  account_id, "event_type", "application", url
+  | sort -created_at_fmt
+  | rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
 
-    </query>
-    <earliest>$timepicker.earliest$</earliest>
-    <latest>$timepicker.latest$</latest>
-  </search>
-  <fieldset submitButton="false">
-    <input type="time" token="timepicker">
-      <label>Timestamp</label>
-      <default>
-        <earliest></earliest>
-        <latest></latest>
-      </default>
-    </input>
-    <input type="dropdown" token="filter_system" searchWhenChanged="true">
-      <label>System</label>
-      <search base="base_query">
-        <query>| stats count by System</query>
-      </search>
-      <fieldForLabel>System</fieldForLabel>
-      <fieldForValue>System</fieldForValue>
-      <prefix>System="</prefix>
-      <suffix>"</suffix>
-      <choice value="*">All</choice>
-      <default>*</default>
-    </input>
-    <input type="dropdown" token="field_application" searchWhenChanged="true">
-      <label>Application</label>
-      <search base="base_query">
-        <query>| stats count by Application</query>
-      </search>
-      <fieldForLabel>Application</fieldForLabel>
-      <fieldForValue>Application</fieldForValue>
-      <prefix>Application="</prefix>
-      <suffix>"</suffix>
-      <choice value="*">All</choice>
-      <default>*</default>
-    </input>
-    <input type="dropdown" token="field_account" searchWhenChanged="true">
-      <label>Account</label>
-      <search base="base_query">
-        <query>| stats count by "Account"</query>
-      </search>
-      <fieldForLabel>Account</fieldForLabel>
-      <fieldForValue>Account</fieldForValue>
-      <prefix>"Account"="</prefix>
-      <suffix>"</suffix>
-      <default>*</default>
-      <choice value="*">All</choice>
-    </input>
-  </fieldset>
-  <row>
-    <panel>
-      <table>
+      </query>
+      <earliest>$timepicker.earliest$</earliest>
+      <latest>$timepicker.latest$</latest>
+    </search>
+    <fieldset submitButton="false">
+      <input type="time" token="timepicker">
+        <label>Timestamp</label>
+        <default>
+          <earliest></earliest>
+          <latest></latest>
+        </default>
+      </input>
+      <input type="dropdown" token="filter_system" searchWhenChanged="true">
+        <label>System</label>
         <search base="base_query">
-          <query>
-           | search $filter_system$
-           | search $field_application$
-           | search $field_account$
-          </query>
+          <query>| stats count by System</query>
         </search>
-        <option name="count">20</option>
-        <option name="showPager">true</option>
-        <option name="drilldown">none</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-</form>
+        <fieldForLabel>System</fieldForLabel>
+        <fieldForValue>System</fieldForValue>
+        <prefix>System="</prefix>
+        <suffix>"</suffix>
+        <choice value="*">All</choice>
+        <default>*</default>
+      </input>
+      <input type="dropdown" token="field_application" searchWhenChanged="true">
+        <label>Application</label>
+        <search base="base_query">
+          <query>| stats count by Application</query>
+        </search>
+        <fieldForLabel>Application</fieldForLabel>
+        <fieldForValue>Application</fieldForValue>
+        <prefix>Application="</prefix>
+        <suffix>"</suffix>
+        <choice value="*">All</choice>
+        <default>*</default>
+      </input>
+      <input type="dropdown" token="field_account" searchWhenChanged="true">
+        <label>Account</label>
+        <search base="base_query">
+          <query>| stats count by "Account"</query>
+        </search>
+        <fieldForLabel>Account</fieldForLabel>
+        <fieldForValue>Account</fieldForValue>
+        <prefix>"Account"="</prefix>
+        <suffix>"</suffix>
+        <default>*</default>
+        <choice value="*">All</choice>
+      </input>
+    </fieldset>
+    <row>
+      <panel>
+        <table>
+          <search base="base_query">
+            <query>
+            | search $filter_system$
+            | search $field_application$
+            | search $field_account$
+            </query>
+          </search>
+          <option name="count">20</option>
+          <option name="showPager">true</option>
+          <option name="drilldown">none</option>
+          <option name="rowNumbers">false</option>
+          <option name="totalsRow">false</option>
+          <option name="wrap">true</option>
+        </table>
+      </panel>
+    </row>
+  </form>
+</dashboard>
