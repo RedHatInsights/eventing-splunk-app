@@ -1,3 +1,5 @@
+[![Build Candidate](https://github.com/RedHatInsights/eventing-splunk-app/actions/workflows/build_splunk_main.yml/badge.svg)](https://github.com/RedHatInsights/eventing-splunk-app/actions/workflows/build_splunk_main.yml)
+
 Vagrant box for Splunk
 ======================
 
