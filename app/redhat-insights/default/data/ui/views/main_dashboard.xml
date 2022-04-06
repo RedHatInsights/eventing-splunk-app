@@ -279,7 +279,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-48h@h",
+					"earliest": "-48h",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval risk='payload.total_risk'\n  | table _time, risk\n  | where risk=4\n  | timechart span=24h aligntime=latest count(risk) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
@@ -297,7 +297,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-48h@h",
+					"earliest": "-48h",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights source=eventing event_type=policy-triggered\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
@@ -308,7 +308,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-48h@h",
+					"earliest": "-48h",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights source=eventing event_type=drift-baseline-detected\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
@@ -319,7 +319,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-48h@h",
+					"earliest": "-48h",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where has_incident=\"true\"\n  | timechart span=24h aligntime=latest count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
