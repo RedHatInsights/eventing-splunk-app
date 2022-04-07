@@ -10,7 +10,7 @@ index=redhatinsights AND bundle = "rhel"
 | mvexpand events 
 | eval _raw=events
 | kv
-| eval title=coalesce('payload.rule_description', event_type) 
+| eval title=case(event_type=="new-recommendation",'payload.rule_description', event_type=="policy-triggered", 'payload.policy_name'." policy triggered", event_type=="drift-baseline-detected","Drift detected from ".'payload.baseline_name'."  baseline", !isnull(event_type), 'event_type') 
 | eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
 | eval url = 'payload.rule_url'
 | eval event_type = case(event_type=="new-recommendation", "New recommendation", event_type=="policy-triggered","Policy triggered", event_type=="drift-baseline-detected","Drift from baseline detected", !isnull(event_type), 'event_type')
