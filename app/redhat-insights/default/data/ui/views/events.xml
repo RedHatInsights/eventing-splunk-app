@@ -30,17 +30,17 @@ index=redhatinsights AND bundle = "rhel"
         <latest></latest>
       </default>
     </input>
-    <input type="dropdown" token="filter_system" searchWhenChanged="true">
-      <label>System</label>
+    <input type="dropdown" token="field_account" searchWhenChanged="true">
+      <label>Account</label>
       <search base="base_query">
-        <query>| stats count by System</query>
+        <query>| stats count by "Account"</query>
       </search>
-      <fieldForLabel>System</fieldForLabel>
-      <fieldForValue>System</fieldForValue>
-      <prefix>System="</prefix>
+      <fieldForLabel>Account</fieldForLabel>
+      <fieldForValue>Account</fieldForValue>
+      <prefix>"Account"="</prefix>
       <suffix>"</suffix>
-      <choice value="*">All</choice>
       <default>*</default>
+      <choice value="*">All</choice>
     </input>
     <input type="dropdown" token="field_application" searchWhenChanged="true">
       <label>Application</label>
@@ -54,17 +54,17 @@ index=redhatinsights AND bundle = "rhel"
       <choice value="*">All</choice>
       <default>*</default>
     </input>
-    <input type="dropdown" token="field_account" searchWhenChanged="true">
-      <label>Account</label>
+    <input type="dropdown" token="filter_system" searchWhenChanged="true">
+      <label>System</label>
       <search base="base_query">
-        <query>| stats count by "Account"</query>
+        <query>| stats count by System</query>
       </search>
-      <fieldForLabel>Account</fieldForLabel>
-      <fieldForValue>Account</fieldForValue>
-      <prefix>"Account"="</prefix>
+      <fieldForLabel>System</fieldForLabel>
+      <fieldForValue>System</fieldForValue>
+      <prefix>System="</prefix>
       <suffix>"</suffix>
-      <default>*</default>
       <choice value="*">All</choice>
+      <default>*</default>
     </input>
   </fieldset>
   <row>
