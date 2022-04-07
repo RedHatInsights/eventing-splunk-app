@@ -11,13 +11,13 @@ index=redhatinsights AND bundle = "rhel"
 | eval _raw=events
 | kv
 | eval title=coalesce('payload.rule_description', event_type) 
-| eval mytime=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
+| eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
 | eval url = 'payload.rule_url'
-| convert timeformat="%Y-%m-%d %H:%M:%S" ctime(mytime) AS created_at_fmt
+| convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
 | table created_at_fmt, title,  "context.display_name",  account_id, "event_type", "application", url
 | sort -created_at_fmt
 | rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Title", "application" as "Application",  url as "URL"          
-
+| sort -time
     </query>
     <earliest>$timepicker.earliest$</earliest>
     <latest>$timepicker.latest$</latest>
