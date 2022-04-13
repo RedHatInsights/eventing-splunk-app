@@ -112,7 +112,11 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'setup-container' }, [
       e('div', null, [
-
+        e('h3', null, 'Create HEC index'),
+        e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance 
+                      to let you send data and application events to your Splunk deployment over Secure 
+                      HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next 
+                      steps we are creating a HEC and generating a token that will be used by Insights.`),
       ]),
       e('fieldset', null, [
         e('div', { class: 'form form-horizontal' }, [
@@ -154,6 +158,14 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: '' }, [
+        e('h3', null, 'Create HEC token'),
+        e('p', null, `Copy your HEC token to configure Splunk integration in Insights application. 
+                      If a new tab does not appear, it could be due to your browser popup blocker.`),
+        e('p', null, 'Once the Splunk configuration is complete, you will be able to navigate back to Splunk application.'),
+        e('div', { class: 'alert alert-warning' }, [
+          e('i', { class: 'icon-alert' }, null),
+          ` A user with 'Organization administrator' permissions is required.`
+        ])
       ]),
       e('fieldset', null, [
         e('div', { class: 'form form-horizontal container-text' }, [
