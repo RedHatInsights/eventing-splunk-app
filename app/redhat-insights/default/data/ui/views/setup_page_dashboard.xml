@@ -1,8 +1,10 @@
 <dashboard isDashboard="false"
+           hideEdit="true"
+           hideExport="true"
+           hideTitle="true"
            script="javascript/setup_page.js"
            stylesheet="styles/setup_page.css"
            version="1.1">
-      <label>Setup Page</label>
     <row>
         <panel>
             <html>
