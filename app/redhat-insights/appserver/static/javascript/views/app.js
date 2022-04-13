@@ -52,7 +52,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               ]),
             ]),
             e('div', null, [
-              e('span', { class: 'step-label' }, ['Step 1: Create HEC index'])
+              e('span', { class: 'step-label' }, ['Step 1: Create HEC'])
             ])
           ]),
           e('div', { class: 'step-container' + (step >= 1 ? ' active completed' : ''), 'data-value': '1' }, [
@@ -68,7 +68,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               ]),
             ]),
             e('div', null, [
-              e('span', { class: 'step-label' }, ['Step 2: Create HEC token'])
+              e('span', { class: 'step-label' }, ['Step 2: Configure Splunk integration in Insights'])
             ])
           ]),
           e('div', { class: 'step-container' + (step >= 2 ? ' active completed' : ''), 'data-value': '2' }, [
@@ -80,7 +80,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               e('div', { class: 'circle' }, null),
             ]),
             e('div', null, [
-              e('span', { class: 'step-label' }, ['Step 3: Configure Splunk integration in Insights'])
+              e('span', { class: 'step-label' }, ['Step 3: Review'])
             ])
           ]),
         ]),
@@ -109,7 +109,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     }
 
     return e('div', { class: 'setup-container' }, [
-      e('div', null, [
+      e('div', { class: 'container-text' }, [
         e('h3', null, 'Create HEC index'),
         e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance 
                       to let you send data and application events to your Splunk deployment over Secure 
@@ -143,9 +143,14 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
   };
 
   const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied, isSetupOpened, setIsSetupOpened }) => {
-    const [setupUrl, setSetupUrl] = react.useState(`https://console.stage.redhat.com/settings/integrations/splunk-setup`);
+    const [setupUrl, setSetupUrl] = react.useState(`https://console.redhat.com/settings/integrations/splunk-setup`);
 
     const handleSubmit = async () => {}
+
+    const handleSetupIntegration = async () => {
+      window.open(setupUrl);
+      setIsSetupOpened(true);
+    }
 
     const handleCopyHEC = async (event) => {
       event.preventDefault();
@@ -155,7 +160,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: '' }, [
-        e('h3', null, 'Create HEC token'),
+        e('h3', null, '1. Create HEC token'),
         e('p', null, `Copy your HEC token to configure Splunk integration in Insights application. 
                       If a new tab does not appear, it could be due to your browser popup blocker.`),
         e('p', null, 'Once the Splunk configuration is complete, you will be able to navigate back to Splunk application.'),
@@ -194,7 +199,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit, isHecCopied }),
+          e(WizardButton, { setStep, step, handleSubmit, isHecCopied, isSetupOpened }),
         ])
       ]),
     ]);
@@ -226,7 +231,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         ])
       ])])
   }
-  const WizardButton = ({ setStep, step, handleSubmit, isHecCopied }) => {
+  const WizardButton = ({ setStep, step, handleSubmit, isHecCopied, isSetupOpened }) => {
 
     const handleNextStep = async (event) => {
       handleSubmit()
@@ -239,7 +244,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'nav-buttons' }, [
       (step > 0 ?
-        e('a', {
+        e('button', {
           class: 'btn btn-secondary previous-button', 'aria-disabled': 'false',
           style: { display: 'inline-block' },
           onClick: handlePrevStep
@@ -247,13 +252,13 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
           e('i', { class: 'icon-chevron-left' }, null),
           e('span', { class: 'button-text' }, [' Back'])
         ]) : null ),
-      e('a', {
+      e('button', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
-        disabled: (step === 1 && !isHecCopied ? 'disabled' : ''),
+        disabled: (step === 1 && (!isSetupOpened) ? 'disabled' : ''),
         style: { display: 'inline-block' },
         onClick: handleNextStep
       }, [
-        e('span', { class: 'button-text' }, [step === 1 ? 'Next: Configure Splunk integration in Insights ' : step === 2 ? 'Finish set up ' : 'Next ']),
+        e('span', { class: 'button-text' }, [step === 1 ? 'Complete ' : step === 2 ? 'Finish set up ' : 'Next ']),
         e('i', { class: 'icon-chevron-right' }, null)
       ]),
     ]);
