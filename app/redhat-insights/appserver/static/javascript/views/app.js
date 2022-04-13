@@ -1,9 +1,9 @@
 import * as Setup from "./setup.js";
 
-define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
+define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
   const e = react.createElement;
 
-  const SetupPage = () =>  {
+  const SetupPage = () => {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
     const [hecToken, setHecToken] = react.useState('');
@@ -76,13 +76,16 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
 
   const SetupIntegration = ({ status, setStatus, hecToken }) => {
     const [inProgress, setInProgress] = react.useState(false);
+    const [isHecCopied, setIsHecCopied] = react.useState(false);
+
+    const handleCopyHEC = async (event) => {
+      event.preventDefault();
+      navigator.clipboard.writeText(hecToken);
+      setIsHecCopied(!isHecCopied);
+    }
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-
-      setStatus('Finishing setup...');
-      setInProgress(true);
-
       try {
         await Setup.complete(splunk_js_sdk);
       } catch (error) {
@@ -99,7 +102,14 @@ define(["react", "splunkjs/splunk"], function(react, splunk_js_sdk){
             e('label', { class: 'control-label' }, ['HTTP Event Collector (HEC) token to copy']),
             e('div', { class: 'controls controls-join' }, [
               e('div', { class: 'control shared-controls-textcontrol control-default' }, [
-                e("input", { readonly: true, type: "text", name: "hecToken", value: hecToken })
+                e("input", { readonly: true, type: "text", name: "hecToken", value: hecToken }),
+                e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+                  e('label', { class: 'control-label' }),
+                  e('div', { class: 'controls controls-join' }, [
+                    e('a', { class: 'btn btn-primary', onClick: handleCopyHEC }, ['Copy HEC']),
+                    e('div', { class: 'inline-status' }, [status])
+                  ])
+                ]),
               ])
             ])
           ]),
