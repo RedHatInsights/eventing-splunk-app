@@ -26,9 +26,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
             isSetupOpened, 
             setIsSetupOpened })
             :
-            step == 2 ? ''
-              :
-              step == 3 ? '' : ''
+            step == 2 ? e(SetupFinal, { setStep, step}) : ''
       ])
     ])
 
@@ -140,7 +138,6 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
           e(WizardButton, { setStep, step, handleSubmit }),
-          e('div', { class: 'inline-status' }, [status])
         ])
       ])])
   };
@@ -198,25 +195,37 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
           e(WizardButton, { setStep, step, handleSubmit }),
-          e('div', { class: 'inline-status' }, [status])
         ])
       ]),
-      e('div', { class: 'modal hide fade' + (showModal ? ' in' : ''), id: 'setupModal', style: { display: (showModal ? 'block' : 'none') } }, [
-        e('div', { class: 'modal-header' }, [
-          e('h3', null, 'Splunk Set up')
-        ]),
-        e('div', { class: 'modal-body' }, [
-          e('p', null, 'Are you done with the setup?')
-        ]),
-        e('div', { class: 'modal-footer' }, [
-          e('a', { class: 'btn', onClick: () => { setshowModal(!showModal) } }, ['Close']),
-          e('a', { class: 'btn btn-primary', onClick: handleFinishSetup }, ['Save changes'])
-        ])
-      ]),
-      showModal ? e('div', { class: 'modal-backdrop fade in' }) : ''
     ]);
   };
 
+  const SetupFinal = ({ setStep, step }) => {
+
+
+    const handleSubmit = async () => {
+      try {
+        await Setup.complete(splunk_js_sdk);
+      } catch (error) {
+        setInProgress(false);
+        setStatus(error.message);
+        return;
+      }
+    }
+
+    return e('div', { class: 'setup-container' }, [
+      e('div', null, [
+        e('h3', null, 'Splunk Setup is done!'),
+        e('p', null, `Thank you!  You have completed the steps to set up Red Hat Insights Splunk app!`),
+        e('p', null, `By clicking 'Finish set up' button below, you will be redirected to the main dashboard.`),
+      ]),
+      e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+        e('label', { class: 'control-label' }),
+        e('div', { class: 'controls controls-join' }, [
+          e(WizardButton, { setStep, step, handleSubmit }),
+        ])
+      ])])
+  }
   const WizardButton = ({ setStep, step, handleSubmit }) => {
 
     const handleNextStep = async (event) => {
@@ -243,7 +252,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         style: { display: 'inline-block' },
         onClick: handleNextStep
       }, [
-        e('span', { class: 'button-text' }, [step === 1 ? 'Next: Configure Splunk integration in Insights ' : 'Next ']),
+        e('span', { class: 'button-text' }, [step === 1 ? 'Next: Configure Splunk integration in Insights ' : step === 2 ? 'Finish set up ' : 'Next ']),
         e('i', { class: 'icon-chevron-right' }, null)
       ]),
     ]);
