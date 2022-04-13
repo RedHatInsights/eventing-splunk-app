@@ -150,7 +150,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     const handleCopyHEC = async (event) => {
       event.preventDefault();
       navigator.clipboard.writeText(hecToken);
-      setIsHecCopied(!isHecCopied);
+      setIsHecCopied(true);
     }
 
     return e('div', { class: 'setup-container' }, [
@@ -194,7 +194,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit }),
+          e(WizardButton, { setStep, step, handleSubmit, isHecCopied }),
         ])
       ]),
     ]);
@@ -226,7 +226,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         ])
       ])])
   }
-  const WizardButton = ({ setStep, step, handleSubmit }) => {
+  const WizardButton = ({ setStep, step, handleSubmit, isHecCopied }) => {
 
     const handleNextStep = async (event) => {
       handleSubmit()
@@ -249,6 +249,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         ]) : null ),
       e('a', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
+        disabled: (step === 1 && !isHecCopied ? 'disabled' : ''),
         style: { display: 'inline-block' },
         onClick: handleNextStep
       }, [
