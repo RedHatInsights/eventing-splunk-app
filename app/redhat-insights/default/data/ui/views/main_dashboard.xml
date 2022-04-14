@@ -33,15 +33,15 @@
 			"type": "viz.rectangle",
 			"options": {
 				"stroke": "transparent",
-				"fill": "#E9EAEA",
-				"fillOpacity": 0.7
+				"fill": "#ffffff"
 			}
 		},
 		"viz_MgD8seUG": {
 			"type": "viz.text",
 			"options": {
-				"content": "OPERATIONS",
-				"fontSize": 16
+				"content": "Operations",
+				"fontSize": 18,
+				"fontWeight": "bold"
 			}
 		},
 		"viz_ADmMfrJZ": {
@@ -358,9 +358,9 @@
 				"item": "viz_MgD8seUG",
 				"type": "block",
 				"position": {
-					"x": 545,
+					"x": 10,
 					"y": -10,
-					"w": 110,
+					"w": 130,
 					"h": 50
 				}
 			},
@@ -593,7 +593,8 @@
 		],
 		"type": "absolute"
 	},
-	"title": "Dashboard"
+	"title": "Dashboard",
+	"description": "Represents data received from Red Hat Insights"
 }]]>
 					</definition>
             <assets><![CDATA[{}]]></assets>
