@@ -18,7 +18,7 @@ index=redhatinsights AND bundle = "rhel"
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
 | table created_at_fmt, account_id, "application", "event_type", "context.display_name", title, url
 | sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", context.host_url as "Host URL", event_type as "Event Type", "title" as "Description", "application" as "Application",  url as "Details"          
+| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", event_type as "Event Type", "title" as "Description", "application" as "Application"         
 
     </query>
     <earliest>$timepicker.earliest$</earliest>
@@ -98,6 +98,7 @@ index=redhatinsights AND bundle = "rhel"
           | search $field_account$
           </query>
         </search>
+        <fields>["Account", "Timestamp", "System", "Event Type", "Description", "Application"]</fields>
         <option name="count">20</option>
         <option name="showPager">true</option>
         <option name="rowNumbers">false</option>
@@ -105,11 +106,9 @@ index=redhatinsights AND bundle = "rhel"
         <option name="wrap">true</option>
         <option name="drilldown">cell</option>
         <drilldown>
-          <condition match="isnotnull($row.Details$)">
-            <eval token="tokCombined">$row.Details|n$$row.series|n$</eval>
-            <link target="_blank">
-              <![CDATA[$row.Details|n$$row.series|n$]]>
-            </link>
+          <condition match="isnotnull($row.url$)">
+            <eval token="tokCombined">$row.url|n$$row.series|n$</eval>
+            <link target="_blank"><![CDATA[$row.url|n$]]></link>
           </condition>
           <condition field="*">
           </condition>
