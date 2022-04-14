@@ -5,7 +5,7 @@
     "id": {
       "group": null,
       "name": "redhat-insights",
-      "version": "0.4.202203311901"
+      "version": "0.5.202203311901"
     },
     "author": [
       {
