@@ -75,16 +75,16 @@ index=redhatinsights AND bundle = "rhel"
         <style>
           #tableColumWidth table thead tr th:nth-child(0),
           #tableColumWidth table thead tr th:nth-child(1){
-            width: 5% !important;
+            width: 9% !important;
             overflow-wrap: anywhere !important;
           }          
           #tableColumWidth table thead tr th:nth-child(0),
           #tableColumWidth table thead tr th:nth-child(2){
-            width: 9% !important;
+            width: 5% !important;
             overflow-wrap: anywhere !important;
           }     
           #tableColumWidth table thead tr th:nth-child(0),
-          #tableColumWidth table thead tr th:nth-child(3){
+          #tableColumWidth table thead tr th:nth-child(5){
             width: 15% !important;
             overflow-wrap: anywhere !important;
           }              
@@ -98,7 +98,7 @@ index=redhatinsights AND bundle = "rhel"
           | search $field_account$
           </query>
         </search>
-        <fields>["Account", "Timestamp", "System", "Event Type", "Description", "Application"]</fields>
+        <fields>["Timestamp", "Account", "Application", "Event Type", "System", "Description"]</fields>
         <option name="count">20</option>
         <option name="showPager">true</option>
         <option name="rowNumbers">false</option>
