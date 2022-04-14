@@ -71,7 +71,26 @@ index=redhatinsights AND bundle = "rhel"
   </fieldset>
   <row>
     <panel>
-      <table>
+      <html depends="$alwaysHideCSSPanel$">
+        <style>
+          #tableColumWidth table thead tr th:nth-child(0),
+          #tableColumWidth table thead tr th:nth-child(1){
+            width: 5% !important;
+            overflow-wrap: anywhere !important;
+          }          
+          #tableColumWidth table thead tr th:nth-child(0),
+          #tableColumWidth table thead tr th:nth-child(2){
+            width: 9% !important;
+            overflow-wrap: anywhere !important;
+          }     
+          #tableColumWidth table thead tr th:nth-child(0),
+          #tableColumWidth table thead tr th:nth-child(3){
+            width: 15% !important;
+            overflow-wrap: anywhere !important;
+          }              
+        </style>
+      </html>
+      <table id="tableColumWidth">
         <search base="base_query">
           <query>
           | search $filter_system$
