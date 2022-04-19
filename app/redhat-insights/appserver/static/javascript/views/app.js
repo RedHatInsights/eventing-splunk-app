@@ -45,7 +45,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       }, [
         e('div', { class: 'wizard-label' }, ['Set up integration with Red Hat']),
         e('div', null, [
-          e('div', { class: 'step-container first active completed', 'data-value': '0' }, [
+          e('div', { class: 'step-container first active' + (step >= 1 ? ' completed' : ''), 'data-value': '0' }, [
             e('div', { class: 'step-indicator' }, [
               e('div', { class: 'connector left' }, [
                 e('div'),
@@ -61,7 +61,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               e('span', { class: 'step-label' }, ['Step 1: Create HEC'])
             ])
           ]),
-          e('div', { class: 'step-container' + (step >= 1 ? ' active completed' : ''), 'data-value': '1' }, [
+          e('div', { class: 'step-container' + (step == 1 ? ' active' : '') + (step >= 2 ? ' active completed' : ''), 'data-value': '1' }, [
             e('div', { class: 'step-indicator' }, [
               e('div', { class: 'connector left' }, [
                 e('div'),
