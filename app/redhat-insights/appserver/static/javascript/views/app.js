@@ -10,7 +10,9 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     const [status, setStatus] = react.useState('');
     const [step, setStep] = react.useState(0);
     const [isHecCopied, setIsHecCopied] = react.useState(false);
+    const [isUrlCopied, setIsUrlCopied] = react.useState(false);
     const [isSetupOpened, setIsSetupOpened] = react.useState(false);
+    const [hecUrl, setHecUrl] = react.useState('https://' + window.location.hostname + ':8088')
 
     const hecCreation = e("div", { class: 'setup_container', id: 'form_wizard' }, [
       e("div", null, [
@@ -18,15 +20,19 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
           ? e(SetupForm, { hecName, defaultIndex, status, setStatus, setStep, step, setHecToken })
           :
           step == 1 ? e(SetupIntegration, {
-            hecToken, 
-            setStep, 
-            step, 
-            isHecCopied, 
-            setIsHecCopied, 
-            isSetupOpened, 
-            setIsSetupOpened })
+            hecToken,
+            setStep,
+            step,
+            isHecCopied,
+            setIsHecCopied,
+            isSetupOpened,
+            setIsSetupOpened,
+            hecUrl,
+            isUrlCopied,
+            setIsUrlCopied
+          })
             :
-            step == 2 ? e(SetupFinal, { setStep, step}) : ''
+            step == 2 ? e(SetupFinal, { setStep, step }) : ''
       ])
     ])
 
@@ -118,20 +124,20 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       ]),
       e('fieldset', null, [
         e('div', { class: 'form form-horizontal' }, [
-            e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
-              e('label', { class: 'control-label' }, ['HEC name']),
-              e("input", {
-                class: 'custom-input',
-                disabled: true, type: "text", name: "hecName", value: hecName
-              }),
-            ]),
-            e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
-              e('label', { class: 'control-label' }, ['Default index']),
-              e("input", {
-                class: 'custom-input',
-                disabled: true, type: "text", name: "defaultIndex", value: defaultIndex
-              }),
-            ])
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+            e('label', { class: 'control-label' }, ['HEC name']),
+            e("input", {
+              class: 'custom-input',
+              disabled: true, type: "text", name: "hecName", value: hecName
+            }),
+          ]),
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
+            e('label', { class: 'control-label' }, ['Default index']),
+            e("input", {
+              class: 'custom-input',
+              disabled: true, type: "text", name: "defaultIndex", value: defaultIndex
+            }),
+          ])
         ]),
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
@@ -142,14 +148,20 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       ])])
   };
 
-  const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied, isSetupOpened, setIsSetupOpened }) => {
+  const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied, isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied, setIsUrlCopied }) => {
     const [setupUrl, setSetupUrl] = react.useState(`https://console.redhat.com/settings/integrations/splunk-setup`);
 
-    const handleSubmit = async () => {}
+    const handleSubmit = async () => { }
 
     const handleSetupIntegration = async () => {
       window.open(setupUrl);
       setIsSetupOpened(true);
+    }
+
+    const handleCopyURL = async (event) => {
+      event.preventDefault();
+      navigator.clipboard.writeText(hecUrl);
+      setIsUrlCopied(true);
     }
 
     const handleCopyHEC = async (event) => {
@@ -171,21 +183,32 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       ]),
       e('fieldset', null, [
         e('div', { class: 'form form-horizontal container-text' }, [
-            e('div', { class: 'control-group shared-controls-controlgroup control-group-default controls-join' }, [
-              e('label', { class: 'control-label' }, ['HEC Token']),
-              e("input", {
-                class: 'custom-input',
-                disabled: true, type: "text", name: "hecToken", value: hecToken
-              }),
-              e('div', { class: 'nav-buttons copy-btn' }, [
-                e('a', { class: 'btn btn-primary', onClick: handleCopyHEC }, ['Copy HEC']),
-              ])
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default controls-join' }, [
+            e('label', { class: 'control-label' }, ['HEC URL']),
+            e("input", {
+              class: 'custom-input',
+              disabled: true, type: "text", name: "hecUrl", value: hecUrl
+            }),
+            e('div', { class: 'nav-buttons copy-btn' }, [
+              e('a', { class: 'btn btn-primary', onClick: handleCopyURL }, ['Copy']),
             ])
+          ]),
+          e('div', { class: 'control-group shared-controls-controlgroup control-group-default controls-join' }, [
+            e('label', { class: 'control-label' }, ['HEC Token']),
+            e("input", {
+              class: 'custom-input',
+              disabled: true, type: "text", name: "hecToken", value: hecToken
+            }),
+            e('div', { class: 'nav-buttons copy-btn' }, [
+              e('a', { class: 'btn btn-primary', onClick: handleCopyHEC }, ['Copy']),
+            ])
+          ]),
+
         ]),
       ]),
       e('button', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
-        disabled: (step === 1 && isHecCopied ? '' : 'disabled'),
+        disabled: (step === 1 && (isHecCopied || isUrlCopied) ? '' : 'disabled'),
         style: { display: 'inline-block' },
         onClick: handleSetupIntegration
       }, [
@@ -194,12 +217,12 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       e('div', { class: 'setup-container-submit' }, [
         e('h3', null, '2. Submit your changes'),
         e('p', null, `Have you finished the configuration of Splunk integration in Insights application? 
-                      If yes, complete the integration with a button below.`),
+                      If yes, complete the integration by clicking 'Complete' below`),
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit, isHecCopied, isSetupOpened }),
+          e(WizardButton, { setStep, step, handleSubmit, isSetupOpened }),
         ])
       ]),
     ]);
@@ -231,7 +254,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         ])
       ])])
   }
-  const WizardButton = ({ setStep, step, handleSubmit, isHecCopied, isSetupOpened }) => {
+  const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened }) => {
 
     const handleNextStep = async (event) => {
       handleSubmit()
@@ -251,7 +274,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         }, [
           e('i', { class: 'icon-chevron-left' }, null),
           e('span', { class: 'button-text' }, [' Back'])
-        ]) : null ),
+        ]) : null),
       e('button', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
         disabled: (step === 1 && (!isSetupOpened) ? 'disabled' : ''),
