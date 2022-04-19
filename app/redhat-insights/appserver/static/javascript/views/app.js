@@ -190,7 +190,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               disabled: true, type: "text", name: "hecUrl", value: hecUrl
             }),
             e('div', { class: 'nav-buttons copy-btn' }, [
-              e('a', { class: 'btn btn-primary', onClick: handleCopyURL }, ['Copy']),
+              e('a', { class: 'btn default', onClick: handleCopyURL }, ['Copy']),
             ])
           ]),
           e('div', { class: 'control-group shared-controls-controlgroup control-group-default controls-join' }, [
@@ -200,7 +200,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
               disabled: true, type: "text", name: "hecToken", value: hecToken
             }),
             e('div', { class: 'nav-buttons copy-btn' }, [
-              e('a', { class: 'btn btn-primary', onClick: handleCopyHEC }, ['Copy']),
+              e('a', { class: 'btn default', onClick: handleCopyHEC }, ['Copy']),
             ])
           ]),
 
