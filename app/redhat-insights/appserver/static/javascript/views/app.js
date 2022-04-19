@@ -281,7 +281,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         style: { display: 'inline-block' },
         onClick: handleNextStep
       }, [
-        e('span', { class: 'button-text' }, [step === 1 ? 'Complete ' : step === 2 ? 'Finish set up ' : 'Next ']),
+        e('span', { class: 'button-text' }, [step === 1 ? 'Complete ' : step === 2 ? 'Go to dashboard ' : 'Next ']),
         e('i', { class: 'icon-chevron-right' }, null)
       ]),
     ]);
