@@ -149,7 +149,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
   };
 
   const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied, isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied, setIsUrlCopied }) => {
-    const [setupUrl, setSetupUrl] = react.useState(`https://console.redhat.com/settings/integrations/splunk-setup`);
+    const [setupUrl, setSetupUrl] = react.useState(`https://console.redhat.com/beta/settings/integrations/splunk-setup`);
 
     const handleSubmit = async () => { }
 
