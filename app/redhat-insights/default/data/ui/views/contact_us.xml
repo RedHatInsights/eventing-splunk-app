@@ -1,0 +1,37 @@
+
+<dashboard 
+        isDashboard="false" 
+        hideEdit="true"
+        hideExport="true"
+        stylesheet="styles/contact_us.css"
+        version="1.1">
+    <label>Contact Us</label>
+    <search>
+        <query> | rest /services/apps/local/redhat-insights | search disabled=0 | table version </query>
+        <done>
+            <set token="version">$result.version$</set>
+        </done>
+    </search>
+    <row>
+        <panel>
+            <html>
+                <div>
+                    <div class="div-container">
+                        <h2>About</h2>
+                        <p> Version $version$ </p>
+                        <p><a href="https://console.redhat.com/beta/settings/integrations" target="_blank">Check integration in Red Hat Insights <i class="icon-external"/></a></p>
+                    </div>
+                    <div class="div-container">
+                        <h2>Documentation</h2>
+                        <p><a href="https://splunkbase.splunk.com/" target="_blank">Splunk Marketplace documentation <i class="icon-external"/></a></p>
+                        <p><a href="https://access.redhat.com/products/red-hat-insights" target="_blank">Red Hat Insights documentation <i class="icon-external"/></a></p>
+                    </div>
+                    <div class="div-container">
+                        <h2>Support</h2>
+                        <p><a href="https://access.redhat.com/support/cases/#/case/new/open-case" target="_blank">Open a Red Hat Support ticket <i class="icon-external"/></a></p>
+                    </div>
+                </div>
+            </html>
+        </panel>
+    </row>
+</dashboard>

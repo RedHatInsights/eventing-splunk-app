@@ -2,5 +2,5 @@
   <view name="main_dashboard" default='true' />
     <view name="events" />
   <view name="search" />
-  <view name="connection_settings" />
+  <view name="contact_us" />
 </nav>
