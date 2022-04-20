@@ -172,10 +172,9 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: '' }, [
-        e('h3', null, '1. Create HEC token'),
-        e('p', null, `Copy your HEC token to configure Splunk integration in Insights application. 
-                      If a new tab does not appear, it could be due to your browser popup blocker.`),
-        e('p', null, 'Once the Splunk configuration is complete, you will be able to navigate back to Splunk application.'),
+        e('h3', null, '1. Configure Splunk integration in Insights'),
+        e('p', null, `HEC is now configured in your Splunk deployment. Copy your HEC URL and Token to configure Splunk integration in Insights application.`),
+        e('p', null, `If a new tab does not appear, it could be due to your browser popup blocker. Once the Splunk configuration is complete, you will be able to navigate back to Splunk application.`),
         e('div', { class: 'alert alert-warning' }, [
           e('i', { class: 'icon-alert' }, null),
           ` A user with 'Organization administrator' permissions is required.`
