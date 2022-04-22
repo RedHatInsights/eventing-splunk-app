@@ -272,6 +272,94 @@
 					}
 				]
 			}
+		},
+		"viz_KXCgwJmP": {
+			"type": "viz.text",
+			"options": {
+				"content": "Advisor events received",
+				"fontSize": 16,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_cBrpBujU": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_GW0oTLGS": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			},
+			"encoding": {}
+		},
+		"viz_ox83bb5Y": {
+			"type": "viz.text",
+			"options": {
+				"content": "Policy events received",
+				"fontSize": 16
+			}
+		},
+		"viz_wQEbYspm": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_uzSFliAR": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_Jm6ab6ll_ds_A28QM2S4_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_6hIT1ObQ": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_9hVCveWJ_ds_A28QM2S4_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14,
+				"trendDisplay": "off"
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"to": 0,
+						"value": "#9E2520"
+					},
+					{
+						"from": 0,
+						"value": "#1C6B2D"
+					}
+				]
+			}
 		}
 	},
 	"dataSources": {
@@ -332,6 +420,28 @@
 				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where now()>relative_time(_time, \"+30d\")\n  | where has_incident=\"false\"\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_recomm_with_incidents_30days"
+		},
+		"ds_Jm6ab6ll_ds_A28QM2S4_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights source=eventing event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_advisor_24hrs"
+		},
+		"ds_9hVCveWJ_ds_A28QM2S4_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights source=eventing\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_24hrs"
 		}
 	},
 	"inputs": {},
@@ -344,6 +454,72 @@
 		},
 		"globalInputs": [],
 		"structure": [
+			{
+				"item": "viz_xJf2jqoc",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 19,
+						"y": 82
+					},
+					"to": {
+						"x": 1182,
+						"y": 80
+					}
+				}
+			},
+			{
+				"item": "viz_OdvpkuaK",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 22,
+						"y": 131
+					},
+					"to": {
+						"x": 1185,
+						"y": 129
+					}
+				}
+			},
+			{
+				"item": "viz_UefNQGOa",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 23,
+						"y": 225
+					},
+					"to": {
+						"x": 1186,
+						"y": 223
+					}
+				}
+			},
+			{
+				"item": "viz_y538Pu8o",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 24,
+						"y": 177
+					},
+					"to": {
+						"x": 1187,
+						"y": 175
+					}
+				}
+			},
+			{
+				"item": "viz_GW0oTLGS",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 360,
+					"w": 1200,
+					"h": 85
+				}
+			},
 			{
 				"item": "viz_rec",
 				"type": "block",
@@ -385,6 +561,16 @@
 				}
 			},
 			{
+				"item": "viz_6hIT1ObQ",
+				"type": "block",
+				"position": {
+					"x": 150,
+					"y": 380,
+					"w": 170,
+					"h": 60
+				}
+			},
+			{
 				"item": "viz_6ySxGaeW",
 				"type": "block",
 				"position": {
@@ -415,20 +601,6 @@
 				}
 			},
 			{
-				"item": "viz_xJf2jqoc",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 19,
-						"y": 82
-					},
-					"to": {
-						"x": 1182,
-						"y": 80
-					}
-				}
-			},
-			{
 				"item": "viz_m20WVFsT",
 				"type": "block",
 				"position": {
@@ -446,34 +618,6 @@
 					"y": 20,
 					"w": 70,
 					"h": 20
-				}
-			},
-			{
-				"item": "viz_OdvpkuaK",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 22,
-						"y": 131
-					},
-					"to": {
-						"x": 1185,
-						"y": 129
-					}
-				}
-			},
-			{
-				"item": "viz_UefNQGOa",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 23,
-						"y": 225
-					},
-					"to": {
-						"x": 1186,
-						"y": 223
-					}
 				}
 			},
 			{
@@ -557,20 +701,6 @@
 				}
 			},
 			{
-				"item": "viz_y538Pu8o",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 24,
-						"y": 177
-					},
-					"to": {
-						"x": 1187,
-						"y": 175
-					}
-				}
-			},
-			{
 				"item": "viz_JXs4BGWC",
 				"type": "block",
 				"position": {
@@ -587,6 +717,56 @@
 					"x": 430,
 					"y": 130,
 					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_KXCgwJmP",
+				"type": "block",
+				"position": {
+					"x": 50,
+					"y": 220,
+					"w": 180,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_ox83bb5Y",
+				"type": "block",
+				"position": {
+					"x": 30,
+					"y": 370,
+					"w": 170,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_cBrpBujU",
+				"type": "block",
+				"position": {
+					"x": 90,
+					"y": 240,
+					"w": 110,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_uzSFliAR",
+				"type": "block",
+				"position": {
+					"x": 50,
+					"y": 270,
+					"w": 180,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_wQEbYspm",
+				"type": "block",
+				"position": {
+					"x": 30,
+					"y": 395,
+					"w": 110,
 					"h": 50
 				}
 			}
