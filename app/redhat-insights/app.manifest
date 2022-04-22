@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2.0.0",
   "info": {
-    "title": "Red Hat Insigths",
+    "title": "Red Hat Insights",
     "id": {
       "group": null,
       "name": "redhat-insights",
-      "version": "0.5.202203311901"
+      "version": "0.6.202203311901"
     },
     "author": [
       {
