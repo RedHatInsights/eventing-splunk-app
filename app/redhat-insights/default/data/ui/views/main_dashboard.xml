@@ -299,7 +299,7 @@
 		"viz_ox83bb5Y": {
 			"type": "viz.text",
 			"options": {
-				"content": "Policy events received",
+				"content": "All events received",
 				"fontSize": 16
 			}
 		},
