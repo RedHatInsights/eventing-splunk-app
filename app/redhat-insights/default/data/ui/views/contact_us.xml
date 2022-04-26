@@ -24,7 +24,7 @@
                     <div class="div-container">
                         <h2>Documentation</h2>
                         <p><a href="https://splunkbase.splunk.com/" target="_blank">Splunk Marketplace documentation <i class="icon-external"/></a></p>
-                        <p><a href="https://access.redhat.com/products/red-hat-insights" target="_blank">Red Hat Insights documentation <i class="icon-external"/></a></p>
+                        <p><a href="https://access.redhat.com/documentation/en-us/red_hat_insights/" target="_blank">Red Hat Insights documentation <i class="icon-external"/></a></p>
                     </div>
                     <div class="div-container">
                         <h2>Support</h2>
