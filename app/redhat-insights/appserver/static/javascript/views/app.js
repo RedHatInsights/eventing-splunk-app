@@ -161,26 +161,26 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     const copyToClipboard = (textToCopy) => {
       // navigator clipboard api needs a secure context (https)
       if (navigator.clipboard && window.isSecureContext) {
-          // navigator clipboard api method'
-          return navigator.clipboard.writeText(textToCopy);
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(textToCopy);
       } else {
-          // text area method
-          let textArea = document.createElement("textarea");
-          textArea.value = textToCopy;
-          // make the textarea out of viewport
-          textArea.style.position = "fixed";
-          textArea.style.left = "-999999px";
-          textArea.style.top = "-999999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          return new Promise((res, rej) => {
-              // here the magic happens
-              document.execCommand('copy') ? res() : rej();
-              textArea.remove();
-          });
+        // text area method
+        let textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        // make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+          // here the magic happens
+          document.execCommand('copy') ? res() : rej();
+          textArea.remove();
+        });
       }
-  }
+    }
     const handleCopyURL = async (event) => {
       event.preventDefault();
       copyToClipboard(hecUrl);
@@ -265,9 +265,9 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
 
     return e('div', { class: 'setup-container' }, [
       e('div', null, [
-        e('h3', null, 'Splunk Setup is done!'),
-        e('p', null, `Thank you!  You have completed the steps to set up Red Hat Insights Splunk app!`),
-        e('p', null, `By clicking 'Finish set up' button below, you will be redirected to the main dashboard.`),
+        e('h3', null, 'Splunk Integration completed'),
+        e('p', null, `Your Splunk integration with Red Hat Insights is ready.`),
+        e('p', null, `Get started by exploring a dashboard.`)
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
