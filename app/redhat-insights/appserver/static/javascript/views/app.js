@@ -2,7 +2,6 @@ import * as Setup from "./setup.js";
 
 define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
   const e = react.createElement;
-
   const SetupPage = () => {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
@@ -13,6 +12,36 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     const [isUrlCopied, setIsUrlCopied] = react.useState(false);
     const [isSetupOpened, setIsSetupOpened] = react.useState(false);
     const [hecUrl, setHecUrl] = react.useState('https://' + window.location.hostname + ':8088')
+    const [splunkVersion, setSplunkVersion] = react.useState('');
+    const [appVersion, setAppVersion] = react.useState('');
+
+    const getSplunkVersion = async () => {
+      try {
+        const version = await Setup.getSplunkVersion(splunk_js_sdk);
+        setSplunkVersion(version);
+
+      } catch (error) {
+        console.error(error);
+      }
+
+    };
+
+    const getAppVersion = async () => {
+      try {
+        const version = await Setup.getAppVersion(splunk_js_sdk);
+        setAppVersion(version);
+
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
+
+    react.useEffect(() => {
+      getSplunkVersion();
+      getAppVersion();
+    }, [])
+
 
     const hecCreation = e("div", { class: 'setup_container', id: 'form_wizard' }, [
       e("div", null, [
@@ -29,7 +58,9 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
             setIsSetupOpened,
             hecUrl,
             isUrlCopied,
-            setIsUrlCopied
+            setIsUrlCopied,
+            splunkVersion,
+            appVersion
           })
             :
             step == 2 ? e(SetupFinal, { setStep, step }) : ''
@@ -145,11 +176,18 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
         e('div', { class: 'controls controls-join' }, [
           e(WizardButton, { setStep, step, handleSubmit }),
         ])
-      ])])
+      ]),
+    ])
   };
 
-  const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied, isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied, setIsUrlCopied }) => {
-    const [setupUrl, setSetupUrl] = react.useState(`https://console.redhat.com/beta/settings/integrations/splunk-setup`);
+  const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied,
+    isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied,
+    setIsUrlCopied, splunkVersion, appVersion }) => {
+    const [setupUrl, setSetupUrl] = react.useState('https://console.redhat.com/beta/settings/integrations/splunk-setup');
+
+    react.useEffect(() => {
+      setSetupUrl(`https://console.redhat.com/beta/settings/integrations/splunk-setup?appVersion=${appVersion}&splunkVersion=${splunkVersion}`);
+    }, [splunkVersion, appVersion]);
 
     const handleSubmit = async () => { }
 
