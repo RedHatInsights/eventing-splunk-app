@@ -1,10 +1,13 @@
 import * as Setup from "./setup.js";
+import { validate_uuidv4 } from "./util.js";
+import { app_name } from "./setup_configuration.js";
 
-define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
+define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_sdk, mvc) {
   const e = react.createElement;
   const SetupPage = () => {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
+    const stanza_name = `http://${hecName}`;
     const [hecToken, setHecToken] = react.useState('');
     const [status, setStatus] = react.useState('');
     const [step, setStep] = react.useState(0);
@@ -46,7 +49,7 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     const hecCreation = e("div", { class: 'setup_container', id: 'form_wizard' }, [
       e("div", null, [
         step == 0
-          ? e(SetupForm, { hecName, defaultIndex, status, setStatus, setStep, step, setHecToken })
+          ? e(SetupForm, { hecName, defaultIndex, setStep, step, setHecToken, stanza_name })
           :
           step == 1 ? e(SetupIntegration, {
             hecToken,
@@ -127,8 +130,25 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
     ]);
   }
 
-  const SetupForm = ({ hecName, defaultIndex, status, setStatus, setStep, step, setHecToken }) => {
+  const SetupForm = ({ hecName, defaultIndex, setStep, step, setHecToken, stanza_name }) => {
     const [inProgress, setInProgress] = react.useState(false);
+    const stanza_name = 'http://redhatinsights';
+
+     const getExistingHecToken = async (stanza_name) =>{
+      return new Promise((resolve, reject) => {
+        mvc.createService().get("/servicesNS/nobody/redhat-insights/configs/conf-inputs", {}, (err, res) => {
+          if(err){
+            reject(err);
+          }
+          else{
+            const obj = res.data.entry.find(element => element.name === stanza_name);
+            resolve(obj.content.token)
+          }
+          
+        })
+      })
+
+    }
 
     const handleSubmit = async () => {
 
@@ -136,7 +156,13 @@ define(["react", "splunkjs/splunk"], function (react, splunk_js_sdk) {
       let hecToken;
 
       try {
-        hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex });
+        const token = await getExistingHecToken(stanza_name);
+        if(!validate_uuidv4(token)){
+          hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex });
+        }else{
+          hecToken = token;
+        }
+
       } catch (error) {
         setInProgress(false);
         setStatus(error.message);
