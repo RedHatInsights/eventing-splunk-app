@@ -131,11 +131,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
   const SetupForm = ({ hecName, defaultIndex, setStep, step, setHecToken, stanza_name }) => {
     const [inProgress, setInProgress] = react.useState(false);
-    const stanza_name = 'http://redhatinsights';
 
      const getExistingHecToken = async (stanza_name) =>{
       return new Promise((resolve, reject) => {
-        mvc.createService().get("/servicesNS/nobody/redhat-insights/configs/conf-inputs", {}, (err, res) => {
+        mvc.createService().get(`/servicesNS/nobody/${app_name}/configs/conf-inputs`, {}, (err, res) => {
           if(err){
             reject(err);
           }
@@ -146,7 +145,6 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
           
         })
       })
-
     }
 
     const handleSubmit = async () => {
