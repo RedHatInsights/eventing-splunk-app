@@ -1,13 +1,13 @@
 import * as Setup from "./setup.js";
 import { validate_uuidv4 } from "./util.js";
-import { app_name } from "./setup_configuration.js";
+//import { app_name } from "./setup_configuration.js";
 
 define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_sdk, mvc) {
   const e = react.createElement;
   const SetupPage = () => {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
-    const stanza_name = `http://${hecName}`;
+    const stanzaName = `http://${hecName}`;
     const [hecToken, setHecToken] = react.useState('');
     const [step, setStep] = react.useState(0);
     const [isHecCopied, setIsHecCopied] = react.useState(false);
@@ -48,7 +48,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     const hecCreation = e("div", { class: 'setup_container', id: 'form_wizard' }, [
       e("div", null, [
         step == 0
-          ? e(SetupForm, { hecName, defaultIndex, setStep, step, setHecToken, stanza_name })
+          ? e(SetupForm, { hecName, defaultIndex, setStep, step, setHecToken, stanzaName })
           :
           step == 1 ? e(SetupIntegration, {
             hecToken,
@@ -129,22 +129,20 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     ]);
   }
 
-  const SetupForm = ({ hecName, defaultIndex, setStep, step, setHecToken, stanza_name }) => {
+  const SetupForm = ({ hecName, defaultIndex, setStep, step, setHecToken, stanzaName }) => {
     const [inProgress, setInProgress] = react.useState(false);
 
-     const getExistingHecToken = async (stanza_name) =>{
+    const getExistingHecToken = async (stanzaName) => {
       return new Promise((resolve, reject) => {
         mvc.createService().get(`/servicesNS/nobody/${app_name}/configs/conf-inputs`, {}, (err, res) => {
-          if(err){
+          if (err) {
             reject(err);
+          } else {
+            const obj = res.data.entry.find(element => element.name === stanzaName);
+            resolve(obj.content.token);
           }
-          else{
-            const obj = res.data.entry.find(element => element.name === stanza_name);
-            resolve(obj.content.token)
-          }
-          
-        })
-      })
+        });
+      });
     }
 
     const handleSubmit = async () => {
@@ -153,10 +151,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       let hecToken;
 
       try {
-        const token = await getExistingHecToken(stanza_name);
-        if(!validate_uuidv4(token)){
+        const token = await getExistingHecToken(stanzaName);
+        if (!validate_uuidv4(token)) {
           hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex });
-        }else{
+        } else {
           hecToken = token;
         }
 
