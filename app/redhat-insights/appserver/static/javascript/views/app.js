@@ -9,7 +9,6 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     const defaultIndex = 'redhatinsights';
     const stanza_name = `http://${hecName}`;
     const [hecToken, setHecToken] = react.useState('');
-    const [status, setStatus] = react.useState('');
     const [step, setStep] = react.useState(0);
     const [isHecCopied, setIsHecCopied] = react.useState(false);
     const [isUrlCopied, setIsUrlCopied] = react.useState(false);
@@ -165,7 +164,6 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
       } catch (error) {
         setInProgress(false);
-        setStatus(error.message);
         return;
       }
       setHecToken(hecToken);
@@ -322,7 +320,6 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         await Setup.complete(splunk_js_sdk);
       } catch (error) {
         setInProgress(false);
-        setStatus(error.message);
         return;
       }
     }
