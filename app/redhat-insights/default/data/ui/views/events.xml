@@ -34,41 +34,53 @@ index=redhatinsights AND bundle = "rhel"
         <latest></latest>
       </default>
     </input>
-    <input type="dropdown" token="field_account" searchWhenChanged="true">
+    <input type="multiselect" token="field_account" searchWhenChanged="true">
       <label>Account</label>
       <search base="base_query">
-        <query>| stats count by "Account"</query>
+        <query>| dedup "Account"</query>
       </search>
       <fieldForLabel>Account</fieldForLabel>
       <fieldForValue>Account</fieldForValue>
-      <prefix>"Account"="</prefix>
-      <suffix>"</suffix>
-      <default>*</default>
+      <prefix>"Account" IN (</prefix>
       <choice value="*">All</choice>
+      <default>*</default>
+      <delimiter>, </delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <initialValue>*</initialValue>
+      <suffix>)</suffix>
     </input>
-    <input type="dropdown" token="field_application" searchWhenChanged="true">
+    <input type="multiselect" token="field_application" searchWhenChanged="true">
       <label>Application</label>
       <search base="base_query">
-        <query>| stats count by Application</query>
+        <query>| dedup Application</query>
       </search>
       <fieldForLabel>Application</fieldForLabel>
       <fieldForValue>Application</fieldForValue>
-      <prefix>Application="</prefix>
-      <suffix>"</suffix>
+      <prefix>Application IN (</prefix>
       <choice value="*">All</choice>
       <default>*</default>
+      <delimiter>, </delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <initialValue>*</initialValue>
+      <suffix>)</suffix>
     </input>
-    <input type="dropdown" token="filter_system" searchWhenChanged="true">
+    <input type="multiselect" token="filter_system" searchWhenChanged="true">
       <label>System</label>
       <search base="base_query">
-        <query>| stats count by System</query>
+        <query>| dedup System</query>
       </search>
       <fieldForLabel>System</fieldForLabel>
       <fieldForValue>System</fieldForValue>
-      <prefix>System="</prefix>
-      <suffix>"</suffix>
+      <prefix>System IN (</prefix>
       <choice value="*">All</choice>
       <default>*</default>
+      <delimiter>, </delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <initialValue>*</initialValue>
+      <suffix>)</suffix>
     </input>
   </fieldset>
   <row>
