@@ -3,7 +3,7 @@ import * as SplunkHelpers from './splunk_helpers.js'
 
 export const app_name = "redhat-insights";
 
-async function create_hec_collector(splunk_js_sdk_service, { hecName, defaultIndex }) {
+async function create_hec_collector(splunk_js_sdk_service, { hecName, defaultIndex, stanzaName }) {
   const token = uuidv4();
   const properties_to_update = {
     disabled: 0,
@@ -14,7 +14,7 @@ async function create_hec_collector(splunk_js_sdk_service, { hecName, defaultInd
 
   await SplunkHelpers.create_hec_collector(
     splunk_js_sdk_service,
-    stanza_name,
+    stanzaName,
     properties_to_update
   );
 

@@ -139,7 +139,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
             reject(err);
           } else {
             const obj = res.data.entry.find(element => element.name === stanzaName);
-            resolve(obj.content.token);
+            resolve(obj?.content?.token);
           }
         });
       });
@@ -153,7 +153,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       try {
         const token = await getExistingHecToken(stanzaName);
         if (!validate_uuidv4(token)) {
-          hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex });
+          hecToken = await Setup.hecAndIndex(splunk_js_sdk, { hecName, defaultIndex, stanzaName });
         } else {
           hecToken = token;
         }
