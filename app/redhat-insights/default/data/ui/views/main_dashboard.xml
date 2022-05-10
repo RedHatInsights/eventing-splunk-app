@@ -360,6 +360,136 @@
 					}
 				]
 			}
+		},
+		"viz_G743tctf": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			}
+		},
+		"viz_wYMc6XvL": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			},
+			"encoding": {}
+		},
+		"viz_a7KfRI9Z": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			}
+		},
+		"viz_pQXc4KIW": {
+			"type": "viz.text",
+			"options": {
+				"content": "Security",
+				"fontSize": 18,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_yfsosoE1": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_q5kL8bG5_ds_lDtnkMeN"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_QY4S5HnP": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_tLIWvnHc": {
+			"type": "viz.text",
+			"options": {
+				"content": "Compliance events received",
+				"fontSize": 16,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_kIX75S9d": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			}
+		},
+		"viz_5QdByQk9": {
+			"type": "viz.text",
+			"options": {
+				"content": "Compliance",
+				"fontSize": 18,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_QwPEez2D": {
+			"type": "splunk.table",
+			"options": {
+				"count": 3,
+				"tableFormat": {
+					"rowBackgroundColors": "> table | seriesByIndex(0) | pick(tableAltRowBackgroundColorsByTheme)"
+				},
+				"columnFormat": {
+					"Threshold": {
+						"data": "> table | seriesByName(\"Threshold\") | formatByType(ThresholdColumnFormatEditorConfig)"
+					}
+				}
+			},
+			"dataSources": {
+				"primary": "ds_btBzUHEq"
+			},
+			"eventHandlers": [],
+			"context": {
+				"ThresholdColumnFormatEditorConfig": {
+					"number": {
+						"thousandSeparated": false,
+						"unitPosition": "after",
+						"unit": "%",
+						"precision": 0
+					}
+				}
+			}
+		},
+		"viz_jR9xt151": {
+			"type": "viz.text",
+			"options": {
+				"content": "All reports in Red Hat Insights →",
+				"fontSize": 12,
+				"textColor": "#65A0DF"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "https://console.redhat.com/insights/compliance/reports",
+						"newTab": true
+					}
+				}
+			]
 		}
 	},
 	"dataSources": {
@@ -442,6 +572,28 @@
 				"query": "index=redhatinsights source=eventing\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_24hrs"
+		},
+		"ds_q5kL8bG5_ds_lDtnkMeN": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights source=eventing application=compliance\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_compliance_24hrs"
+		},
+		"ds_btBzUHEq": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights AND bundle = \"rhel\" AND event_type=\"compliance-below-threshold\"\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval version=mvindex('context.rhel_version',0)\n| strcat \"RHEL \" version finalVersion\n| eval finalName = mvappend(finalVersion, name)\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, \"payload.policy_threshold\", finalVersion\n| mvcombine finalName\n| table name, finalVersion, events_count, \"payload.policy_threshold\"\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL Version\", events_count as \"Events\", \"payload.policy_threshold\" as \"Threshold\"\n| head 3"
+			},
+			"name": "search_compliance_table"
 		}
 	},
 	"inputs": {},
@@ -463,8 +615,8 @@
 						"y": 82
 					},
 					"to": {
-						"x": 1182,
-						"y": 80
+						"x": 615,
+						"y": 81
 					}
 				}
 			},
@@ -477,8 +629,8 @@
 						"y": 131
 					},
 					"to": {
-						"x": 1185,
-						"y": 129
+						"x": 613,
+						"y": 130
 					}
 				}
 			},
@@ -491,8 +643,8 @@
 						"y": 225
 					},
 					"to": {
-						"x": 1186,
-						"y": 223
+						"x": 610,
+						"y": 224
 					}
 				}
 			},
@@ -505,8 +657,8 @@
 						"y": 177
 					},
 					"to": {
-						"x": 1187,
-						"y": 175
+						"x": 613,
+						"y": 177
 					}
 				}
 			},
@@ -516,7 +668,7 @@
 				"position": {
 					"x": 0,
 					"y": 360,
-					"w": 1200,
+					"w": 640,
 					"h": 85
 				}
 			},
@@ -526,8 +678,8 @@
 				"position": {
 					"x": 0,
 					"y": 0,
-					"w": 1200,
-					"h": 30
+					"w": 640,
+					"h": 32
 				}
 			},
 			{
@@ -546,7 +698,7 @@
 				"position": {
 					"x": 0,
 					"y": 30,
-					"w": 1200,
+					"w": 640,
 					"h": 310
 				}
 			},
@@ -624,7 +776,7 @@
 				"item": "viz_RlISPDpy",
 				"type": "block",
 				"position": {
-					"x": 380,
+					"x": 240,
 					"y": 220,
 					"w": 170,
 					"h": 50
@@ -634,7 +786,7 @@
 				"item": "viz_b1j2M42M",
 				"type": "block",
 				"position": {
-					"x": 420,
+					"x": 280,
 					"y": 240,
 					"w": 110,
 					"h": 50
@@ -644,7 +796,7 @@
 				"item": "viz_aHadWVNE",
 				"type": "block",
 				"position": {
-					"x": 380,
+					"x": 250,
 					"y": 270,
 					"w": 170,
 					"h": 60
@@ -654,7 +806,7 @@
 				"item": "viz_sT40CCzB",
 				"type": "block",
 				"position": {
-					"x": 710,
+					"x": 440,
 					"y": 220,
 					"w": 170,
 					"h": 50
@@ -664,7 +816,7 @@
 				"item": "viz_JcoYwJev",
 				"type": "block",
 				"position": {
-					"x": 755,
+					"x": 480,
 					"y": 240,
 					"w": 130,
 					"h": 50
@@ -674,7 +826,7 @@
 				"item": "viz_0FXgnEsP",
 				"type": "block",
 				"position": {
-					"x": 720,
+					"x": 450,
 					"y": 270,
 					"w": 170,
 					"h": 60
@@ -724,7 +876,7 @@
 				"item": "viz_KXCgwJmP",
 				"type": "block",
 				"position": {
-					"x": 50,
+					"x": 30,
 					"y": 220,
 					"w": 180,
 					"h": 50
@@ -744,7 +896,7 @@
 				"item": "viz_cBrpBujU",
 				"type": "block",
 				"position": {
-					"x": 90,
+					"x": 80,
 					"y": 240,
 					"w": 110,
 					"h": 50
@@ -768,6 +920,116 @@
 					"y": 395,
 					"w": 110,
 					"h": 50
+				}
+			},
+			{
+				"item": "viz_G743tctf",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 0,
+					"w": 540,
+					"h": 140
+				}
+			},
+			{
+				"item": "viz_wYMc6XvL",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 150,
+					"w": 540,
+					"h": 330
+				}
+			},
+			{
+				"item": "viz_a7KfRI9Z",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 0,
+					"w": 540,
+					"h": 32
+				}
+			},
+			{
+				"item": "viz_pQXc4KIW",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": -10,
+					"w": 130,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_yfsosoE1",
+				"type": "block",
+				"position": {
+					"x": 670,
+					"y": 80,
+					"w": 170,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_QY4S5HnP",
+				"type": "block",
+				"position": {
+					"x": 700,
+					"y": 50,
+					"w": 130,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_tLIWvnHc",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 30,
+					"w": 220,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_kIX75S9d",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 150,
+					"w": 540,
+					"h": 32
+				}
+			},
+			{
+				"item": "viz_5QdByQk9",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 150,
+					"w": 130,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_QwPEez2D",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 200,
+					"w": 520,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_jR9xt151",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 440,
+					"w": 190,
+					"h": 30
 				}
 			}
 		],
