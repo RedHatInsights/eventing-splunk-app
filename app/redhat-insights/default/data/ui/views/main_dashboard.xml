@@ -518,7 +518,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights source=eventing application=policies\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights application=policies\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_policy_24hrs"
 		},
@@ -529,7 +529,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights source=eventing application=drift\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights application=drift\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_drift_24hrs"
 		},
@@ -558,7 +558,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights source=eventing application=advisor\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights application=advisor\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_advisor_24hrs"
 		},
@@ -569,7 +569,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights source=eventing\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_24hrs"
 		},
@@ -580,7 +580,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights source=eventing application=compliance\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights application=compliance\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_compliance_24hrs"
 		},
@@ -591,7 +591,7 @@
 					"earliest": "-24h@h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights AND bundle = \"rhel\" AND event_type=\"compliance-below-threshold\"\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval version=mvindex('context.rhel_version',0)\n| strcat \"RHEL \" version finalVersion\n| eval finalName = mvappend(finalVersion, name)\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, \"payload.policy_threshold\", finalVersion\n| mvcombine finalName\n| table name, finalVersion, events_count, \"payload.policy_threshold\"\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL Version\", events_count as \"Events\", \"payload.policy_threshold\" as \"Threshold\"\n| head 3"
+				"query": "index=redhatinsights AND bundle = \"rhel\" AND event_type=\"compliance-below-threshold\"\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval threshold=case(event_type=\"compliance-below-threshold\", 'payload.policy_threshold')\n| eval version=mvindex('context.rhel_version',0)\n| eval majorVersion = substr(version,1,1)\n| strcat \"RHEL \" majorVersion finalVersion\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, threshold, finalVersion\n| appendpipe [| stats count | where count=0 | addinfo \n| eval name=\"---\"  \n| eval finalVersion=\"---\"\n| eval events_count=\"---\"\n| eval threshold=\"---\"\n]\n| table name, finalVersion, events_count, threshold\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL Version\", events_count as \"Events\", threshold as \"Threshold\"\n| head 3"
 			},
 			"name": "search_compliance_table"
 		}
