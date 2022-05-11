@@ -91,7 +91,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
               ]),
             ]),
             e('div', null, [
-              e('span', { class: 'step-label' }, ['Step 1: Create HEC'])
+              e('span', { class: 'step-label' }, ['Step 1: Create Index and HEC'])
             ])
           ]),
           e('div', { class: 'step-container' + (step == 1 ? ' active' : '') + (step >= 2 ? ' active completed' : ''), 'data-value': '1' }, [
@@ -167,13 +167,23 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: 'container-text' }, [
-        e('h3', null, 'Create HEC index'),
+        e('div', { class: 'alert alert-warning' }, [
+          e('i', { class: 'icon-alert' }, null),
+          e('b', null, `1) Attention! Manual step required: Create the Red Hat Default Index:`)
+        ]),
+        e('i', null, 'You need to create the index manually. Please go throw: Settings  \u279C  Indexes and create one index called: '),
+        e('b', null, 'redhatinsights'),
+        e('p', null, ' Make sure the index is Enabled before continue this setup.'),
+        e('p', null, `Have you finished the configuration of Default Index? 
+                      If yes, go to the step bellow`),
+      ]),
+      e('div', { class: 'container-text' }, [
+        e('h3', null, '2) Create HEC index'),
         e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance 
                       to let you send data and application events to your Splunk deployment over Secure 
                       HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next 
                       steps we are creating a HEC and generating a token that will be used by Insights.`),
-      ]),
-      e('fieldset', null, [
+      ]),      e('fieldset', null, [
         e('div', { class: 'form form-horizontal' }, [
           e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
             e('label', { class: 'control-label' }, ['HEC name']),

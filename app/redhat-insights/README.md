@@ -17,6 +17,9 @@ Insights is included as part of your Red Hat subscription, and is accessible thr
 
 Installation and initial configuration are automated, so setting up the integration is quick and simple. The project is open source, and we welcome contributions or feedback on its repository.
 
+### Pre-requisites ###
+
+* Create a new index on your Splunk server named as `redhatinsights` and make it enabled.
 ### Documentation ###
 
 * **Installation and Release Notes:** See the application Splunkbase page.
