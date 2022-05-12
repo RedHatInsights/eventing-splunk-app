@@ -167,15 +167,21 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: 'container-text' }, [
+        e('h3', null, '1) Create the Red Hat Default Index'),
         e('div', { class: 'alert alert-warning' }, [
           e('i', { class: 'icon-alert' }, null),
-          e('b', null, `1) Attention! Manual step required: Create the Red Hat Default Index:`)
+          e('i', null, `This step is required`)
         ]),
-        e('i', null, 'You need to create the index manually. Please go throw: Settings  \u279C  Indexes and create one index called: '),
-        e('b', null, 'redhatinsights'),
-        e('p', null, ' Make sure the index is Enabled before continue this setup.'),
-        e('p', null, `Have you finished the configuration of Default Index? 
-                      If yes, go to the step bellow`),
+        e('p', null, [
+          e('i', null, 'To create the index manually, go to: Settings  \u279C  Indexes and create index: '),
+          e('b', null, 'redhatinsights'),
+        ]),
+        e('p', null, [
+          e('i', null, ' Make sure the index is '),
+          e('b', null, 'enabled'),
+          e('i', null, ' before continue this setup.'),
+        ]),
+        e('p', null, `If you finished the configuration of Default index, follow the next step.`),
       ]),
       e('div', { class: 'container-text' }, [
         e('h3', null, '2) Create HEC index'),
