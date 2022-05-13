@@ -29,9 +29,9 @@ Vagrant.configure("2") do |config|
   end
   
   if ENV.fetch('NFS', '1')  == "1"
-    config.vm.synced_folder "./app/redhat-insights", "/opt/splunk/etc/apps/redhat-insights", create: true, type: "nfs", nfs_udp: false
+    config.vm.synced_folder "./app/redhat_insights", "/opt/splunk/etc/apps/redhat_insights", create: true, type: "nfs", nfs_udp: false
   elsif OS.mac?
-    config.vm.synced_folder "./app/redhat-insights", "/opt/splunk/etc/apps/redhat-insights", create: true
+    config.vm.synced_folder "./app/redhat_insights", "/opt/splunk/etc/apps/redhat_insights", create: true
   end
 
   config.vm.box = "eurolinux-vagrant/centos-8"

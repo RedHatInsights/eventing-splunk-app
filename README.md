@@ -64,7 +64,7 @@ Password: `splunk.go`
 
 ## Splunk App
 
-Vagrant will share `app/redhat-insights` folder to vagrant box, any changes on local folder will reflect to the splunk server into vagrant box.
+Vagrant will share `app/redhat_insights` folder to vagrant box, any changes on local folder will reflect to the splunk server into vagrant box.
 
 Splunk may have problem to show images or new changes after the changes, maybe need to restart the service:
 
@@ -102,17 +102,17 @@ $ pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packagin
 1. Set new version using these commands
    ```
    version=0.1.$(date -u +%Y%m%d%H%M)
-   sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" app/redhat-insights/app.manifest
-   sed -i "s/version = .*/version = $version/" app/redhat-insights/default/app.conf
+   sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" app/redhat_insights/app.manifest
+   sed -i "s/version = .*/version = $version/" app/redhat_insights/default/app.conf
    ```
 2. Validate the app:
    ```bash
-   slim validate app/redhat-insights
+   slim validate app/redhat_insights
    ```
 3. Generate the package
    ```bash
-   slim package app/redhat-insights
-   mv "redhat-insights-$version.tar.gz" "redhat-insights-$version-$(git rev-parse --short HEAD).tar.gz"
+   slim package app/redhat_insights
+   mv "redhat_insights-$version.tar.gz" "redhat_insights-$version-$(git rev-parse --short HEAD).tar.gz"
    ```
 
 Note, that the images from the app are only shown after the Splunk
@@ -145,7 +145,7 @@ To send example events from [`examples/`](examples/) use:
 TOKEN=puttokenhere send-examples.sh
 ```
 
-The token can be found at http://localhost:8000/en-US/manager/redhat-insights/http-eventcollector.
+The token can be found at http://localhost:8000/en-US/manager/redhat_insights/http-eventcollector.
 
 If you haven't set up your HEC yet, you will need to do so to create the token, see "Set up your HEC" section above.
 

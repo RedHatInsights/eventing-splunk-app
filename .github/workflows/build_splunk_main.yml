@@ -24,13 +24,13 @@ jobs:
         run: |
           patch=$(TZ=UTC0 git show -s --date=format-local:'%Y%m%d%H%M' --format=%cd)
           echo "Patch version is $patch"
-          sed -ri "s/\"version\": \"([0-9]+\\.[0-9]+)\\.[0-9]+\"/\"version\": \"\\1.$patch\"/" app/redhat-insights/app.manifest
-          sed -ri "s/version = ([0-9]+\\.[0-9]+)\\.[0-9]+/version = \\1.$patch/" app/redhat-insights/default/app.conf
+          sed -ri "s/\"version\": \"([0-9]+\\.[0-9]+)\\.[0-9]+\"/\"version\": \"\\1.$patch\"/" app/redhat_insights/app.manifest
+          sed -ri "s/version = ([0-9]+\\.[0-9]+)\\.[0-9]+/version = \\1.$patch/" app/redhat_insights/default/app.conf
 
       - name: Create package
         run: |
           mkdir build
-          slim package app/redhat-insights -o build/
+          slim package app/redhat_insights -o build/
 
       - name: Upload package
         uses: actions/upload-artifact@v3

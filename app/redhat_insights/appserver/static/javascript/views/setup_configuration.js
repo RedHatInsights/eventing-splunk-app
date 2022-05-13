@@ -1,7 +1,7 @@
 import { promisify, uuidv4 } from './util.js'
 import * as SplunkHelpers from './splunk_helpers.js'
 
-export const app_name = "redhat-insights";
+export const app_name = "redhat_insights";
 
 async function create_hec_collector(splunk_js_sdk_service, { hecName, defaultIndex, stanzaName }) {
   const token = uuidv4();

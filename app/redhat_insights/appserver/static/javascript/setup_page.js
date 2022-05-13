@@ -1,6 +1,6 @@
 "use strict";
 
-var app_name = "redhat-insights";
+var app_name = "redhat_insights";
 
 require.config({
   paths: {
