@@ -167,29 +167,33 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
     return e('div', { class: 'setup-container' }, [
       e('div', { class: 'container-text' }, [
-        e('h3', null, '1) Create the Red Hat Default Index'),
+        e('h3', null, '1. Create Red Hat Default Index'),
         e('div', { class: 'alert alert-warning' }, [
           e('i', { class: 'icon-alert' }, null),
-          e('i', null, `This step is required`)
+          e('span', null, `This step is required`)
         ]),
         e('p', null, [
-          e('i', null, 'To create the index manually, go to: Settings  \u279C  Indexes and create index: '),
+          e('span', null, 'To create the index manually, go to '),
+          e('b', null, ' Settings  \u279C  Indexes'),
+          e('span', null, ' and create index: '),
           e('b', null, 'redhatinsights'),
         ]),
         e('p', null, [
-          e('i', null, ' Make sure the index is '),
+          e('span', null, ' Make sure the index is '),
           e('b', null, 'enabled'),
-          e('i', null, ' before continue this setup.'),
+          e('span', null, ' before continuing this setup.'),
         ]),
-        e('p', null, `If you finished the configuration of Default index, follow the next step.`),
+        e('p', null, `Once you finish the configuration of the Default index, follow the next step.`),
       ]),
       e('div', { class: 'container-text' }, [
-        e('h3', null, '2) Create HEC index'),
+        e('h3', null, '2. Create HEC index'),
         e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance 
                       to let you send data and application events to your Splunk deployment over Secure 
                       HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next 
                       steps we are creating a HEC and generating a token that will be used by Insights.`),
-      ]),      e('fieldset', null, [
+      ]),     
+      e('p', null, 'You can specify a HEC name and index used when sending Insights events.'),
+      e('fieldset', null, [
         e('div', { class: 'form form-horizontal' }, [
           e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
             e('label', { class: 'control-label' }, ['HEC name']),
