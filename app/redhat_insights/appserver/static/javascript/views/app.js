@@ -191,6 +191,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
                       to let you send data and application events to your Splunk deployment over Secure 
                       HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next 
                       steps we are creating a HEC and generating a token that will be used by Insights.`),
+        e('div', { class: 'alert alert-warning' }, [
+          e('i', { class: 'icon-alert' }, null),
+          e('span', null, `You will need to check your Global Settings to ensure your HEC is enabled`)
+        ]),
       ]),     
       e('p', null, 'You can specify a HEC name and index used when sending Insights events.'),
       e('fieldset', null, [
