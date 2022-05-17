@@ -1,5 +1,6 @@
 .DS_Store/
 .vagrant/
+redhat-insights-*.*.*.tar.gz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
