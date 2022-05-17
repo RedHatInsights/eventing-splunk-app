@@ -20,7 +20,7 @@ index=redhatinsights AND bundle = "rhel"
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
 | table created_at_fmt, account_id, "application", "event_type", "context.display_name", title, url
 | sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", event_type as "Event Type", "title" as "Description", "application" as "Application"
+| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", event_type as "Event type", "title" as "Description", "application" as "Application"
 
     </query>
     <earliest>$timepicker.earliest$</earliest>
@@ -112,7 +112,7 @@ index=redhatinsights AND bundle = "rhel"
           | search $field_account$
           </query>
         </search>
-        <fields>["Timestamp", "Account", "Application", "Event Type", "System", "Description"]</fields>
+        <fields>["Timestamp", "Account", "Application", "Event type", "System", "Description"]</fields>
         <option name="count">20</option>
         <option name="showPager">true</option>
         <option name="rowNumbers">false</option>
