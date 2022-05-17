@@ -19,7 +19,7 @@
                     <div class="div-container">
                         <h2>About</h2>
                         <p> Version $version$ </p>
-                        <p><a href="https://console.redhat.com/beta/settings/integrations" target="_blank">Check integration in Red Hat Insights <i class="icon-external"/></a></p>
+                        <p><a href="https://access.redhat.com/documentation/en-us/red_hat_hybrid_cloud_console/2022/html-single/configuring_notifications_and_integrations_on_the_red_hat_hybrid_cloud_console/index" target="_blank">Learn more about integrations in Red Hat Insights <i class="icon-external"/></a></p>
                     </div>
                     <div class="div-container">
                         <h2>Documentation</h2>
