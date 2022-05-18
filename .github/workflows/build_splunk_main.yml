@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-      - ci-build-pipeline-110
+      - build-logos-from-internal-repo-479
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -26,6 +26,12 @@ jobs:
           echo "Patch version is $patch"
           sed -ri "s/\"version\": \"([0-9]+\\.[0-9]+)\\.[0-9]+\"/\"version\": \"\\1.$patch\"/" app/redhat_insights/app.manifest
           sed -ri "s/version = ([0-9]+\\.[0-9]+)\\.[0-9]+/version = \\1.$patch/" app/redhat_insights/default/app.conf
+
+      - name: Add branding assets
+        run: |
+          git clone https://github.com/RedHatInsights/frontend-assets.git
+          cp frontend-assets/src/eventing-splunk-app/*.* app/redhat_insights/static/
+          mv app/redhat_insights/static/favicon.ico app/redhat_insights/appserver/static/
 
       - name: Create package
         run: |
