@@ -1,12 +1,12 @@
-name: Build Candidate
+name: Pull Request Check
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow only on push to the main branch (and temorarily to branch that is introducing it)
-  push:
+  pull_request:
     branches:
       - main
-      - build-logos-from-internal-repo-479
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -47,9 +47,3 @@ jobs:
         with:
           app_path: build/${{ env.PACKAGE_FILENAME }}
           included_tags: cloud, splunk_appinspect
-
-      - name: Upload package
-        uses: actions/upload-artifact@v3
-        with:
-          name: build/${{ env.PACKAGE_FILENAME }}
-          path: build/${{ env.PACKAGE_FILENAME }}
