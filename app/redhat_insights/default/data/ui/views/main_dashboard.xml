@@ -144,7 +144,16 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Policy&form.filter_system=*",
+						"newTab": false
+					}
+				}
+			]
 		},
 		"viz_sT40CCzB": {
 			"type": "viz.text",
@@ -184,7 +193,16 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Drift&form.filter_system=*",
+						"newTab": false
+					}
+				}
+			]
 		},
 		"viz_8LQURw6Y": {
 			"type": "splunk.singlevalue",
@@ -333,7 +351,16 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Advisor&form.filter_system=*",
+						"newTab": false
+					}
+				}
+			]
 		},
 		"viz_6hIT1ObQ": {
 			"type": "splunk.singlevalue",
@@ -359,7 +386,16 @@
 						"value": "#1C6B2D"
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=*&form.filter_system=*",
+						"newTab": false
+					}
+				}
+			]
 		},
 		"viz_G743tctf": {
 			"type": "viz.rectangle",
@@ -414,7 +450,15 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Compliance&form.filter_system=*"
+					}
+				}
+			]
 		},
 		"viz_QY4S5HnP": {
 			"type": "viz.text",
