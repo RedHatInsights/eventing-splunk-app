@@ -149,7 +149,7 @@
 				{
 					"type": "drilldown.customUrl",
 					"options": {
-						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Policy&form.filter_system=*",
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Policies&form.filter_system=*",
 						"newTab": false
 					}
 				}
