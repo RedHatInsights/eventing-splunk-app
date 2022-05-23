@@ -67,6 +67,22 @@ index=redhatinsights AND bundle = "rhel"
       <initialValue>*</initialValue>
       <suffix>)</suffix>
     </input>
+    <input type="multiselect" token="field_event_type" searchWhenChanged="true">
+      <label>Event type</label>
+      <search base="base_query">
+        <query>| dedup "Event type"</query>
+      </search>
+      <fieldForLabel>Event type</fieldForLabel>
+      <fieldForValue>Event type</fieldForValue>
+      <prefix>"Event type" IN (</prefix>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <delimiter>, </delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <initialValue>*</initialValue>
+      <suffix>)</suffix>
+    </input>
     <input type="multiselect" token="filter_system" searchWhenChanged="true">
       <label>System</label>
       <search base="base_query">
@@ -111,6 +127,7 @@ index=redhatinsights AND bundle = "rhel"
           | search $filter_system$
           | search $field_application$
           | search $field_account$
+          | search $field_event_type$
           </query>
         </search>
         <fields>["Timestamp", "Account", "Application", "Event type", "System", "Description"]</fields>
