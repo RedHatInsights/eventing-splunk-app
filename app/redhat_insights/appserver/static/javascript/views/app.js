@@ -155,9 +155,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
       } catch (error) {
         setInProgress(false);
-        return;
+        return false;
       }
       setHecToken(hecToken);
+      return true;
     }
 
     return e('div', { class: 'setup-container' }, [
@@ -337,8 +338,9 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         await Setup.complete(splunk_js_sdk);
       } catch (error) {
         setInProgress(false);
-        return;
+        return false;
       }
+      return true;
     }
 
     return e('div', { class: 'setup-container' }, [
@@ -358,7 +360,9 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
   const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened, inProgress }) => {
 
     const handleNextStep = async (_event) => {
-      handleSubmit && await handleSubmit();
+      if (handleSubmit && await handleSubmit() === false) {
+        return;
+      }
       setStep(currStep => currStep === 2 ? currStep : currStep + 1);
     }
 
