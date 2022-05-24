@@ -213,7 +213,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit }),
+          e(WizardButton, { setStep, step, handleSubmit, inProgress }),
         ])
       ]),
     ])
@@ -332,6 +332,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     const [inProgress, setInProgress] = react.useState(false);
 
     const handleSubmit = async () => {
+      setInProgress(true);
       try {
         await Setup.complete(splunk_js_sdk);
       } catch (error) {
@@ -349,12 +350,12 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit }),
+          e(WizardButton, { setStep, step, handleSubmit, inProgress }),
         ])
       ])]);
   }
 
-  const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened }) => {
+  const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened, inProgress }) => {
 
     const handleNextStep = async (_event) => {
       handleSubmit && handleSubmit();
@@ -370,6 +371,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('button', {
           class: 'btn btn-secondary previous-button', 'aria-disabled': 'false',
           style: { display: 'inline-block' },
+          disabled: inProgress ? 'disabled' : '',
           onClick: handlePrevStep
         }, [
           e('i', { class: 'icon-chevron-left' }, null),
@@ -377,7 +379,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         ]) : null),
       e('button', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
-        disabled: (step === 1 && (!isSetupOpened) ? 'disabled' : ''),
+        disabled: (step === 1 && (!isSetupOpened) || inProgress ? 'disabled' : ''),
         style: { display: 'inline-block' },
         onClick: handleNextStep
       }, [
