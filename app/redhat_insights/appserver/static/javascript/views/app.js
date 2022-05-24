@@ -358,7 +358,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
   const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened, inProgress }) => {
 
     const handleNextStep = async (_event) => {
-      handleSubmit && handleSubmit();
+      handleSubmit && await handleSubmit();
       setStep(currStep => currStep === 2 ? currStep : currStep + 1);
     }
 
