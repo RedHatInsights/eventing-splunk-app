@@ -329,6 +329,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
   };
 
   const SetupFinal = ({ setStep, step }) => {
+    const [inProgress, setInProgress] = react.useState(false);
 
     const handleSubmit = async () => {
       try {
