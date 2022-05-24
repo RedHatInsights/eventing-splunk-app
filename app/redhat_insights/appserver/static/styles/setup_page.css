@@ -144,9 +144,7 @@
 
 .nav-buttons {
     float: left;
-    height: 66px;
-    line-height: 66px;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .nav-buttons.copy-btn {
@@ -156,17 +154,13 @@
     margin-left: 10px;
 }
 
-
-.nav-buttons .next-button {
-    margin-left: 3px;
-}
-
 .nav-buttons .btn {
     font-size: 14px;
+    margin-right: 3px;
 }
 
 .controls.controls-join {
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .custom-input {
@@ -190,7 +184,16 @@
     margin-top: 20px;
 }
 
-.container-text { 
+.container-text {
     max-width: 1050px;
     margin-bottom: 30px;
+}
+
+.wizard-step-control {
+    flex-direction: 'row';
+    margin-top: 10px;
+}
+
+.controls.controls-join .alert-inline {
+    margin: 0;
 }
