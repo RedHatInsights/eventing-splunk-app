@@ -126,6 +126,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
   const SetupForm = ({ hecName, defaultIndex, setStep, step, setHecToken, stanzaName }) => {
     const [inProgress, setInProgress] = react.useState(false);
+    const [error, setError] = react.useState();
 
     const getExistingHecToken = async (stanzaName) => {
       return new Promise((resolve, reject) => {
@@ -153,10 +154,11 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
           hecToken = token;
         }
 
-      } catch (error) {
-        setInProgress(false);
+      } catch (e) {
+        setError(`HEC creation failed: ${e}.`);
         return false;
       }
+      setInProgress(false);
       setHecToken(hecToken);
       return true;
     }
@@ -212,11 +214,11 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         ]),
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
-        e('label', { class: 'control-label' }),
-        e('div', { class: 'controls controls-join' }, [
+        e('div', { class: 'controls controls-join wizard-step-control' }, [
           e(WizardButton, { setStep, step, handleSubmit, inProgress }),
+          error ? e(AlertOnError, { error }) : null
         ])
-      ]),
+      ])
     ])
   };
 
@@ -321,8 +323,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
                       If yes, complete the integration by clicking 'Complete' below`),
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
-        e('label', { class: 'control-label' }),
-        e('div', { class: 'controls controls-join' }, [
+        e('div', { class: 'controls controls-join wizard-step-control' }, [
           e(WizardButton, { setStep, step, isSetupOpened }),
         ])
       ]),
@@ -331,13 +332,14 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
 
   const SetupFinal = ({ setStep, step }) => {
     const [inProgress, setInProgress] = react.useState(false);
+    const [error, setError] = react.useState();
 
     const handleSubmit = async () => {
       setInProgress(true);
       try {
         await Setup.complete(splunk_js_sdk);
-      } catch (error) {
-        setInProgress(false);
+      } catch (e) {
+        setError(`Completion failed: ${e}.`)
         return false;
       }
       return true;
@@ -350,9 +352,9 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('p', null, `Get started by exploring a dashboard.`)
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
-        e('label', { class: 'control-label' }),
-        e('div', { class: 'controls controls-join' }, [
+        e('div', { class: 'controls controls-join wizard-step-control' }, [
           e(WizardButton, { setStep, step, handleSubmit, inProgress }),
+          error ? e(AlertOnError, { error }) : null
         ])
       ])]);
   }
@@ -391,7 +393,16 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('i', { class: 'icon-chevron-right' }, null)
       ]),
     ]);
-  }
+  };
+
+  const AlertOnError = ({ error }) => (
+    e('div', { class: 'alert alert-error alert-inline' }, [
+      e('i', { class: 'icon-alert' }),
+      'Error: ', error, ' Please try again. If the problem persists, ',
+      e('a', { href: 'https://access.redhat.com/support/cases/#/case/new/open-case' }, [ 'contact us' ]),
+      '.'
+    ])
+  );
 
   return e(SetupPage);
 });
