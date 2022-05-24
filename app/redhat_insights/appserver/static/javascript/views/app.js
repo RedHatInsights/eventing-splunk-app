@@ -1,6 +1,5 @@
 import * as Setup from "./setup.js";
 import { validate_uuidv4 } from "./util.js";
-//import { app_name } from "./setup_configuration.js";
 
 define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_sdk, mvc) {
   const e = react.createElement;
@@ -13,7 +12,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     const [isHecCopied, setIsHecCopied] = react.useState(false);
     const [isUrlCopied, setIsUrlCopied] = react.useState(false);
     const [isSetupOpened, setIsSetupOpened] = react.useState(false);
-    const [hecUrl, setHecUrl] = react.useState('https://' + window.location.hostname + ':8088')
+    const [hecUrl, _setHecUrl] = react.useState('https://' + window.location.hostname + ':8088')
     const [splunkVersion, setSplunkVersion] = react.useState('');
     const [appVersion, setAppVersion] = react.useState('');
 
@@ -21,28 +20,24 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       try {
         const version = await Setup.getSplunkVersion(splunk_js_sdk);
         setSplunkVersion(version);
-
       } catch (error) {
         console.error(error);
       }
-
     };
 
     const getAppVersion = async () => {
       try {
         const version = await Setup.getAppVersion(splunk_js_sdk);
         setAppVersion(version);
-
       } catch (error) {
         console.error(error);
       }
-
     }
 
     react.useEffect(() => {
       getSplunkVersion();
       getAppVersion();
-    }, [])
+    }, []);
 
 
     const hecCreation = e("div", { class: 'setup_container', id: 'form_wizard' }, [
@@ -187,15 +182,15 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       ]),
       e('div', { class: 'container-text' }, [
         e('h3', null, '2. Create HEC index'),
-        e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance 
-                      to let you send data and application events to your Splunk deployment over Secure 
-                      HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next 
+        e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance
+                      to let you send data and application events to your Splunk deployment over Secure
+                      HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next
                       steps we are creating a HEC and generating a token that will be used by Insights.`),
         e('div', { class: 'alert alert-warning' }, [
           e('i', { class: 'icon-alert' }, null),
           e('span', null, `You will need to check your Global Settings to ensure your HEC is enabled`)
         ]),
-      ]),     
+      ]),
       e('p', null, 'You can specify a HEC name and index used when sending Insights events.'),
       e('fieldset', null, [
         e('div', { class: 'form form-horizontal' }, [
@@ -224,16 +219,16 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
     ])
   };
 
-  const SetupIntegration = ({ hecToken, setStep, step, isHecCopied, setIsHecCopied,
+  const SetupIntegration = ({
+    hecToken, setStep, step, isHecCopied, setIsHecCopied,
     isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied,
-    setIsUrlCopied, splunkVersion, appVersion }) => {
+    setIsUrlCopied, splunkVersion, appVersion
+  }) => {
     const [setupUrl, setSetupUrl] = react.useState('https://console.redhat.com/beta/settings/integrations/splunk-setup');
 
     react.useEffect(() => {
       setSetupUrl(`https://console.redhat.com/beta/settings/integrations/splunk-setup?appVersion=${appVersion}&splunkVersion=${splunkVersion}`);
     }, [splunkVersion, appVersion]);
-
-    const handleSubmit = async () => { }
 
     const handleSetupIntegration = async () => {
       window.open(setupUrl);
@@ -263,6 +258,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         });
       }
     }
+
     const handleCopyURL = async (event) => {
       event.preventDefault();
       copyToClipboard(hecUrl);
@@ -320,20 +316,19 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       ]),
       e('div', { class: 'setup-container-submit' }, [
         e('h3', null, '2. Submit your changes'),
-        e('p', null, `Have you finished the configuration of Splunk integration in Insights application? 
+        e('p', null, `Have you finished the configuration of Splunk integration in Insights application?
                       If yes, complete the integration by clicking 'Complete' below`),
       ]),
       e('div', { class: 'control-group shared-controls-controlgroup control-group-default' }, [
         e('label', { class: 'control-label' }),
         e('div', { class: 'controls controls-join' }, [
-          e(WizardButton, { setStep, step, handleSubmit, isSetupOpened }),
+          e(WizardButton, { setStep, step, isSetupOpened }),
         ])
       ]),
     ]);
   };
 
   const SetupFinal = ({ setStep, step }) => {
-
 
     const handleSubmit = async () => {
       try {
@@ -355,16 +350,17 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('div', { class: 'controls controls-join' }, [
           e(WizardButton, { setStep, step, handleSubmit }),
         ])
-      ])])
+      ])]);
   }
+
   const WizardButton = ({ setStep, step, handleSubmit, isSetupOpened }) => {
 
-    const handleNextStep = async (event) => {
-      handleSubmit()
+    const handleNextStep = async (_event) => {
+      handleSubmit && handleSubmit();
       setStep(currStep => currStep === 2 ? currStep : currStep + 1);
     }
 
-    const handlePrevStep = async (event) => {
+    const handlePrevStep = async (_event) => {
       setStep(currStep => currStep - 1);
     }
 
@@ -388,7 +384,6 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('i', { class: 'icon-chevron-right' }, null)
       ]),
     ]);
-
   }
 
   return e(SetupPage);
