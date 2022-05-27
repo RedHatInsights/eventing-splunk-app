@@ -184,7 +184,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         e('p', null, `Once you finish the configuration of the Default index, follow the next step.`),
       ]),
       e('div', { class: 'container-text' }, [
-        e('h3', null, '2. Create HEC index'),
+        e('h3', null, '2. Create HEC'),
         e('p', null, `This process will create a HTTP Event Collector (HEC) in your Splunk instance
                       to let you send data and application events to your Splunk deployment over Secure
                       HTTP (HTTPS) protocol. HEC uses a token-based authentication model. In the next
