@@ -534,6 +534,13 @@
 					}
 				}
 			]
+		},
+		"viz_nzxpDhks": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
 		}
 	},
 	"dataSources": {
@@ -1001,7 +1008,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": -10,
+					"y": -4,
 					"w": 130,
 					"h": 50
 				}
@@ -1074,6 +1081,16 @@
 					"y": 440,
 					"w": 190,
 					"h": 30
+				}
+			},
+			{
+				"item": "viz_nzxpDhks",
+				"type": "block",
+				"position": {
+					"x": 1100,
+					"y": 157,
+					"w": 90,
+					"h": 40
 				}
 			}
 		],
