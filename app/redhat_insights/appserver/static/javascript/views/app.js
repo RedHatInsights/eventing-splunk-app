@@ -71,7 +71,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       e('div', {
         class: 'control shared-controls-stepwizardcontrol control-default step-wizard controls controls-join'
       }, [
-        e('div', { class: 'wizard-label' }, ['Set up integration with Red Hat']),
+        e('div', { class: 'wizard-label' }, ['Set up integration with Red Hat Insights']),
         e('div', null, [
           e('div', { class: 'step-container first active' + (step >= 1 ? ' completed' : ''), 'data-value': '0' }, [
             e('div', { class: 'step-indicator' }, [
