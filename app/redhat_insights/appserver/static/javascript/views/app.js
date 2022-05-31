@@ -315,7 +315,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
       ]),
       e('button', {
         class: 'btn btn-primary next-button', 'aria-disabled': 'false',
-        disabled: (step === 1 && (isHecCopied || isUrlCopied) ? '' : 'disabled'),
+        disabled: false,
         style: { display: 'inline-block' },
         onClick: handleSetupIntegration
       }, [
