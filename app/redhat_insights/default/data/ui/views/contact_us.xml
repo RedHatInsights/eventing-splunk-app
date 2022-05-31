@@ -19,12 +19,13 @@
                     <div class="div-container">
                         <h2>About</h2>
                         <p> Version $version$ </p>
-                        <p><a href="https://access.redhat.com/documentation/en-us/red_hat_hybrid_cloud_console/2022/html-single/configuring_notifications_and_integrations_on_the_red_hat_hybrid_cloud_console/index" target="_blank">Learn more about integrations in Red Hat Insights <i class="icon-external"/></a></p>
+                        <p><a href="https://access.redhat.com/documentation/en-us/red_hat_hybrid_cloud_console/2022/html-single/configuring_notifications_and_integrations_on_the_red_hat_hybrid_cloud_console/index" target="_blank">Check integrations in Red Hat Insights <i class="icon-external"/></a></p>
                     </div>
                     <div class="div-container">
                         <h2>Documentation</h2>
                         <p><a href="https://splunkbase.splunk.com/" target="_blank">Splunk Marketplace documentation <i class="icon-external"/></a></p>
                         <p><a href="https://access.redhat.com/documentation/en-us/red_hat_insights/" target="_blank">Red Hat Insights documentation <i class="icon-external"/></a></p>
+                        <p><a href="https://www.redhat.com/en/technologies/management/insights/data-application-security" target="_blank">Red Hat Insights data and application security <i class="icon-external"/></a></p>
                     </div>
                     <div class="div-container">
                         <h2>Support</h2>
