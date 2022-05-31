@@ -172,7 +172,8 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
         ]),
         e('p', null, [
           e('span', null, 'To create the index manually, go to '),
-          e('b', null, ' Settings  \u279C  Indexes'),
+          e('a', {href: '/manager/redhat_insights/data/indexes', target: '_blank'}, ' Settings  \u279C  Indexes '),
+          e('i',{class: 'icon-external'}),
           e('span', null, ' and create index: '),
           e('b', null, 'redhatinsights'),
         ]),
@@ -191,7 +192,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_
                       steps we are creating a HEC and generating a token that will be used by Insights.`),
         e('div', { class: 'alert alert-warning' }, [
           e('i', { class: 'icon-alert' }, null),
-          e('span', null, `You will need to check your Global Settings to ensure your HEC is enabled`)
+          e('span', null, 'Check your '),
+          e('a', {href: '/manager/redhat_insights/http-eventcollector', target: '_blank'}, 'Global Settings in HTTP Event Collector '),
+          e('i',{class: 'icon-external'}),
+          e('span', null, ' to ensure your HEC is enabled'),
         ]),
       ]),
       e('p', null, 'You can specify a HEC name and index used when sending Insights events.'),
