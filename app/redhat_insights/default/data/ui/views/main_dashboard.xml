@@ -485,7 +485,7 @@
 		"viz_5QdByQk9": {
 			"type": "viz.text",
 			"options": {
-				"content": "Compliance",
+				"content": "Compliance reports below threshold",
 				"fontSize": 18,
 				"fontWeight": "bold"
 			}
@@ -534,6 +534,13 @@
 					}
 				}
 			]
+		},
+		"viz_nzxpDhks": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 30 days",
+				"fontSize": 12
+			}
 		}
 	},
 	"dataSources": {
@@ -635,7 +642,7 @@
 					"earliest": "-24h@h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights AND bundle = \"rhel\" AND event_type=\"compliance-below-threshold\"\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval threshold=case(event_type=\"compliance-below-threshold\", 'payload.policy_threshold')\n| eval version=mvindex('context.rhel_version',0)\n| rex field=version \"(?<majorVersion>\\w+)\\.(?<minorVersion>\\w+)\"\n| strcat \"RHEL \" majorVersion finalVersion\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, threshold, finalVersion\n| appendpipe [| stats count | where count=0 | addinfo \n| eval name=\"---\"  \n| eval finalVersion=\"---\"\n| eval events_count=\"---\"\n| eval threshold=\"---\"\n]\n| table name, finalVersion, events_count, threshold\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL Version\", events_count as \"Events\", threshold as \"Threshold\"\n| head 3"
+				"query": "index=redhatinsights AND bundle = \"rhel\" AND event_type=\"compliance-below-threshold\" AND earliest=-24h@m AND latest=+30d@m\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval threshold=case(event_type=\"compliance-below-threshold\", 'payload.policy_threshold')\n| eval version=mvindex('context.rhel_version',0)\n| rex field=version \"(?<majorVersion>\\w+)\\.(?<minorVersion>\\w+)\"\n| strcat \"RHEL \" majorVersion finalVersion\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, threshold, finalVersion\n| appendpipe [| stats count | where count=0 | addinfo \n| eval name=\"---\"  \n| eval finalVersion=\"---\"\n| eval events_count=\"---\"\n| eval threshold=\"---\"\n]\n| table name, finalVersion, events_count, threshold\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL version\", events_count as \"Events\", threshold as \"Threshold\"\n| head 3"
 			},
 			"name": "search_compliance_table"
 		}
@@ -1001,7 +1008,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": -10,
+					"y": -4,
 					"w": 130,
 					"h": 50
 				}
@@ -1051,8 +1058,8 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 150,
-					"w": 130,
+					"y": 145,
+					"w": 310,
 					"h": 50
 				}
 			},
@@ -1074,6 +1081,16 @@
 					"y": 440,
 					"w": 190,
 					"h": 30
+				}
+			},
+			{
+				"item": "viz_nzxpDhks",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 168,
+					"w": 90,
+					"h": 40
 				}
 			}
 		],
