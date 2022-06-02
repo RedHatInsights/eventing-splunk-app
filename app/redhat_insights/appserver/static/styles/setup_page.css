@@ -160,7 +160,7 @@
 }
 
 .controls.controls-join {
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .custom-input {
