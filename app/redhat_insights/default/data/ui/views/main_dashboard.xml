@@ -598,7 +598,7 @@
 		"ds_8HzUA9oC_ds_HRRsnn9w": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where relative_time(now(), \"-30d\") <= _time\n  | where has_incident=\"false\"\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where relative_time(now(), \"-30d\") <= _time\n  | where has_incident=\"true\"\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_recomm_with_incidents_30days"
 		},
