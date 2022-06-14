@@ -26,6 +26,7 @@ jobs:
           echo "Patch version is $patch"
           sed -ri "s/\"version\": \"([0-9]+\\.[0-9]+)\\.[0-9]+\"/\"version\": \"\\1.$patch\"/" app/redhat_insights/app.manifest
           sed -ri "s/version = ([0-9]+\\.[0-9]+)\\.[0-9]+/version = \\1.$patch/" app/redhat_insights/default/app.conf
+          sed -ri "s/build = ([0-9]+\\.[0-9]+)\\.[0-9]+/build = \\1.$patch/" app/redhat_insights/default/app.conf
 
       - name: Add branding assets
         run: |
