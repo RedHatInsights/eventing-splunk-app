@@ -32,8 +32,8 @@ index=redhatinsights AND bundle = "rhel"
     <input type="time" token="timepicker">
       <label>Timestamp</label>
       <default>
-        <earliest></earliest>
-        <latest></latest>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
       </default>
     </input>
     <input type="multiselect" token="field_account" searchWhenChanged="true">
