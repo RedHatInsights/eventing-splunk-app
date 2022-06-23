@@ -1,0 +1,22 @@
+{
+    "name": "eventing-splunk-app",
+    "version": "0.13",
+    "description": "Red Hat Insights application for Splunk",
+    "main": "app/redhat_insights/appserver/application.js",
+    "directories": {
+        "app": "app/redhat_insights/"
+    },
+    "repository": "git+https://github.com/RedHatInsights/eventing-splunk-app.git",
+    "author": "Red Hat <splunkmarketplace@redhat.com>",
+    "license": "Apache-2.0 license",
+    "bugs": {
+        "url": "https://github.com/RedHatInsights/eventing-splunk-app/issues"
+    },
+    "homepage": "https://github.com/RedHatInsights/eventing-splunk-app#README",
+    "scripts": {
+    },
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    }
+}
