@@ -22,7 +22,7 @@ index=redhatinsights
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
 | table created_at_fmt, account_id, "application", "event_type", "context.display_name", title, url
 | sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System", event_type as "Event type", "title" as "Description", "application" as "Application"
+| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System/Cluster", event_type as "Event type", "title" as "Description", "application" as "Application"
 
     </query>
     <earliest>$timepicker.earliest$</earliest>
@@ -85,13 +85,13 @@ index=redhatinsights
       <suffix>)</suffix>
     </input>
     <input type="multiselect" token="filter_system" searchWhenChanged="true">
-      <label>System</label>
+      <label>System/Cluster</label>
       <search base="base_query">
-        <query>| dedup System</query>
+        <query>| dedup System/Cluster</query>
       </search>
-      <fieldForLabel>System</fieldForLabel>
-      <fieldForValue>System</fieldForValue>
-      <prefix>System IN (</prefix>
+      <fieldForLabel>System/Cluster</fieldForLabel>
+      <fieldForValue>System/Cluster</fieldForValue>
+      <prefix>System/Cluster IN (</prefix>
       <choice value="*">All</choice>
       <default>*</default>
       <delimiter>, </delimiter>
@@ -131,7 +131,7 @@ index=redhatinsights
           | search $field_event_type$
           </query>
         </search>
-        <fields>["Timestamp", "Account", "Application", "Event type", "System", "Description"]</fields>
+        <fields>["Timestamp", "Account", "Application", "Event type", "System/Cluster", "Description"]</fields>
         <option name="count">20</option>
         <option name="showPager">true</option>
         <option name="rowNumbers">false</option>
