@@ -2,7 +2,7 @@
   <label>Events</label>
   <search id="base_query">
     <query>
-index=redhatinsights AND bundle = "rhel" 
+index=redhatinsights
 | spath 
 | rename object.* as *
 | spath path=events{} output=events
