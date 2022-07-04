@@ -26,7 +26,14 @@ jobs:
           echo "Patch version is $patch"
           sed -ri "s/\"version\": \"([0-9]+\\.[0-9]+)\\.[0-9]+\"/\"version\": \"\\1.$patch\"/" app/redhat_insights/app.manifest
           sed -ri "s/version = ([0-9]+\\.[0-9]+)\\.[0-9]+/version = \\1.$patch/" app/redhat_insights/default/app.conf
-          sed -ri "s/build = ([0-9]+\\.[0-9]+)\\.[0-9]+/build = \\1.$patch/" app/redhat_insights/default/app.conf
+
+      - name: Set build version
+        run: |
+          old_build_ver=`grep "build" app/redhat_insights/default/app.conf | cut -d '=' -f 2`
+          echo "Old Build version is $old_build_ver"
+          new_build_ver=$((old_build_ver+1))
+          echo "New Build version is $new_build_ver"
+          sed -ri "s/build = [0-9]+/build = $new_build_ver/" app/redhat_insights/default/app.conf
 
       - name: Add branding assets
         run: |
