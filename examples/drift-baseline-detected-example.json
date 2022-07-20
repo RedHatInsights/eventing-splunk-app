@@ -4,7 +4,7 @@
         "application": "drift",
         "event_type": "drift-baseline-detected",
         "timestamp": "2021-11-03T17:08:21.948364+00:00",
-        "account_id": "6089719",
+        "org_id": "6089719",
         "events": [
             {
                 "metadata": {},

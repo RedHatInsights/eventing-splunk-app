@@ -6,7 +6,7 @@ index=redhatinsights
 | spath 
 | rename object.* as *
 | spath path=events{} output=events
-| stats by timestamp, events, application, event_type, account_id, context.display_name,
+| stats by timestamp, events, application, event_type, org_id, context.display_name,
 | mvexpand events 
 | eval _raw=events
 | kv
@@ -20,9 +20,9 @@ index=redhatinsights
 | eval url = case(event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id', event_type=="report-upload-failed", INVENTORY_URL.'payload.host_id', event_type=="policy-triggered", POLICIES_URL.'payload.policy_id', event_type="compliance-below-threshold", COMPLIANCE_URL.'payload.host_id', !isnull('payload.rule_url'), 'payload.rule_url')
 | eval event_type = case(event_type=="resolved-recommendation", "Resolved recommendation", event_type=="new-recommendation", "New recommendation", event_type=="deactivated-recommendation", "Deactivated recommendation", event_type=="policy-triggered","Policy triggered", event_type=="drift-baseline-detected","Drift from baseline detected", event_type=="compliance-below-threshold","System is non compliant to SCAP policy", event_type=="report-upload-failed","Policy report failed to upload", !isnull(event_type), 'event_type')
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
-| table created_at_fmt, account_id, "application", "event_type", "context.display_name", title, url
+| table created_at_fmt, org_id, "application", "event_type", "context.display_name", title, url
 | sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System/Cluster", event_type as "Event type", "title" as "Description", "application" as "Application"
+| rename org_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System/Cluster", event_type as "Event type", "title" as "Description", "application" as "Application"
 
     </query>
     <earliest>$timepicker.earliest$</earliest>

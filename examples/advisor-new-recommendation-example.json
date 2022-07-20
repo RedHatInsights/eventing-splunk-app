@@ -4,7 +4,7 @@
         "application": "advisor",
         "event_type": "deactivated-recommendation",
         "timestamp": "2022-04-28T17:04:45.683504",
-        "account_id": "6089719",
+        "org_id": "6089719",
         "context": {
             "inventory_id": "0d671e9e-7928-47b5-9111-3d80c75fa3b0",
             "hostname": "system.example.com",
