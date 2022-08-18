@@ -1,0 +1,26 @@
+{
+    "event": {
+            "bundle": "rhel",
+            "application": "patch",
+            "event_type": "new-advisory",
+            "account_id": "6212377",
+            "org_id": "12383032",
+            "timestamp": "2022-08-17T13:56:02",
+            "events": [
+                {
+                "payload": {
+                    "advisory_id": 123262338,
+                    "advisory_name": "RHSA-2021:1734",
+                    "advisory_type": "security",
+                    "synopsis": "Moderate: shim security update"
+                },
+                "metadata": {}
+                }
+            ],
+            "context": {
+                "inventory_id": "e1453408-ca23-4f94-9f7c-825d35a0eb9f",
+                "display_name": "iqe-eventing-rhel82-f28a245c-38f1-4101-b31e-b38fa7c55596",
+                "host_url": ""
+            }
+    }
+}
