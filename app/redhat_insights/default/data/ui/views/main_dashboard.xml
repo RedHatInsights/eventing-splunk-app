@@ -464,14 +464,14 @@
 			"type": "viz.text",
 			"options": {
 				"content": "Last 24 hours",
-				"fontSize": 12
+				"fontSize": 10
 			}
 		},
 		"viz_tLIWvnHc": {
 			"type": "viz.text",
 			"options": {
 				"content": "Compliance events received",
-				"fontSize": 16,
+				"fontSize": 12,
 				"fontWeight": "bold"
 			}
 		},
@@ -541,6 +541,286 @@
 				"content": "Last 30 days",
 				"fontSize": 12
 			}
+		},
+		"viz_mfAhiZVu": {
+			"type": "viz.text",
+			"options": {
+				"content": "Vulnerability events received",
+				"fontSize": 12,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_HZvFHchO": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 10
+			}
+		},
+		"viz_ITQi01CO": {
+			"type": "viz.text",
+			"options": {
+				"content": "Patch advisories events received",
+				"fontSize": 12,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_sFKQx3UX": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 10
+			}
+		},
+		"viz_9VBWSTo0": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Vulnerability&form.filter_system=*"
+					}
+				}
+			]
+		},
+		"viz_W3FbUfC5": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_pOfmedTL_ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Patch&form.filter_system=*"
+					}
+				}
+			]
+		},
+		"viz_u7N1Tqw0": {
+			"type": "viz.rectangle",
+			"options": {
+				"stroke": "transparent",
+				"fill": "#ffffff"
+			}
+		},
+		"viz_9w03Dvsi": {
+			"type": "viz.text",
+			"options": {
+				"content": "Vulnerability",
+				"fontSize": 18,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_h43wWbvn": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 12
+			}
+		},
+		"viz_COobqNkb": {
+			"type": "viz.text",
+			"options": {
+				"content": "Old",
+				"fontSize": 16
+			}
+		},
+		"viz_NKJrrFw7": {
+			"type": "viz.text",
+			"options": {
+				"content": ">30 days",
+				"fontSize": 12
+			}
+		},
+		"viz_BkpIipBR": {
+			"type": "viz.text",
+			"options": {
+				"content": "New Today",
+				"fontSize": 16
+			}
+		},
+		"viz_RDVKOOtq": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA"
+			}
+		},
+		"viz_BUKru8jJ": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_tSTAMct1_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"sparklineDisplay": "off",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"trendFontSize": 12
+			},
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_XaUYOAz0": {
+			"type": "viz.text",
+			"options": {
+				"content": "CVEs with security rules",
+				"fontSize": 16
+			}
+		},
+		"viz_VlzsP6MX": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_ZlqEH4oo_ds_HRRsnn9w"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 12
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_ckkvOrLk": {
+			"type": "viz.text",
+			"options": {
+				"content": "CVEs with known exploits",
+				"fontSize": 16
+			}
+		},
+		"viz_ELaJTTU7": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_Th8SaLkj_ds_cflXieRi_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"sparklineDisplay": "off",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"trendFontSize": 12
+			},
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_oBFyE8G8": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_U2K2gqcn_ds_8HzUA9oC_ds_HRRsnn9w"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 12
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			}
+		},
+		"viz_lQdKYbSx": {
+			"type": "abslayout.line",
+			"options": {
+				"strokeColor": "#E9EAEA"
+			}
+		},
+		"viz_69L4jcHH": {
+			"type": "viz.text",
+			"options": {
+				"content": "All CVEs in Red Hat Insights →",
+				"fontSize": 12,
+				"textColor": "#65A0DF"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "https://console.redhat.com/insights/vulnerability/cves",
+						"newTab": true
+					}
+				}
+			]
 		}
 	},
 	"dataSources": {
@@ -645,14 +925,72 @@
 				"query": "index=redhatinsights AND event_type=\"compliance-below-threshold\"\n| spath \n| rename object.* as *\n| spath path=events{} output=events\n| mvexpand events\n| spath path=context{} output=context\n| mvexpand context\n| eval _raw=events\n| kv\n| eval name=case(event_type=\"compliance-below-threshold\", 'payload.policy_name')\n| eval threshold=case(event_type=\"compliance-below-threshold\", 'payload.policy_threshold')\n| eval version=mvindex('context.rhel_version',0)\n| rex field=version \"(?<majorVersion>\\w+)\\.(?<minorVersion>\\w+)\"\n| strcat \"RHEL \" majorVersion finalVersion\n| stats count(\"payload.policy_name\") as events_count by \"payload.policy_id\", name, threshold, finalVersion\n| appendpipe [| stats count | where count=0 | addinfo \n| eval name=\"---\"  \n| eval finalVersion=\"---\"\n| eval events_count=\"---\"\n| eval threshold=\"---\"\n]\n| table name, finalVersion, events_count, threshold\n| sort -events_count\n| rename name as \"Policy name\", finalVersion as \"RHEL version\", events_count as \"Events\", threshold as \"Threshold\"\n| head 3"
 			},
 			"name": "search_compliance_table"
+		},
+		"ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_vulnerability_24hrs"
+		},
+		"ds_pOfmedTL_ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights application=patch\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_patch_24hrs"
+		},
+		"ds_tSTAMct1_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights AND  application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload. has_rule'\n  | table _time,  has_rule\n  | where has_rule=True\n  | timechart span=24h aligntime=latest count( has_rule) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_cve_with_security_rules_24hrs"
+		},
+		"ds_ZlqEH4oo_ds_HRRsnn9w": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload. has_rule'\n  | table _time,  has_rule\n  | where now()>relative_time(_time, \"+30d\")\n  | where has_rule=True\n  | timechart span=30d aligntime=latest count(has_rule) as count \n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_cve_with_security_rules_30days"
+		},
+		"ds_Th8SaLkj_ds_cflXieRi_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=True\n  | timechart span=24h aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_cve_with_know_exploits_24hrs"
+		},
+		"ds_U2K2gqcn_ds_8HzUA9oC_ds_HRRsnn9w": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=True\n  | timechart span=30d aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_cve_with_know_exploits_30days"
 		}
 	},
 	"inputs": {},
 	"layout": {
+		"type": "absolute",
 		"options": {
 			"submitButton": false,
-			"height": 500,
-			"width": 1200,
+			"height": 700,
 			"display": "auto-scale"
 		},
 		"globalInputs": [],
@@ -718,9 +1056,9 @@
 				"type": "block",
 				"position": {
 					"x": 0,
-					"y": 360,
+					"y": 350,
 					"w": 640,
-					"h": 85
+					"h": 100
 				}
 			},
 			{
@@ -988,7 +1326,7 @@
 				"type": "block",
 				"position": {
 					"x": 650,
-					"y": 150,
+					"y": 350,
 					"w": 540,
 					"h": 330
 				}
@@ -1017,30 +1355,20 @@
 				"item": "viz_yfsosoE1",
 				"type": "block",
 				"position": {
-					"x": 670,
-					"y": 80,
-					"w": 170,
-					"h": 60
-				}
-			},
-			{
-				"item": "viz_QY4S5HnP",
-				"type": "block",
-				"position": {
-					"x": 700,
-					"y": 50,
-					"w": 130,
-					"h": 50
+					"x": 1100,
+					"y": 40,
+					"w": 90,
+					"h": 40
 				}
 			},
 			{
 				"item": "viz_tLIWvnHc",
 				"type": "block",
 				"position": {
-					"x": 660,
+					"x": 950,
 					"y": 30,
-					"w": 220,
-					"h": 50
+					"w": 170,
+					"h": 40
 				}
 			},
 			{
@@ -1048,7 +1376,7 @@
 				"type": "block",
 				"position": {
 					"x": 650,
-					"y": 150,
+					"y": 350,
 					"w": 540,
 					"h": 32
 				}
@@ -1058,7 +1386,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 145,
+					"y": 345,
 					"w": 310,
 					"h": 50
 				}
@@ -1068,7 +1396,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 200,
+					"y": 400,
 					"w": 520,
 					"h": 250
 				}
@@ -1078,7 +1406,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 440,
+					"y": 640,
 					"w": 190,
 					"h": 30
 				}
@@ -1088,13 +1416,240 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 168,
+					"y": 368,
 					"w": 90,
 					"h": 40
 				}
+			},
+			{
+				"item": "viz_QY4S5HnP",
+				"type": "block",
+				"position": {
+					"x": 951,
+					"y": 47,
+					"w": 100,
+					"h": 30
+				}
+			},
+			{
+				"item": "viz_mfAhiZVu",
+				"type": "block",
+				"position": {
+					"x": 661,
+					"y": 30,
+					"w": 170,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_HZvFHchO",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 50,
+					"w": 100,
+					"h": 30
+				}
+			},
+			{
+				"item": "viz_sFKQx3UX",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 100,
+					"w": 100,
+					"h": 30
+				}
+			},
+			{
+				"item": "viz_9VBWSTo0",
+				"type": "block",
+				"position": {
+					"x": 840,
+					"y": 40,
+					"w": 90,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_W3FbUfC5",
+				"type": "block",
+				"position": {
+					"x": 840,
+					"y": 90,
+					"w": 90,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_ITQi01CO",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 80,
+					"w": 180,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_u7N1Tqw0",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 150,
+					"w": 540,
+					"h": 190
+				}
+			},
+			{
+				"item": "viz_9w03Dvsi",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 144,
+					"w": 130,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_h43wWbvn",
+				"type": "block",
+				"position": {
+					"x": 890,
+					"y": 180,
+					"w": 100,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_COobqNkb",
+				"type": "block",
+				"position": {
+					"x": 1050,
+					"y": 160,
+					"w": 70,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_NKJrrFw7",
+				"type": "block",
+				"position": {
+					"x": 1050,
+					"y": 180,
+					"w": 100,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_BkpIipBR",
+				"type": "block",
+				"position": {
+					"x": 890,
+					"y": 160,
+					"w": 90,
+					"h": 20
+				}
+			},
+			{
+				"item": "viz_RDVKOOtq",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 665,
+						"y": 217
+					},
+					"to": {
+						"x": 1170,
+						"y": 219
+					}
+				}
+			},
+			{
+				"item": "viz_BUKru8jJ",
+				"type": "block",
+				"position": {
+					"x": 860,
+					"y": 220,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_XaUYOAz0",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 230,
+					"w": 200,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_VlzsP6MX",
+				"type": "block",
+				"position": {
+					"x": 1020,
+					"y": 220,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_ckkvOrLk",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 270,
+					"w": 240,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_ELaJTTU7",
+				"type": "block",
+				"position": {
+					"x": 860,
+					"y": 270,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_oBFyE8G8",
+				"type": "block",
+				"position": {
+					"x": 1020,
+					"y": 270,
+					"w": 150,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_lQdKYbSx",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 662,
+						"y": 272
+					},
+					"to": {
+						"x": 1167,
+						"y": 274
+					}
+				}
+			},
+			{
+				"item": "viz_69L4jcHH",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 306,
+					"w": 190,
+					"h": 30
+				}
 			}
-		],
-		"type": "absolute"
+		]
 	},
 	"title": "Dashboard",
 	"description": "Represents data received from Red Hat Insights"
