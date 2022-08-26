@@ -560,7 +560,7 @@
 		"viz_ITQi01CO": {
 			"type": "viz.text",
 			"options": {
-				"content": "Patch advisories events received",
+				"content": "Patch events received",
 				"fontSize": 12,
 				"fontWeight": "bold"
 			}
