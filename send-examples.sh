@@ -17,4 +17,4 @@ send_to_spulnk() {
 send_to_spulnk advisor-new-recommendation-example
 send_to_spulnk drift-baseline-detected-example
 send_to_spulnk patch-example
-send_to_spulnk vunerability-example
+send_to_spulnk vulnerability-example
