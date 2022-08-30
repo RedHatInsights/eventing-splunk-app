@@ -30,7 +30,15 @@ index=redhatinsights
       !isnull(event_type), 'event_type'
       ) 
 | eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
-| eval url = case(event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name', event_type=="any-cve-known-exploit ", CVE_URL.'payload.reported_cve', event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id', event_type=="report-upload-failed", INVENTORY_URL.'payload.host_id', event_type=="policy-triggered", POLICIES_URL.'payload.policy_id', event_type="compliance-below-threshold", COMPLIANCE_URL.'payload.host_id', !isnull('payload.rule_url'), 'payload.rule_url')
+| eval url = case(
+        event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name', 
+        application=="Vulnerability", CVE_URL.'payload.reported_cve', 
+        event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id', 
+        event_type=="report-upload-failed", INVENTORY_URL.'payload.host_id', 
+        event_type=="policy-triggered", POLICIES_URL.'payload.policy_id', 
+        event_type="compliance-below-threshold", COMPLIANCE_URL.'payload.host_id', 
+        !isnull('payload.rule_url'), 'payload.rule_url'
+    )
 | eval event_type = case(
       event_type=="new-cve-cvss", "CVEs with CVSS greater or equal to 7.0", 
       event_type=="new-cve-severity", "CVEs with critical severity", 
