@@ -663,14 +663,14 @@
 		"viz_COobqNkb": {
 			"type": "viz.text",
 			"options": {
-				"content": "Old",
+				"content": "Total",
 				"fontSize": 16
 			}
 		},
 		"viz_NKJrrFw7": {
 			"type": "viz.text",
 			"options": {
-				"content": ">30 days",
+				"content": "Last 30 days",
 				"fontSize": 12
 			}
 		},
