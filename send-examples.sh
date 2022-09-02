@@ -7,14 +7,15 @@ if [[ -z "$TOKEN" ]]; then
     exit 1
 fi
 
-send_to_spulnk() {
+send_to_splunk() {
     local filepath="$( dirname -- "${BASH_SOURCE[0]}")/examples/$1.json"
     curl -u "x:$TOKEN" "http://$SPLUNK/services/collector/event" \
     -d "@$filepath" \
     -H "Content-Type: application/json"
 }
 
-send_to_spulnk advisor-new-recommendation-example
-send_to_spulnk drift-baseline-detected-example
-send_to_spulnk patch-example
-send_to_spulnk vulnerability-example
+send_to_splunk advisor-new-recommendation-example
+send_to_splunk drift-baseline-detected-example
+send_to_splunk patch-example
+send_to_splunk vulnerability-example
+send_to_splunk malware-example
