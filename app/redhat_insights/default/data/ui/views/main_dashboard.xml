@@ -821,6 +821,54 @@
 					}
 				}
 			]
+		},
+		"viz_tMiiAsvK": {
+			"type": "viz.text",
+			"options": {
+				"content": "Malware Detection events received",
+				"fontSize": 12,
+				"fontWeight": "bold"
+			}
+		},
+		"viz_JSPTHVku": {
+			"type": "viz.text",
+			"options": {
+				"content": "Last 24 hours",
+				"fontSize": 10
+			}
+		},
+		"viz_89oyYK2v": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_1AuG6Zgj_ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"value": "#118832",
+						"to": 1
+					},
+					{
+						"value": "#d41f1f",
+						"from": 1
+					}
+				]
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Malware&form.filter_system=*"
+					}
+				}
+			]
 		}
 	},
 	"dataSources": {
@@ -983,6 +1031,17 @@
 				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=True\n  | timechart span=30d aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_cve_with_know_exploits_30days"
+		},
+		"ds_1AuG6Zgj_ds_IjDQvLZj_ds_q5kL8bG5_ds_lDtnkMeN": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights application=malware-detection\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_malware_24hrs"
 		}
 	},
 	"inputs": {},
@@ -1049,6 +1108,54 @@
 						"x": 613,
 						"y": 177
 					}
+				}
+			},
+			{
+				"item": "viz_RDVKOOtq",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 665,
+						"y": 217
+					},
+					"to": {
+						"x": 1170,
+						"y": 219
+					}
+				}
+			},
+			{
+				"item": "viz_lQdKYbSx",
+				"type": "line",
+				"position": {
+					"from": {
+						"x": 662,
+						"y": 272
+					},
+					"to": {
+						"x": 1167,
+						"y": 274
+					}
+				}
+			},
+			{
+				"item": "viz_G743tctf",
+				"type": "block",
+				"position": {
+					"x": 650,
+					"y": 0,
+					"w": 540,
+					"h": 140
+				}
+			},
+			{
+				"item": "viz_89oyYK2v",
+				"type": "block",
+				"position": {
+					"x": 860,
+					"y": 40,
+					"w": 80,
+					"h": 40
 				}
 			},
 			{
@@ -1312,16 +1419,6 @@
 				}
 			},
 			{
-				"item": "viz_G743tctf",
-				"type": "block",
-				"position": {
-					"x": 650,
-					"y": 0,
-					"w": 540,
-					"h": 140
-				}
-			},
-			{
 				"item": "viz_wYMc6XvL",
 				"type": "block",
 				"position": {
@@ -1355,8 +1452,8 @@
 				"item": "viz_yfsosoE1",
 				"type": "block",
 				"position": {
-					"x": 1100,
-					"y": 40,
+					"x": 850,
+					"y": 90,
 					"w": 90,
 					"h": 40
 				}
@@ -1365,8 +1462,8 @@
 				"item": "viz_tLIWvnHc",
 				"type": "block",
 				"position": {
-					"x": 950,
-					"y": 30,
+					"x": 660,
+					"y": 80,
 					"w": 170,
 					"h": 40
 				}
@@ -1425,8 +1522,8 @@
 				"item": "viz_QY4S5HnP",
 				"type": "block",
 				"position": {
-					"x": 951,
-					"y": 47,
+					"x": 660,
+					"y": 100,
 					"w": 100,
 					"h": 30
 				}
@@ -1435,7 +1532,7 @@
 				"item": "viz_mfAhiZVu",
 				"type": "block",
 				"position": {
-					"x": 661,
+					"x": 950,
 					"y": 30,
 					"w": 170,
 					"h": 40
@@ -1445,7 +1542,7 @@
 				"item": "viz_HZvFHchO",
 				"type": "block",
 				"position": {
-					"x": 660,
+					"x": 950,
 					"y": 50,
 					"w": 100,
 					"h": 30
@@ -1455,7 +1552,7 @@
 				"item": "viz_sFKQx3UX",
 				"type": "block",
 				"position": {
-					"x": 660,
+					"x": 950,
 					"y": 100,
 					"w": 100,
 					"h": 30
@@ -1465,7 +1562,7 @@
 				"item": "viz_9VBWSTo0",
 				"type": "block",
 				"position": {
-					"x": 840,
+					"x": 1100,
 					"y": 40,
 					"w": 90,
 					"h": 40
@@ -1475,7 +1572,7 @@
 				"item": "viz_W3FbUfC5",
 				"type": "block",
 				"position": {
-					"x": 840,
+					"x": 1100,
 					"y": 90,
 					"w": 90,
 					"h": 40
@@ -1485,7 +1582,7 @@
 				"item": "viz_ITQi01CO",
 				"type": "block",
 				"position": {
-					"x": 660,
+					"x": 950,
 					"y": 80,
 					"w": 180,
 					"h": 40
@@ -1552,20 +1649,6 @@
 				}
 			},
 			{
-				"item": "viz_RDVKOOtq",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 665,
-						"y": 217
-					},
-					"to": {
-						"x": 1170,
-						"y": 219
-					}
-				}
-			},
-			{
 				"item": "viz_BUKru8jJ",
 				"type": "block",
 				"position": {
@@ -1626,26 +1709,32 @@
 				}
 			},
 			{
-				"item": "viz_lQdKYbSx",
-				"type": "line",
-				"position": {
-					"from": {
-						"x": 662,
-						"y": 272
-					},
-					"to": {
-						"x": 1167,
-						"y": 274
-					}
-				}
-			},
-			{
 				"item": "viz_69L4jcHH",
 				"type": "block",
 				"position": {
 					"x": 660,
 					"y": 306,
 					"w": 190,
+					"h": 30
+				}
+			},
+			{
+				"item": "viz_tMiiAsvK",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 30,
+					"w": 210,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_JSPTHVku",
+				"type": "block",
+				"position": {
+					"x": 660,
+					"y": 50,
+					"w": 100,
 					"h": 30
 				}
 			}

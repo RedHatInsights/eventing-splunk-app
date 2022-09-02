@@ -16,9 +16,15 @@ index=redhatinsights
 | eval INVENTORY_URL = "https://console.redhat.com/insights/inventory/"
 | eval CVE_URL = "https://console.redhat.com/insights/vulnerability/cves/"
 | eval ADVISORY_URL = "https://console.redhat.com/insights/patch/advisories/"
-| eval application = upper(substr(application,1,1)).substr(application,2)
+| eval MALWARE_URL = "https://console.redhat.com/beta/insights/malware/systems/"
+| eval application = case(
+      application=="malware-detection", "Malware",
+      !isnull(application), upper(substr(application,1,1)).substr(application,2)
+      ) 
+| rename payload.matched_rules{} as malware_matched_list 
 | eval title=case(
       application=="Vulnerability", "CVE: ".'payload.reported_cve'." CVSS Score: ".'payload.cvss_score', 
+      event_type=="detected-malware", "Malware detected on system: ".mvjoin(malware_matched_list, ", "),
       event_type=="new-advisory",'payload.synopsis', 
       event_type=="new-recommendation",'payload.rule_description', 
       event_type=="resolved-recommendation",'payload.rule_description', 
@@ -31,6 +37,7 @@ index=redhatinsights
       ) 
 | eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
 | eval url = case(
+        application=="Malware", MALWARE_URL.'payload.host_id', 
         event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name', 
         application=="Vulnerability", CVE_URL.'payload.reported_cve', 
         event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id', 
@@ -40,6 +47,7 @@ index=redhatinsights
         !isnull('payload.rule_url'), 'payload.rule_url'
     )
 | eval event_type = case(
+      event_type=="detected-malware", "Detected Malware",
       event_type=="new-cve-cvss", "CVEs with CVSS greater or equal to 7.0", 
       event_type=="new-cve-severity", "CVEs with critical severity", 
       event_type=="new-cve-security-rule", "CVEs with security rule associated", 
