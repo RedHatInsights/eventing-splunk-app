@@ -1003,14 +1003,18 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights AND  application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload. has_rule'\n  | table _time,  has_rule\n  | where has_rule=True\n  | timechart span=24h aligntime=latest count( has_rule) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND  application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload.has_rule'\n  | table _time,  has_rule\n  | where has_rule=\"true\"\n  | timechart span=24h aligntime=latest count( has_rule) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_cve_with_security_rules_24hrs"
 		},
 		"ds_ZlqEH4oo_ds_HRRsnn9w": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=redhatinsights AND application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload. has_rule'\n  | table _time,  has_rule\n  | where now()>relative_time(_time, \"+30d\")\n  | where has_rule=True\n  | timechart span=30d aligntime=latest count(has_rule) as count \n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND application=vulnerability\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval  has_rule='payload.has_rule'\n  | table _time,  has_rule\n | where has_rule=\"true\"\n  | timechart span=30d aligntime=latest count(has_rule) as count \n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]",
+				"queryParameters": {
+					"earliest": "-30d@d",
+					"latest": "now"
+				}
 			},
 			"name": "search_cve_with_security_rules_30days"
 		},
@@ -1021,13 +1025,28 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=True\n  | timechart span=24h aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=\"true\"\n  | timechart span=24h aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_cve_with_know_exploits_24hrs"
 		},
 		"ds_U2K2gqcn_ds_8HzUA9oC_ds_HRRsnn9w": {
 			"type": "ds.search",
 			"options": {
+				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=\"true\"\n  | timechart span=30d aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]",
+				"queryParameters": {
+					"earliest": "-30d@d",
+					"latest": "now"
+				}
+			},
+			"name": "search_cve_with_know_exploits_30days"
+		},
+		"ds_kYygFFho_ds_tSTAMct1_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
 				"query": "index=redhatinsights AND event_type=any-cve-known-exploit\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval known_exploit='payload.known_exploit'\n  | table _time, known_exploit\n  | where known_exploit=True\n  | timechart span=30d aligntime=latest count(known_exploit) as count | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_cve_with_know_exploits_30days"
