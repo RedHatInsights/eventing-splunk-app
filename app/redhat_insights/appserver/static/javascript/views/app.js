@@ -1,7 +1,6 @@
-import * as Setup from "./setup.js";
 import { validate_uuidv4 } from "./util.js";
 
-define(["react", "splunkjs/splunk", "splunkjs/mvc"], function (react, splunk_js_sdk, mvc) {
+define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup"], function (react, splunk_js_sdk, mvc, Setup) {
   const e = react.createElement;
   const SetupPage = () => {
     const hecName = 'redhatinsights';
