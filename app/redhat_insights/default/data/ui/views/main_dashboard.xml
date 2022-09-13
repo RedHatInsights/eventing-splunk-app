@@ -869,6 +869,71 @@
 					}
 				}
 			]
+		},
+		"viz_8eAN6hh5": {
+			"type": "viz.pie",
+			"dataSources": {
+				"primary": "ds_CdEMyHR6"
+			},
+			"title": "",
+			"description": ""
+		},
+		"viz_ixGCzVvb": {
+			"type": "viz.pie",
+			"dataSources": {
+				"primary": "ds_SZLRrfAb_ds_CdEMyHR6"
+			},
+			"title": "",
+			"description": ""
+		},
+		"viz_dhJxQezq": {
+			"type": "viz.text",
+			"options": {
+				"content": "All events received",
+				"fontSize": 16
+			}
+		},
+		"viz_4RKeJqvl": {
+			"type": "viz.text",
+			"options": {
+				"content": "Total in last 30 days",
+				"fontSize": 12
+			}
+		},
+		"viz_uIXtfRVR": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_TbymX4BM_ds_9hVCveWJ_ds_A28QM2S4_ds_snKvID23"
+			},
+			"options": {
+				"unit": "",
+				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
+				"sparklineDisplay": "off",
+				"trendFontSize": 14,
+				"trendDisplay": "off"
+			},
+			"title": "",
+			"context": {
+				"trendColorEditorConfig": [
+					{
+						"to": 0,
+						"value": "#9E2520"
+					},
+					{
+						"from": 0,
+						"value": "#1C6B2D"
+					}
+				]
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=*&form.filter_system=*",
+						"newTab": false
+					}
+				}
+			]
 		}
 	},
 	"dataSources": {
@@ -1061,6 +1126,39 @@
 				"query": "index=redhatinsights application=malware-detection\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_malware_24hrs"
+		},
+		"ds_CdEMyHR6": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      ) \n  | kv\n  | table application\n  | chart count by application"
+			},
+			"name": "Search_Pie_All_Events_24h"
+		},
+		"ds_SZLRrfAb_ds_CdEMyHR6": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-30d@d",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      ) \n  | kv\n  | table application\n  | chart count by application"
+			},
+			"name": "Search_Pie_All_Events_30d"
+		},
+		"ds_TbymX4BM_ds_9hVCveWJ_ds_A28QM2S4_ds_snKvID23": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-48h",
+					"latest": "now"
+				},
+				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=30d aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+			},
+			"name": "search_30d"
 		}
 	},
 	"inputs": {},
@@ -1158,6 +1256,26 @@
 				}
 			},
 			{
+				"item": "viz_GW0oTLGS",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 350,
+					"w": 640,
+					"h": 340
+				}
+			},
+			{
+				"item": "viz_8eAN6hh5",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 400,
+					"w": 330,
+					"h": 270
+				}
+			},
+			{
 				"item": "viz_G743tctf",
 				"type": "block",
 				"position": {
@@ -1175,16 +1293,6 @@
 					"y": 40,
 					"w": 80,
 					"h": 40
-				}
-			},
-			{
-				"item": "viz_GW0oTLGS",
-				"type": "block",
-				"position": {
-					"x": 0,
-					"y": 350,
-					"w": 640,
-					"h": 100
 				}
 			},
 			{
@@ -1755,6 +1863,46 @@
 					"y": 50,
 					"w": 100,
 					"h": 30
+				}
+			},
+			{
+				"item": "viz_ixGCzVvb",
+				"type": "block",
+				"position": {
+					"x": 310,
+					"y": 400,
+					"w": 330,
+					"h": 270
+				}
+			},
+			{
+				"item": "viz_dhJxQezq",
+				"type": "block",
+				"position": {
+					"x": 330,
+					"y": 370,
+					"w": 170,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_4RKeJqvl",
+				"type": "block",
+				"position": {
+					"x": 330,
+					"y": 395,
+					"w": 110,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_uIXtfRVR",
+				"type": "block",
+				"position": {
+					"x": 470,
+					"y": 380,
+					"w": 170,
+					"h": 60
 				}
 			}
 		]
