@@ -1140,7 +1140,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-24h@h",
+					"earliest": "-24h",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
@@ -1151,7 +1151,7 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-30d@d",
+					"earliest": "-30d",
 					"latest": "now"
 				},
 				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
