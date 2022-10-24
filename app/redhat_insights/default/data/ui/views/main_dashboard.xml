@@ -890,7 +890,7 @@
 			"description": "",
 			"showProgressBar": false,
 			"showLastUpdated": false,
-			"charting.chart.usePercentageValue": false
+			"charting.chart.usePercentageValue": false,
 			"options": {
 				"showDonutHole": true
 			}
