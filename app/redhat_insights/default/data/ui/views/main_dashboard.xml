@@ -888,12 +888,12 @@
 			},
 			"title": "",
 			"description": "",
-			"options": {
-				"showDonutHole": true
-			},
 			"showProgressBar": false,
 			"showLastUpdated": false,
 			"charting.chart.usePercentageValue": false
+			"options": {
+				"showDonutHole": true
+			}
 		},
 		"viz_dhJxQezq": {
 			"type": "viz.text",
@@ -1271,17 +1271,7 @@
 					"x": 0,
 					"y": 350,
 					"w": 640,
-					"h": 340
-				}
-			},
-			{
-				"item": "viz_8eAN6hh5",
-				"type": "block",
-				"position": {
-					"x": 10,
-					"y": 400,
-					"w": 330,
-					"h": 270
+					"h": 370
 				}
 			},
 			{
@@ -1348,9 +1338,9 @@
 				"item": "viz_6hIT1ObQ",
 				"type": "block",
 				"position": {
-					"x": 150,
+					"x": 170,
 					"y": 380,
-					"w": 170,
+					"w": 150,
 					"h": 60
 				}
 			},
@@ -1545,23 +1535,13 @@
 				}
 			},
 			{
-				"item": "viz_wQEbYspm",
-				"type": "block",
-				"position": {
-					"x": 30,
-					"y": 395,
-					"w": 110,
-					"h": 50
-				}
-			},
-			{
 				"item": "viz_wYMc6XvL",
 				"type": "block",
 				"position": {
 					"x": 650,
 					"y": 350,
 					"w": 540,
-					"h": 330
+					"h": 370
 				}
 			},
 			{
@@ -1631,7 +1611,7 @@
 					"x": 660,
 					"y": 400,
 					"w": 520,
-					"h": 250
+					"h": 290
 				}
 			},
 			{
@@ -1639,7 +1619,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 640,
+					"y": 680,
 					"w": 190,
 					"h": 30
 				}
@@ -1875,16 +1855,6 @@
 				}
 			},
 			{
-				"item": "viz_ixGCzVvb",
-				"type": "block",
-				"position": {
-					"x": 310,
-					"y": 400,
-					"w": 330,
-					"h": 270
-				}
-			},
-			{
 				"item": "viz_dhJxQezq",
 				"type": "block",
 				"position": {
@@ -1912,6 +1882,36 @@
 					"y": 380,
 					"w": 170,
 					"h": 60
+				}
+			},
+			{
+				"item": "viz_8eAN6hh5",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 450,
+					"w": 300,
+					"h": 270
+				}
+			},
+			{
+				"item": "viz_ixGCzVvb",
+				"type": "block",
+				"position": {
+					"x": 340,
+					"y": 450,
+					"w": 300,
+					"h": 270
+				}
+			},
+			{
+				"item": "viz_wQEbYspm",
+				"type": "block",
+				"position": {
+					"x": 30,
+					"y": 395,
+					"w": 110,
+					"h": 50
 				}
 			}
 		]
