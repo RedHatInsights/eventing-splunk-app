@@ -1143,7 +1143,7 @@
 					"earliest": "-24h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
+				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      application==\"resource-optimization\", \"ROS\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
 			},
 			"name": "Search_Pie_All_Events_24h"
 		},
@@ -1154,7 +1154,7 @@
 					"earliest": "-30d",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
+				"query": "index=redhatinsights \n| stats count by application\n| eval application = case(\n      application==\"malware-detection\", \"Malware\",\n      application==\"resource-optimization\", \"ROS\",\n      !isnull(application), upper(substr(application,1,1)).substr(application,2)\n      )\n| rename application as Application, count as Count"
 			},
 			"name": "Search_Pie_All_Events_30d"
 		},
