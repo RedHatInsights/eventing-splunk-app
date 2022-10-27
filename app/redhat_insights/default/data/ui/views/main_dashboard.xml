@@ -938,7 +938,7 @@
 				{
 					"type": "drilldown.customUrl",
 					"options": {
-						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=*&form.filter_system=*",
+						"url": "/app/redhat_insights/events?form.timepicker.earliest=-30d&form.timepicker.latest=now&form.field_account=*&form.field_application=*&form.filter_system=*",
 						"newTab": false
 					}
 				}
@@ -1165,7 +1165,7 @@
 					"earliest": "-48h",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=30d aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | where relative_time(now(), \"-30d\") <= _time\n  | timechart span=30d count(_time) as count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
 			},
 			"name": "search_30d"
 		}
@@ -1271,7 +1271,7 @@
 					"x": 0,
 					"y": 350,
 					"w": 640,
-					"h": 370
+					"h": 280
 				}
 			},
 			{
@@ -1541,7 +1541,7 @@
 					"x": 650,
 					"y": 350,
 					"w": 540,
-					"h": 370
+					"h": 280
 				}
 			},
 			{
@@ -1611,7 +1611,7 @@
 					"x": 660,
 					"y": 400,
 					"w": 520,
-					"h": 290
+					"h": 190
 				}
 			},
 			{
@@ -1619,7 +1619,7 @@
 				"type": "block",
 				"position": {
 					"x": 660,
-					"y": 680,
+					"y": 590,
 					"w": 190,
 					"h": 30
 				}
@@ -1891,7 +1891,7 @@
 					"x": 10,
 					"y": 450,
 					"w": 300,
-					"h": 270
+					"h": 180
 				}
 			},
 			{
@@ -1901,7 +1901,7 @@
 					"x": 340,
 					"y": 450,
 					"w": 300,
-					"h": 270
+					"h": 180
 				}
 			},
 			{
