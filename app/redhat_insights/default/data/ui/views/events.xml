@@ -17,13 +17,17 @@ index=redhatinsights
 | eval CVE_URL = "https://console.redhat.com/insights/vulnerability/cves/"
 | eval ADVISORY_URL = "https://console.redhat.com/insights/patch/advisories/"
 | eval MALWARE_URL = "https://console.redhat.com/beta/insights/malware/systems/"
+| eval ROS_URL = "https://console.redhat.com/insights/ros/"
 | eval application = case(
+      application=="resource-optimization", "Resource Optimization",
       application=="malware-detection", "Malware",
       !isnull(application), upper(substr(application,1,1)).substr(application,2)
       ) 
 | rename payload.matched_rules{} as malware_matched_list 
+| rename payload.previous_state{} as ros_previous_state_list
 | eval title=case(
       application=="Vulnerability", "CVE: ".'payload.reported_cve'." CVSS Score: ".'payload.cvss_score', 
+      event_type=="new-suggestion", "State changed from ".mvjoin(ros_previous_state_list, ", ")." to ".'payload.current_state', 
       event_type=="detected-malware", "Malware detected on system: ".mvjoin(malware_matched_list, ", "),
       event_type=="new-advisory",'payload.synopsis', 
       event_type=="new-recommendation",'payload.rule_description', 
@@ -37,6 +41,7 @@ index=redhatinsights
       ) 
 | eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
 | eval url = case(
+        event_type=="new-suggestion", ROS_URL.'payload.inventory_id', 
         application=="Malware", MALWARE_URL.'payload.host_id', 
         event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name', 
         application=="Vulnerability", CVE_URL.'payload.reported_cve', 
@@ -47,6 +52,7 @@ index=redhatinsights
         !isnull('payload.rule_url'), 'payload.rule_url'
     )
 | eval event_type = case(
+      event_type=="new-suggestion", "New suggestion", 
       event_type=="detected-malware", "Detected Malware",
       event_type=="new-cve-cvss", "CVEs with CVSS greater or equal to 7.0", 
       event_type=="new-cve-severity", "CVEs with critical severity", 
