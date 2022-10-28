@@ -6,8 +6,9 @@ index=redhatinsights
 | spath 
 | rename object.* as *
 | spath path=events{} output=events
-| stats by timestamp, events, application, event_type, account_id, context.display_name,
 | mvexpand events 
+| fillnull value=0 org_id, account_id
+| stats by timestamp, events, application, event_type, org_id, account_id, context.display_name
 | eval _raw=events
 | kv
 | eval DRIFT_URL = "https://console.redhat.com/insights/drift/baselines/"
@@ -69,9 +70,9 @@ index=redhatinsights
       !isnull(event_type), 'event_type'
       )
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
-| table created_at_fmt, account_id, "application", "event_type", "context.display_name", title, url
+| table created_at_fmt, account_id, org_id, "application", "event_type", "context.display_name", title, url
 | sort -created_at_fmt
-| rename account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System/Cluster", event_type as "Event type", "title" as "Description", "application" as "Application"
+| rename org_id as "Org", account_id as "Account", created_at_fmt as "Timestamp", context.display_name as "System/Cluster", event_type as "Event type", "title" as "Description", "application" as "Application"
     </query>
     <earliest>$timepicker.earliest$</earliest>
     <latest>$timepicker.latest$</latest>
@@ -92,6 +93,22 @@ index=redhatinsights
       <fieldForLabel>Account</fieldForLabel>
       <fieldForValue>Account</fieldForValue>
       <prefix>"Account" IN (</prefix>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <delimiter>, </delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <initialValue>*</initialValue>
+      <suffix>)</suffix>
+    </input>
+    <input type="multiselect" token="field_org" searchWhenChanged="true">
+      <label>Org</label>
+      <search base="base_query">
+        <query>| dedup "Org"</query>
+      </search>
+      <fieldForLabel>Org</fieldForLabel>
+      <fieldForValue>Org</fieldForValue>
+      <prefix>"Org" IN (</prefix>
       <choice value="*">All</choice>
       <default>*</default>
       <delimiter>, </delimiter>
@@ -176,10 +193,11 @@ index=redhatinsights
           | search $filter_system$
           | search $field_application$
           | search $field_account$
+          | search $field_org$
           | search $field_event_type$
           </query>
         </search>
-        <fields>["Timestamp", "Account", "Application", "Event type", "System/Cluster", "Description"]</fields>
+        <fields>["Timestamp", "Account", "Org", "Application", "Event type", "System/Cluster", "Description"]</fields>
         <option name="count">20</option>
         <option name="showPager">true</option>
         <option name="rowNumbers">false</option>
