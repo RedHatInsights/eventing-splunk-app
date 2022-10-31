@@ -914,26 +914,7 @@
 			"dataSources": {
 				"primary": "ds_TbymX4BM_ds_9hVCveWJ_ds_A28QM2S4_ds_snKvID23"
 			},
-			"options": {
-				"unit": "",
-				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
-				"sparklineDisplay": "off",
-				"trendFontSize": 14,
-				"trendDisplay": "off"
-			},
 			"title": "",
-			"context": {
-				"trendColorEditorConfig": [
-					{
-						"to": 0,
-						"value": "#9E2520"
-					},
-					{
-						"from": 0,
-						"value": "#1C6B2D"
-					}
-				]
-			},
 			"eventHandlers": [
 				{
 					"type": "drilldown.customUrl",
@@ -942,7 +923,14 @@
 						"newTab": false
 					}
 				}
-			]
+			],
+			"options": {
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('event_ct')"
+			}
 		}
 	},
 	"dataSources": {
@@ -960,7 +948,7 @@
 		"ds_HRRsnn9w": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval risk='payload.total_risk'\n  | table _time, risk\n  | where relative_time(now(), \"-30d\") <= _time\n  | where risk=4\n  | timechart span=24h count(risk) as count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND event_type=new-recommendation earliest=-60d latest=now()\n| spath \n| spath path=events{} output=events\n| search \"events{}.payload.total_risk\"=4\n| eval event_ct=MVCOUNT(events)\n| timechart span=720h aligntime=latest count(event_ct) AS event_ct\n| appendpipe [| stats count as total\n| where total=0\n| eval total=0]"
 			},
 			"name": "search_critical_recomm_30days"
 		},
@@ -1000,7 +988,7 @@
 		"ds_8HzUA9oC_ds_HRRsnn9w": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=redhatinsights AND event_type=new-recommendation\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | eval has_incident='payload.has_incident'\n  | table _time, has_incident\n  | where relative_time(now(), \"-30d\") <= _time\n  | where has_incident=\"true\"\n  | timechart span=24h count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights AND event_type=new-recommendation earliest=-60d latest=now()\n| spath \n| spath path=events{} output=events\n| search \"events{}.payload.has_incident\"=\"true\"\n| eval event_ct=MVCOUNT(events)\n| timechart span=720h aligntime=latest count(event_ct) AS event_ct\n| appendpipe [| stats count as total\n| where total=0\n| eval total=0]"
 			},
 			"name": "search_recomm_with_incidents_30days"
 		},
@@ -1162,10 +1150,10 @@
 			"type": "ds.search",
 			"options": {
 				"queryParameters": {
-					"earliest": "-48h",
+					"earliest": "-30d",
 					"latest": "now"
 				},
-				"query": "index=redhatinsights \n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | where relative_time(now(), \"-30d\") <= _time\n  | timechart span=30d count(_time) as count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
+				"query": "index=redhatinsights earliest=-30d latest=now()\n| spath \n| spath path=events{} output=events\n| eval event_ct=MVCOUNT(events)\n| timechart span=720h aligntime=latest count(event_ct) AS event_ct"
 			},
 			"name": "search_30d"
 		}
