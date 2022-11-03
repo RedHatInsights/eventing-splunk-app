@@ -8,6 +8,8 @@ index=redhatinsights
 | spath path=events{} output=events
 | stats by timestamp, events, application, event_type, account_id, context.display_name,
 | mvexpand events 
+| fillnull value="Unknown" account_id
+| eval account_id=if(account_id=="null", "Unknown", account_id)
 | eval _raw=events
 | kv
 | eval DRIFT_URL = "https://console.redhat.com/insights/drift/baselines/"
