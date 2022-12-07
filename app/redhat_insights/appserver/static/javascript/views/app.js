@@ -1,7 +1,14 @@
 import { validate_uuidv4 } from "./util.js";
 
-define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup"], function (react, splunk_js_sdk, mvc, Setup) {
+export const appNamespace = {
+  owner: "Red Hat",
+  app: "redhat_insights",
+  sharing: "app",
+};
+
+define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup", 'app/views/setup_configuration'], function (react, splunk_js_sdk, mvc, Setup, Config) {
   const e = react.createElement;
+
   const SetupPage = () => {
     const hecName = 'redhatinsights';
     const defaultIndex = 'redhatinsights';
@@ -33,7 +40,20 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup"], function
       }
     }
 
+    const validateAppIsConfigured = async () => {
+      try{
+        // Validate if the app is already configured
+        const isConfigured = await Config.is_app_configured(splunk_js_sdk);
+        if (isConfigured){
+          Config.redirect_to_splunk_app_homepage(app_name);
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     react.useEffect(() => {
+      validateAppIsConfigured();
       getSplunkVersion();
       getAppVersion();
     }, []);
@@ -230,6 +250,7 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup"], function
     isSetupOpened, setIsSetupOpened, hecUrl, isUrlCopied,
     setIsUrlCopied, splunkVersion, appVersion
   }) => {
+
     const [setupUrl, setSetupUrl] = react.useState('https://console.redhat.com/beta/settings/integrations/splunk-setup');
 
     react.useEffect(() => {
