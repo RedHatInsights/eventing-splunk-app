@@ -1,6 +1,8 @@
 
 define(['./setup_configuration'], function(Config) {
 
+  console.debug("Entering setup.js");
+
   const hecAndIndex = async (splunk_js_sdk, input) => {
     var application_name_space = {
       owner: "nobody",

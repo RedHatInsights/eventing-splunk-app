@@ -2,6 +2,11 @@ import { promisify } from './util.js';
 import * as SplunkHelpers from './splunk_helpers.js';
 
 export const app_name = "redhat_insights";
+export const appNamespace = {
+    owner: "Red Hat",
+    app: app_name,
+    sharing: "app",
+};
 
 define(["uuid"], function(uuidlib) {
 
@@ -73,7 +78,32 @@ define(["uuid"], function(uuidlib) {
     return splunk_js_sdk_service;
   };
 
+  async function is_app_configured(splunk_js_sdk){
+    //Method to validate if app is configured
+    var application_name_space = {
+      owner: "nobody",
+      app: app_name,
+      sharing: "app",
+    };
+    try{
+      const service = create_splunk_js_sdk_service(splunk_js_sdk, application_name_space)
+      const configFileName = "app";
+      const stanzaName = "install";
+      
+      const isConfigured = await SplunkHelpers.get_config_value(service, configFileName, stanzaName);
+      if (isConfigured){
+        return true;
+      } else {
+        return false;
+      }
+    }catch (error){
+      console.error(error)
+    }
+
+  }
+
   return {
+    is_app_configured,
     complete_setup,
     reload_splunk_app,
     redirect_to_splunk_app_homepage,

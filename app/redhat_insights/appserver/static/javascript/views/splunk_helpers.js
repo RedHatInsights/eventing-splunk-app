@@ -1,5 +1,66 @@
 import { promisify } from "./util.js";
 
+async function get_config_value(
+  splunk_js_sdk_service,
+  configuration_file_name,
+  stanza_name
+) {
+  console.debug("Called get_config_value");
+
+  // Retrieve the accessor used to get a configuration file
+  var splunk_js_sdk_service_configurations =
+    splunk_js_sdk_service.configurations({
+      // Name space information not provided
+    });
+  splunk_js_sdk_service_configurations = await promisify(
+    splunk_js_sdk_service_configurations.fetch
+  )();
+  console.debug("splunk_js_sdk_service_configurations", splunk_js_sdk_service_configurations);
+
+  // Check for the existence of the configuration file
+  var configuration_file_exist = does_configuration_file_exist(
+    splunk_js_sdk_service_configurations,
+    configuration_file_name
+  );
+
+  // Retrieves the configuration file accessor
+  var configuration_file_accessor = get_configuration_file(
+    splunk_js_sdk_service_configurations,
+    configuration_file_name
+  );
+  configuration_file_accessor = await promisify(
+    configuration_file_accessor.fetch
+  )();
+
+  // Checks to see if the stanza where the inputs will be
+  // stored exist
+  var stanza_exist = does_stanza_exist(
+    configuration_file_accessor,
+    stanza_name
+  );
+
+  // If the configuration stanza doesn't exist, create it
+  if (!stanza_exist) {
+    await create_stanza(configuration_file_accessor, stanza_name);
+  }
+  // Need to update the information after the creation of the stanza
+  configuration_file_accessor = await promisify(
+    configuration_file_accessor.fetch
+  )();
+
+  // Retrieves the configuration stanza accessor
+  var configuration_stanza_accessor = get_configuration_file_stanza(
+    configuration_file_accessor,
+    stanza_name
+  );
+  configuration_stanza_accessor = await promisify(
+    configuration_stanza_accessor.fetch
+  )();
+
+  return does_setup_is_configured(configuration_stanza_accessor)
+}
+
+
 async function create_hec_collector(
   splunk_js_sdk_service,
   stanza_name,
@@ -217,6 +278,18 @@ function does_stanza_property_exist(
   return was_property_found;
 }
 
+function does_setup_is_configured(
+  configuration_stanza_accessor
+) {
+  const properties = configuration_stanza_accessor.properties()
+
+  if (properties.is_configured == 1){
+    return true
+  } else{
+    return false
+  }
+}
+
 // ---------------------
 // Retrieval Functions
 // ---------------------
@@ -266,4 +339,4 @@ function update_stanza_properties(
   return promisify(configuration_stanza_accessor.update)(new_stanza_properties);
 }
 
-export { update_configuration_file, create_hec_collector };
+export { get_config_value, update_configuration_file, create_hec_collector };
