@@ -19,7 +19,7 @@
                     <div class="div-container">
                         <h2>About</h2>
                         <p> Version $version$ </p>
-                        <p><a href="https://console.redhat.com/beta/settings/integrations" target="_blank">Check integrations in Red Hat Insights <i class="icon-external"/></a></p>
+                        <p><a href="https://console.redhat.com/settings/integrations" target="_blank">Check integrations in Red Hat Insights <i class="icon-external"/></a></p>
                     </div>
                     <div class="div-container">
                         <h2>Documentation</h2>
