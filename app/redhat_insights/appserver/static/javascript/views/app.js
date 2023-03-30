@@ -251,10 +251,10 @@ define(["react", "splunkjs/splunk", "splunkjs/mvc", "app/views/setup", 'app/view
     setIsUrlCopied, splunkVersion, appVersion
   }) => {
 
-    const [setupUrl, setSetupUrl] = react.useState('https://console.redhat.com/beta/settings/integrations/splunk-setup');
+    const [setupUrl, setSetupUrl] = react.useState('https://console.redhat.com/settings/integrations/splunk-setup');
 
     react.useEffect(() => {
-      setSetupUrl(`https://console.redhat.com/beta/settings/integrations/splunk-setup?appVersion=${appVersion}&splunkVersion=${splunkVersion}`);
+      setSetupUrl(`https://console.redhat.com/settings/integrations/splunk-setup?appVersion=${appVersion}&splunkVersion=${splunkVersion}`);
     }, [splunkVersion, appVersion]);
 
     const handleSetupIntegration = async () => {

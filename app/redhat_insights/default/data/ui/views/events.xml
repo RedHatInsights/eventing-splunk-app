@@ -18,7 +18,7 @@ index=redhatinsights
 | eval INVENTORY_URL = "https://console.redhat.com/insights/inventory/"
 | eval CVE_URL = "https://console.redhat.com/insights/vulnerability/cves/"
 | eval ADVISORY_URL = "https://console.redhat.com/insights/patch/advisories/"
-| eval MALWARE_URL = "https://console.redhat.com/beta/insights/malware/systems/"
+| eval MALWARE_URL = "https://console.redhat.com/insights/malware/systems/"
 | eval ROS_URL = "https://console.redhat.com/insights/ros/"
 | eval application = case(
       application=="resource-optimization", "Resource Optimization",
