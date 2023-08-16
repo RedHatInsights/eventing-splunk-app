@@ -26,10 +26,9 @@ index=redhatinsights
       !isnull(application), upper(substr(application,1,1)).substr(application,2)
       ) 
 | rename payload.matched_rules{} as malware_matched_list 
-| rename payload.previous_state{} as ros_previous_state_list
 | eval title=case(
       application=="Vulnerability", "CVE: ".'payload.reported_cve'." CVSS Score: ".'payload.cvss_score', 
-      event_type=="new-suggestion", "State changed from ".mvjoin(ros_previous_state_list, ", ")." to ".'payload.current_state', 
+      event_type=="new-suggestion", "State changed from ".'payload.previous_state'." to ".'payload.current_state', 
       event_type=="detected-malware", "Malware detected on system: ".mvjoin(malware_matched_list, ", "),
       event_type=="new-advisory",'payload.synopsis', 
       event_type=="new-recommendation",'payload.rule_description', 

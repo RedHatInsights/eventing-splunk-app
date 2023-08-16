@@ -17,7 +17,7 @@
           "display_name": "iqe-eventing-72fb1e91-9d9a-4b00-b572-c035f46dc6c1",
           "inventory_id": "372104fe-5120-45ff-9655-c47170631539",
           "message": "iqe-eventing-72fb1e91-9d9a-4b00-b572-c035f46dc6c1 has a new suggestion.",
-          "previous_state": ["Idling"],
+          "previous_state": "Idling",
           "current_state": "Undersized"
         }
       }
