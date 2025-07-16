@@ -3,10 +3,10 @@
   <search id="base_query">
     <query>
 index=redhatinsights
-| spath 
+| spath
 | rename object.* as *
 | spath path=events{} output=events
-| mvexpand events 
+| mvexpand events
 | fillnull value="Unknown" account_id
 | eval account_id=if(account_id=="null", "Unknown", account_id)
 | stats by timestamp, events, application, event_type, org_id, account_id, context.display_name
@@ -24,49 +24,57 @@ index=redhatinsights
       application=="resource-optimization", "Resource Optimization",
       application=="malware-detection", "Malware",
       !isnull(application), upper(substr(application,1,1)).substr(application,2)
-      ) 
-| rename payload.matched_rules{} as malware_matched_list 
+      )
+| rename payload.matched_rules{} as malware_matched_list
 | eval title=case(
-      application=="Vulnerability", "CVE: ".'payload.reported_cve'." CVSS Score: ".'payload.cvss_score', 
-      event_type=="new-suggestion", "State changed from ".'payload.previous_state'." to ".'payload.current_state', 
+      application=="Vulnerability", "CVE: ".'payload.reported_cve'." CVSS Score: ".'payload.cvss_score',
+      event_type=="new-suggestion", "State changed from ".'payload.previous_state'." to ".'payload.current_state',
       event_type=="detected-malware", "Malware detected on system: ".mvjoin(malware_matched_list, ", "),
-      event_type=="new-advisory",'payload.synopsis', 
-      event_type=="new-recommendation",'payload.rule_description', 
-      event_type=="resolved-recommendation",'payload.rule_description', 
-      event_type=="deactivated-recommendation", 'payload.rule_description', 
-      event_type=="policy-triggered", 'payload.policy_name'." policy triggered", 
-      event_type=="drift-baseline-detected","Drift detected from ".'payload.baseline_name'." baseline", 
-      event_type=="compliance-below-threshold",'payload.policy_name', 
-      event_type=="report-upload-failed", 'payload.error', 
+      event_type=="new-advisory",'payload.synopsis',
+      event_type=="new-recommendation",'payload.rule_description',
+      event_type=="resolved-recommendation",'payload.rule_description',
+      event_type=="deactivated-recommendation", 'payload.rule_description',
+      event_type=="policy-triggered", 'payload.policy_name'." policy triggered",
+      event_type=="drift-baseline-detected","Drift detected from ".'payload.baseline_name'." baseline",
+      event_type=="compliance-below-threshold",'payload.policy_name',
+      event_type=="report-upload-failed", 'payload.error',
+      event_type=="validation-error", 'payload.error.message',
+      event_type=="system-became-stale", "System became stale",
+      event_type=="system-deleted", "System deleted",
+      event_type=="new-system-registered", "New system registered",
       !isnull(event_type), 'event_type'
-      ) 
+      )
 | eval time=strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%3N")
 | eval url = case(
-        event_type=="new-suggestion", ROS_URL.'payload.inventory_id', 
-        application=="Malware", MALWARE_URL.'payload.host_id', 
-        event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name', 
-        application=="Vulnerability", CVE_URL.'payload.reported_cve', 
-        event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id', 
-        event_type=="report-upload-failed", INVENTORY_URL.'payload.host_id', 
-        event_type=="policy-triggered", POLICIES_URL.'payload.policy_id', 
-        event_type="compliance-below-threshold", COMPLIANCE_URL.'payload.host_id', 
+        event_type=="new-suggestion", ROS_URL.'payload.inventory_id',
+        application=="Malware", MALWARE_URL.'payload.host_id',
+        event_type=="new-advisory", ADVISORY_URL.'payload.advisory_name',
+        application=="Vulnerability", CVE_URL.'payload.reported_cve',
+        event_type=="drift-baseline-detected", DRIFT_URL.'payload.baseline_id',
+        event_type=="report-upload-failed", INVENTORY_URL.'payload.host_id',
+        event_type=="policy-triggered", POLICIES_URL.'payload.policy_id',
+        event_type="compliance-below-threshold", COMPLIANCE_URL.'payload.host_id',
         !isnull('payload.rule_url'), 'payload.rule_url'
     )
 | eval event_type = case(
-      event_type=="new-suggestion", "New suggestion", 
+      event_type=="new-suggestion", "New suggestion",
       event_type=="detected-malware", "Detected Malware",
-      event_type=="new-cve-cvss", "CVEs with CVSS greater or equal to 7.0", 
-      event_type=="new-cve-severity", "CVEs with critical severity", 
-      event_type=="new-cve-security-rule", "CVEs with security rule associated", 
-      event_type=="any-cve-known-exploit", "CVEs with at least one known exploit", 
-      event_type=="new-advisory", "New Advisory", 
-      event_type=="resolved-recommendation", "Resolved recommendation", 
-      event_type=="new-recommendation", "New recommendation", 
-      event_type=="deactivated-recommendation", "Deactivated recommendation", 
-      event_type=="policy-triggered","Policy triggered", 
-      event_type=="drift-baseline-detected","Drift from baseline detected", 
-      event_type=="compliance-below-threshold","System is non compliant to SCAP policy", 
-      event_type=="report-upload-failed","Policy report failed to upload", 
+      event_type=="new-cve-cvss", "CVEs with CVSS greater or equal to 7.0",
+      event_type=="new-cve-severity", "CVEs with critical severity",
+      event_type=="new-cve-security-rule", "CVEs with security rule associated",
+      event_type=="any-cve-known-exploit", "CVEs with at least one known exploit",
+      event_type=="new-advisory", "New Advisory",
+      event_type=="resolved-recommendation", "Resolved recommendation",
+      event_type=="new-recommendation", "New recommendation",
+      event_type=="deactivated-recommendation", "Deactivated recommendation",
+      event_type=="policy-triggered","Policy triggered",
+      event_type=="drift-baseline-detected","Drift from baseline detected",
+      event_type=="compliance-below-threshold","System is non compliant to SCAP policy",
+      event_type=="report-upload-failed","Policy report failed to upload",
+      event_type=="validation-error","Validation error",
+      event_type=="system-became-stale", "System became stale",
+      event_type=="system-deleted", "System deleted",
+      event_type=="new-system-registered", "New system registered",
       !isnull(event_type), 'event_type'
       )
 | convert timeformat="%Y-%m-%d %H:%M:%S" ctime(time) AS created_at_fmt
