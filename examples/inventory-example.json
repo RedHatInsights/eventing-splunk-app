@@ -1,0 +1,163 @@
+{
+"event": {
+  "account_id": "",
+  "application": "inventory",
+  "bundle": "rhel",
+  "context": {
+    "event_name": "Host Validation Error",
+    "display_name": null,
+    "inventory_id": "328dc952-b90c-46ea-b7c1-6e3258b36ff6"
+  },
+  "event_type": "validation-error",
+  "events": [
+    {
+      "metadata": {},
+      "payload": {
+        "request_id": "8b717f36-c045-4504-8c6f-b8f6f2e8fdbd",
+        "display_name": null,
+        "canonical_facts": {
+          "insights_id": null,
+          "subscription_manager_id": null,
+          "satellite_id": null,
+          "bios_uuid": null,
+          "ip_addresses": null,
+          "fqdn": null,
+          "mac_addresses": null,
+          "provider_id": null,
+          "provider_type": null
+        },
+        "error": {
+          "code": "VE001",
+          "message": "Could not find an existing host with the provided facts.",
+          "stack_trace": null,
+          "severity": "error"
+        }
+      }
+    }
+  ],
+  "org_id": "13959588",
+  "timestamp": "2024-06-28T13:57:53.355997",
+  "source": {
+    "application": {
+      "display_name": "Inventory"
+    },
+    "bundle": {
+      "display_name": "Red Hat Enterprise Linux"
+    },
+    "event_type": {
+      "display_name": "Validation error"
+    }
+  }
+},
+"event":{
+
+  "org_id": "7931872",
+  "application": "inventory",
+  "bundle": "rhel",
+  "context": {
+    "inventory_id": "82703bcd-ddad-4d9d-bec2-7d83be703cde",
+    "hostname": "rhel8desktop",
+    "display_name": "rhel8desktop",
+    "rhel_version": "8.10",
+    "tags": {
+      "insights-client": {
+        "Team": ["PMs"],
+        "Owner": ["Jerome Marc"],
+        "Application": ["RHEL Desktop"],
+        "Expiration Date": []
+      }
+    }
+  },
+  "events": [
+    {
+      "metadata": {},
+      "payload": {
+        "groups": [
+          {
+            "id": "00e87dbf-738a-4089-8e74-ed84da7e8149",
+            "name": "My group"
+          }
+        ],
+        "insights_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "subscription_manager_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "satellite_id": ""
+      }
+    }
+  ],
+  "event_type": "system-deleted",
+  "timestamp": "2025-03-26T10:07:22.301813+00:00"
+},
+"event":{
+  "org_id": "7931872",
+  "application": "inventory",
+  "bundle": "rhel",
+  "context": {
+    "inventory_id": "0fae4f0d-73a0-4810-835a-5c5374a218b3",
+    "hostname": "rhel8desktop",
+    "display_name": "rhel8desktop",
+    "rhel_version": "8.10",
+    "tags": {
+      "insights-client": {
+        "Team": ["PMs"],
+        "Owner": ["Jerome Marc"],
+        "Application": ["RHEL Desktop"],
+        "Expiration Date": []
+      }
+    },
+    "host_url": "https://console.redhat.com/insights/inventory/0fae4f0d-73a0-4810-835a-5c5374a218b3"
+  },
+  "events": [
+    {
+      "metadata": {},
+      "payload": {
+        "groups": [],
+        "insights_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "subscription_manager_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "satellite_id": "",
+        "reporter": "puptoo",
+        "system_check_in": "2025-03-26T10:08:19.593384+00:00"
+      }
+    }
+  ],
+  "event_type": "new-system-registered",
+  "timestamp": "2025-03-26T10:08:19.616404+00:00"
+},
+"event":{
+  "org_id": "7931872",
+  "application": "inventory",
+  "bundle": "rhel",
+  "context": {
+    "inventory_id": "82703bcd-ddad-4d9d-bec2-7d83be703cde",
+    "hostname": "rhel8desktop",
+    "display_name": "rhel8desktop",
+    "rhel_version": "8.10",
+    "tags": {
+      "insights-client": {
+        "Team": ["PMs"],
+        "Owner": ["Jerome Marc"],
+        "Application": ["RHEL Desktop"],
+        "Expiration Date": []
+      }
+    },
+    "host_url": "https://console.redhat.com/insights/inventory/82703bcd-ddad-4d9d-bec2-7d83be703cde"
+  },
+  "events": [
+    {
+      "metadata": {},
+      "payload": {
+        "groups": [
+          {
+            "id": "00e87dbf-738a-4089-8e74-ed84da7e8149",
+            "name": "My group"
+          }
+        ],
+        "insights_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "subscription_manager_id": "dea5eac8-12ec-4283-950a-a3761d9fd9bb",
+        "satellite_id": ""
+      }
+    }
+  ],
+  "event_type": "system-became-stale",
+  "timestamp": "2025-03-26T07:16:26.774585+00:00"
+}
+}

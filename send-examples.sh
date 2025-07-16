@@ -14,9 +14,10 @@ send_to_splunk() {
     -H "Content-Type: application/json"
 }
 
-send_to_splunk advisor-new-recommendation-example
-send_to_splunk drift-baseline-detected-example
-send_to_splunk patch-example
-send_to_splunk vulnerability-example
-send_to_splunk malware-example
-send_to_splunk ros-example
+# send_to_splunk advisor-new-recommendation-example
+# send_to_splunk drift-baseline-detected-example
+# send_to_splunk patch-example
+# send_to_splunk vulnerability-example
+# send_to_splunk malware-example
+# send_to_splunk ros-example
+send_to_splunk inventory-example
