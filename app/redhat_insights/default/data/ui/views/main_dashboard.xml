@@ -155,55 +155,6 @@
 				}
 			]
 		},
-		"viz_sT40CCzB": {
-			"type": "viz.text",
-			"options": {
-				"content": "Drift events received",
-				"fontSize": 16,
-				"fontWeight": "bold"
-			}
-		},
-		"viz_JcoYwJev": {
-			"type": "viz.text",
-			"options": {
-				"content": "Last 24 hours",
-				"fontSize": 12
-			}
-		},
-		"viz_0FXgnEsP": {
-			"type": "splunk.singlevalue",
-			"dataSources": {
-				"primary": "ds_lDtnkMeN"
-			},
-			"options": {
-				"unit": "",
-				"trendColor": "> trendValue | rangeValue(trendColorEditorConfig)",
-				"sparklineDisplay": "off",
-				"trendFontSize": 14
-			},
-			"title": "",
-			"context": {
-				"trendColorEditorConfig": [
-					{
-						"value": "#118832",
-						"to": 1
-					},
-					{
-						"value": "#d41f1f",
-						"from": 1
-					}
-				]
-			},
-			"eventHandlers": [
-				{
-					"type": "drilldown.customUrl",
-					"options": {
-						"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Drift&form.filter_system=*",
-						"newTab": false
-					}
-				}
-			]
-		},
 		"viz_8LQURw6Y": {
 			"type": "splunk.singlevalue",
 			"dataSources": {
@@ -963,17 +914,6 @@
 			},
 			"name": "search_policy_24hrs"
 		},
-		"ds_lDtnkMeN": {
-			"type": "ds.search",
-			"options": {
-				"queryParameters": {
-					"earliest": "-48h",
-					"latest": "now"
-				},
-				"query": "index=redhatinsights application=drift\n  | spath \n  | spath path=events{} output=events\n  | stats by _time, events, application, event_type, account_id, context.display_name\n  | mvexpand events \n  | eval _raw=events\n  | kv\n  | table _time\n  | timechart span=24h aligntime=latest count\n  | appendpipe [| stats count | where count=0 | addinfo | eval time=info_min_time.\" \".info_max_time | makemv time | mvexpand time | table time count | rename time as _time ]"
-			},
-			"name": "search_drift_24hrs"
-		},
 		"ds_cflXieRi_ds_snKvID23": {
 			"type": "ds.search",
 			"options": {
@@ -1410,26 +1350,6 @@
 					"y": 270,
 					"w": 170,
 					"h": 60
-				}
-			},
-			{
-				"item": "viz_sT40CCzB",
-				"type": "block",
-				"position": {
-					"x": 440,
-					"y": 220,
-					"w": 170,
-					"h": 50
-				}
-			},
-			{
-				"item": "viz_JcoYwJev",
-				"type": "block",
-				"position": {
-					"x": 480,
-					"y": 240,
-					"w": 130,
-					"h": 50
 				}
 			},
 			{
