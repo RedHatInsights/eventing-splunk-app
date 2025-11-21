@@ -7,18 +7,17 @@ on:
     branches:
       - main
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    runs-on: ubuntu-20.04  # Need to use this version since  splunk slim package has outdated code for python >= 3.10
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Install build dependencies
         run: |
-          pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
+          pip install splunk-packaging-toolkit
 
       - name: Set patch version
         run: |
