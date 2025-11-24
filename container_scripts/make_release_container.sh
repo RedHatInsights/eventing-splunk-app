@@ -1,12 +1,10 @@
 #!/bin/bash
 WORK="/opt/work"
 
-
-if [ -f /tmp/.venv/bin/activate ]; then
-    source /tmp/.venv/bin/activate
+if ( `pip show splunk-packaging-toolkit > /dev/null 2>&1` ); then
+  echo "INFO: splunk-packaging-toolkit already installed"
 else
-    echo "ERROR: Virtual environment not found at /tmp/.venv/bin/activate"
-    exit 1
+  pip install splunk-packaging-toolkit
 fi
 
 cd $WORK
@@ -18,9 +16,14 @@ sed -i "s/version = .*/version = $version/" app/redhat_insights/default/app.conf
 slim validate app/redhat_insights
 slim package app/redhat_insights
 
-# GIT_REV=`git rev-parse --short HEAD`
-branch_name=$(cat .git/HEAD | cut -d' ' -f2-)
-GIT_REV=`cut -c 1-7 .git/$branch_name`
+BRANCH_NAME=$(cat .git/HEAD | cut -d' ' -f2-)
+if [ $(echo $BRANCH_NAME | grep 'refs/heads') ];then
+  # branch checked out
+  GIT_REV=`cut -c 1-7 .git/$BRANCH_NAME`
+else
+  # commit checked out
+  GIT_REV=`echo ${BRANCH_NAME} | cut -c 1-7`
+fi
 
 if [ ! -f "redhat_insights-${version}.tar.gz" ]; then
     echo "Error: Source file redhat_insights-${version}.tar.gz does not exist."

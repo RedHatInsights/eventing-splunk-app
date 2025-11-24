@@ -91,12 +91,12 @@ and restart splunk:
 ssh ec2-user@splunk1.example.com -R 4000:127.0.0.1:8088 -i ~/.ssh/<ssh-priv-key>.pem
 ```
 
-## Setup venv, create indexes, build and install
+## Create splunk indexes, build and install splunk application
 ```
-podman exec --user 0:0 -it splunk /opt/work/container_scripts/setup_splunk_container.sh
-podman exec --user 0:0 -it splunk /opt/work/container_scripts/create_indexes_container.sh # type admin when asked what username to use
-podman exec --user 0:0 -it splunk /opt/work/container_scripts/make_release_container.sh # type admin when asked what username to use
+podman exec --user 0:0 -it splunk /opt/work/container_scripts/create_indexes_container.sh
+podman exec --user 0:0 -it splunk /opt/work/container_scripts/make_release_container.sh
 ```
+Note: Type admin when asked for username
 
 ## Integrate splunk app with c.r.c
 - when adding the app, as a hostname add https://splunk1.example.com:4000
