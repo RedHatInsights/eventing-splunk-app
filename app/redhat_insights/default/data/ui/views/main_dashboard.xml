@@ -709,7 +709,15 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+		        {
+        		    "type": "drilldown.customUrl",
+            		"options": {
+                		"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Vulnerability&form.filter_system=*&form.field_event_type=CVEs%20with%20security%20rule%20associated"
+            		}
+        		}
+    		]
 		},
 		"viz_XaUYOAz0": {
 			"type": "viz.text",
@@ -741,7 +749,15 @@
 						"from": 1
 					}
 				]
-			}
+			},
+		    "eventHandlers": [
+    		    {
+            		"type": "drilldown.customUrl",
+            		"options": {
+                		"url": "/app/redhat_insights/events?form.timepicker.earliest=-30d%40d&form.timepicker.latest=now&form.field_account=*&form.field_application=Vulnerability&form.filter_system=*&form.field_event_type=CVEs%20with%20security%20rule%20associated"
+            		}
+        		}
+    		]
 		},
 		"viz_ckkvOrLk": {
 			"type": "viz.text",
@@ -772,7 +788,15 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+     		   {
+		            "type": "drilldown.customUrl",
+            		"options": {
+                		"url": "/app/redhat_insights/events?form.timepicker.earliest=-24h%40h&form.timepicker.latest=now&form.field_account=*&form.field_application=Vulnerability&form.filter_system=*&form.field_event_type=CVEs%20with%20at%20least%20one%20known%20exploit"
+            		}
+        		}
+    		]
 		},
 		"viz_oBFyE8G8": {
 			"type": "splunk.singlevalue",
@@ -797,7 +821,15 @@
 						"from": 1
 					}
 				]
-			}
+			},
+			"eventHandlers": [
+     		   {
+            		"type": "drilldown.customUrl",
+            		"options": {
+                		"url": "/app/redhat_insights/events?form.timepicker.earliest=-30d%40d&form.timepicker.latest=now&form.field_account=*&form.field_application=Vulnerability&form.filter_system=*&form.field_event_type=CVEs%20with%20at%20least%20one%20known%20exploit"
+            		}
+        		}
+    		]
 		},
 		"viz_lQdKYbSx": {
 			"type": "abslayout.line",
