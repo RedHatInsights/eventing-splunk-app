@@ -23,7 +23,7 @@ Installation and initial configuration are automated, so setting up the integrat
 ### Documentation
 
 - **Installation and Release Notes:** See the application Splunkbase page.
-- **Red Hat documentation:** See [Configuring notifications and integrations on the Red Hat Hybrid Cloud Console](https://access.redhat.com/documentation/en-us/red_hat_hybrid_cloud_console/2023/html/configuring_notifications_and_integrations_on_the_red_hat_hybrid_cloud_console/index).
+- **Red Hat documentation:** See [Configuring notifications and integrations on the Red Hat Hybrid Cloud Console](https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/configuring_notifications_on_the_red_hat_hybrid_cloud_console/index).
 - **Support:** For questions about this beta release, email <SplunkBeta@redhat.com>.
 
 ### Support
