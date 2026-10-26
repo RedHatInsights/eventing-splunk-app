@@ -91,10 +91,12 @@ Here's the "short version":
 
 ### Prerequisites:
 
-Installed Packaging CLI tool here from https://dev.splunk.com/enterprise/downloads.
+Slim tool can be installed directly from pypi.
 
 ```bash
-$ pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
+$ python3.13 -m venv .venv
+$ source .venv/bin/activate
+$ pip install splunk-packaging-toolkit
 ```
 
 ### Package build
